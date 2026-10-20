@@ -1,0 +1,42 @@
+# Validates pack.json with `content-pack verify`, built from the core tag in core-version.
+# Runs on every pull request and push to main, so a check can be required.
+name: Pack checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions: {}
+
+jobs:
+  verify:
+    name: pack.json is a valid pack
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      # The cache holds only the binary and is keyed by the pinned tag, so a bump of
+      # core-version builds a fresh one.
+      - name: Cache content-pack
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/content-pack
+          key: content-pack-${{ runner.os }}-${{ hashFiles('core-version') }}
+
+      - name: Install content-pack at the pinned core tag
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          cargo install --git https://github.com/stella-rain/core --tag "$(cat core-version)" \
+            --bin content-pack --locked stella-rain-core
+
+      - name: Verify pack.json
+        run: content-pack verify pack.json
