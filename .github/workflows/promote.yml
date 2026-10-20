@@ -1,0 +1,152 @@
+# Promote (release-flow, step 4). Kade runs it on the branch rc/v<version>-rc.N that Candidate
+# made, after trying that prerelease. The tag is the record and the branch only a handle: it
+# refuses unless the branch head is the rc tag's commit, the tag is the highest rc of a version
+# that is not released yet and is above the latest release, VERSION at that commit is the version,
+# and its prerelease exists (scripts/release.cjs rc-branch, check-promote). It downloads the
+# prerelease's assets and checks them against SHA256SUMS and the commit's pack.json, then tags the
+# same commit v<version> and makes the GitHub release, marked latest, with the same assets:
+# nothing is built again. That release is what the app fetches. Last, it deletes the rc branches
+# of that version and every older one; a failed run deletes nothing. Only the tag job can write,
+# and it runs none of the repository's code.
+name: Promote
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: check the candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      final: ${{ steps.check.outputs.final }}
+      commit: ${{ steps.check.outputs.commit }}
+      rc: ${{ steps.check.outputs.rc }}
+      released: ${{ steps.check.outputs.released }}
+    steps:
+      - name: Only an rc/<rc tag> branch is promoted
+        run: |
+          case "$GITHUB_REF" in
+            refs/heads/rc/v*-rc.*) ;;
+            *) echo "::error::Promote runs on a branch rc/vX.Y.Z-rc.N only; this run is on $GITHUB_REF"; exit 1 ;;
+          esac
+
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: The candidate is the newest of a new version, with its prerelease
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          rc=$(node scripts/release.cjs rc-branch "$GITHUB_REF_NAME")
+          final=$(node scripts/release.cjs check-promote "$rc")
+          commit=$(git rev-parse "refs/tags/$rc^{commit}")
+          if [ "$commit" != "$GITHUB_SHA" ]; then
+            echo "::error::$GITHUB_REF_NAME is at $GITHUB_SHA, not at its tag $rc ($commit)"
+            exit 1
+          fi
+          if [ "$(gh release view "$rc" --repo "$REPO" --json isPrerelease --jq .isPrerelease)" != true ]; then
+            echo "::error::$rc has no prerelease"
+            exit 1
+          fi
+          {
+            echo "released=$(node scripts/release.cjs released "$final")"
+            echo "final=$final"
+            echo "commit=$commit"
+            echo "rc=$rc"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Download the prerelease's assets and check them, with no rebuild
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RC: ${{ steps.check.outputs.rc }}
+          FINAL: ${{ steps.check.outputs.final }}
+        run: |
+          set -euo pipefail
+          assets="$RUNNER_TEMP/assets"
+          mkdir "$assets"
+          gh release download "$RC" --repo "$REPO" --dir "$assets" \
+            --pattern pack.json --pattern pack.json.sha256 --pattern SHA256SUMS
+          (cd "$assets" && sha256sum -c SHA256SUMS)
+          if ! cmp -s pack.json "$assets/pack.json"; then
+            echo "::error::the prerelease's pack.json is not pack.json at $RC"
+            exit 1
+          fi
+          {
+            echo "Content pack ${FINAL#v}, promoted from $RC."
+            echo
+            gh release view "$RC" --repo "$REPO" --json body --jq .body
+          } > "$assets/notes.md"
+          cat "$assets/notes.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: |
+            ${{ runner.temp }}/assets/pack.json
+            ${{ runner.temp }}/assets/pack.json.sha256
+            ${{ runner.temp }}/assets/SHA256SUMS
+            ${{ runner.temp }}/assets/notes.md
+          if-no-files-found: error
+          retention-days: 1
+
+  tag:
+    name: tag and GitHub release
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write  # the tag, the release and deleting the rc branches
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-assets
+          path: assets
+
+      - name: Tag the candidate's commit, make the release, delete the rc branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          FINAL: ${{ needs.check.outputs.final }}
+          COMMIT: ${{ needs.check.outputs.commit }}
+          RC: ${{ needs.check.outputs.rc }}
+          RELEASED: ${{ needs.check.outputs.released }}
+        run: |
+          set -euo pipefail
+          head=$(gh api "repos/$REPO/git/ref/heads/$GITHUB_REF_NAME" --jq .object.sha)
+          if [ "$head" != "$COMMIT" ]; then
+            echo "::error::$GITHUB_REF_NAME moved from $COMMIT to $head"
+            exit 1
+          fi
+          (cd assets && sha256sum -c SHA256SUMS)
+          object=$(jq -n --arg tag "$FINAL" --arg sha "$COMMIT" \
+                     '{tag: $tag, message: ("Content pack " + $tag), object: $sha, type: "commit"}' \
+                   | gh api "repos/$REPO/git/tags" --input - --jq .sha)
+          gh api "repos/$REPO/git/refs" -f ref="refs/tags/$FINAL" -f sha="$object" > /dev/null
+          gh release create "$FINAL" assets/pack.json assets/pack.json.sha256 assets/SHA256SUMS \
+            --repo "$REPO" --verify-tag --latest --title "$FINAL" --notes-file assets/notes.md
+          for b in $RELEASED; do
+            gh api -X DELETE "repos/$REPO/git/refs/heads/$b" > /dev/null || echo "::warning::could not delete $b"
+          done
+          {
+            echo "Released $FINAL at $COMMIT, promoted from $RC."
+            echo "Deleted the rc branches $RELEASED."
+          } >> "$GITHUB_STEP_SUMMARY"
