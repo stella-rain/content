@@ -1,0 +1,26 @@
+# Runs the unit tests of scripts/release.cjs, which Candidate and Promote rely on. On every pull
+# request and push to main, so a check can be required.
+name: Release script tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions: {}
+
+jobs:
+  test:
+    name: release script tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test scripts/release.test.cjs
