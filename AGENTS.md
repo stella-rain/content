@@ -31,19 +31,17 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
 
 ## Release
 
-- A release is a pushed tag `pack-<N>` (`pack-1`, `pack-2`, ...), cut by Kade from `main`;
-  agents never push a release tag. The tag pattern `pack-*` is protected by a ruleset.
-- `release.yml` checks the tag is on `main`, runs `content-pack verify pack.json` at the pinned
-  core tag and creates a GitHub release with two assets under fixed names:
-  `pack.json` and `pack.json.sha256` (`<hex>  pack.json`). The names never change.
-- The app fetches `https://github.com/stella-rain/content/releases/latest/download/pack.json`.
-- First tag: `git fetch origin main && git tag pack-1 origin/main && git push origin pack-1`.
+- Follow `release-flow`. The version is `VERSION` (x.y.z, tags `v<version>`); its notes are the
+  `## <version>` section of `CHANGELOG.md`. The app fetches the latest release's `pack.json`
+  (`https://github.com/stella-rain/content/releases/latest/download/pack.json`); each release
+  carries `pack.json`, `pack.json.sha256` and `SHA256SUMS`, and those names never change.
 
 ## Gates
 
 | Part | Gate |
 |---|---|
 | `pack.json` | `content-pack verify pack.json` at the tag in `core-version` (exit 0; CI: `checks.yml`) |
+| `scripts/release.cjs` | `node --test scripts/release.test.cjs` (CI: `release-script.yml`) |
 | Workflows | YAML parses; `actionlint` with shellcheck (CI: `actionlint.yml`); NOT VERIFIED until they have run on GitHub |
 | `CLAUDE.md`, `AGENTS.md` | `python3 ../.github/scripts/claude_md_check.py .` (CI runs it too); `AGENTS.md` at most 100 lines |
 | Line endings, secrets | CI `eol-check` and `repo-check` (`git ls-files --eol` shows no CRLF) |
@@ -64,5 +62,5 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
 ## Overrides of global rules
 
 - **No auto-merge.** Kade merges every PR here by hand, since a merged pack reaches every
-  player once he tags it. Do not enable GitHub auto-merge.
+  player once he promotes it. Do not enable GitHub auto-merge.
 - `CLAUDE.md` holds only `@AGENTS.md`.
