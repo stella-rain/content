@@ -24,10 +24,25 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
 
 ## Core pin
 
-- `core-version` holds the core tag (`v0.0.12`) whose `content-pack` validates packs here and
-  that the app pins. CI installs `content-pack` from exactly that tag.
-- To bump it: change `core-version` only, run `content-pack verify pack.json` with the new
-  tag, and say in the PR why. A bump that makes the current pack invalid also ships a fixed pack.
+- `core-version` names the core ref whose `content-pack` validates packs here: a release tag
+  (`v0.0.15`) or, while developing, a full 40-hex commit on core's `main` (ADR-131, as ADR-125
+  for the app). `scripts/core_pin.cjs kind|ref` reads it and refuses anything else. CI installs
+  `content-pack` at whatever it names (`--tag` for a tag, `--rev` for a commit).
+- A content release needs a tag: `release.cjs check-version` (Candidate) refuses a commit. The
+  release's version PR sets the tag the latest app release pins.
+- To bump it: change `core-version` only, run `content-pack verify pack.json` at the new ref,
+  and say in the PR why. A bump that makes the current pack invalid also ships a fixed pack.
+
+## Balancing (ADR-131)
+
+- Numbers only: same `sim_version`, no schema change, no new rule or ID; more starts in core.
+- Tune `pack.json` on a PR here (by hand, LF), then play-test: `node scripts/playtest.cjs
+  [--app ../app] [--profile test-env] [--build]`. It refuses unless `../app`'s core pin
+  (`godot-ext/Cargo.toml`) equals `core-version`, runs `content-pack verify`, optionally builds
+  the app's debug extension, and launches `$GODOT` (else `godot`) with `--content-path` and
+  `--profile`. It changes nothing in either checkout.
+- When balancing is done, merge the PR; the merge opens a sync PR to core's `content/`, which
+  Kade merges. Then the release flow (a pack-only tuning pass is a content release alone).
 
 ## Release
 
@@ -40,8 +55,8 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
 
 | Part | Gate |
 |---|---|
-| `pack.json` | `content-pack verify pack.json` at the tag in `core-version` (exit 0; CI: `checks.yml`) |
-| `scripts/release.cjs` | `node --test scripts/release.test.cjs` (CI: `release-script.yml`) |
+| `pack.json` | `content-pack verify pack.json` at the ref in `core-version` (exit 0; CI: `checks.yml`) |
+| `scripts/*.cjs` | `node --test scripts/*.test.cjs` (CI: `release-script.yml`) |
 | Workflows | YAML parses; `actionlint` with shellcheck (CI: `actionlint.yml`); NOT VERIFIED until they have run on GitHub |
 | `CLAUDE.md`, `AGENTS.md` | `python3 ../.github/scripts/claude_md_check.py .` (CI runs it too); `AGENTS.md` at most 100 lines |
 | Line endings, secrets | CI `eol-check` and `repo-check` (`git ls-files --eol` shows no CRLF) |

@@ -106,6 +106,7 @@ function repo() {
   git(dev, "config", "user.email", "t@t");
   git(dev, "config", "user.name", "t");
   fs.writeFileSync(path.join(dev, "VERSION"), "0.0.1\n");
+  fs.writeFileSync(path.join(dev, "core-version"), "v0.0.15\n");
   fs.writeFileSync(path.join(dev, "CHANGELOG.md"), "# Changelog\n\n## 0.0.1\n\nFirst pack.\n");
   git(dev, "add", "-A");
   git(dev, "commit", "-q", "-m", "first");
@@ -125,6 +126,17 @@ test("the CLI reads VERSION, CHANGELOG.md and the tags of the clone", () => {
   git(dev, "tag", "v0.0.1");
   assert.strictEqual(cli(dev, "latest"), "v0.0.1");
   assert.throws(() => cli(dev, "check-version"), /v0\.0\.1 is already released/);
+});
+
+test("the CLI check-version refuses a core-version that is a commit or junk (ADR-131), accepts a tag", () => {
+  const dev = repo();
+  const commit = "f108f4f718557c7d41ce8ab7900ff5180d9e09eb";
+  fs.writeFileSync(path.join(dev, "core-version"), `${commit}\n`);
+  assert.throws(() => cli(dev, "check-version"), /core-version must hold a released core tag/);
+  fs.writeFileSync(path.join(dev, "core-version"), "main\n");
+  assert.throws(() => cli(dev, "check-version"), /core-version must hold/);
+  fs.writeFileSync(path.join(dev, "core-version"), "v0.0.16\n");
+  assert.strictEqual(cli(dev, "check-version"), "");
 });
 
 test("the CLI refuses a candidate whose branch is not at HEAD, and finds leftover candidate branches", () => {
