@@ -6,7 +6,8 @@
 // the section "## <version>" of CHANGELOG.md.
 //
 //   version           VERSION, checked to be x.y.z
-//   check-version     refuses a VERSION that has a v<VERSION> tag or is not above the latest release
+//   check-version     refuses a VERSION that has a v<VERSION> tag or is not above the latest release,
+//                     and a core-version that is not a released core tag (a commit is for developing)
 //   rc                the next candidate tag of VERSION: v<VERSION>-rc.1, -rc.2, ...
 //   notes             the CHANGELOG.md section of VERSION; refuses a missing or empty one
 //   latest            the highest release tag v<x.y.z>, or nothing
@@ -25,6 +26,7 @@
 
 const fs = require("fs");
 const { execFileSync } = require("child_process");
+const { checkReleasePin } = require("./core_pin.cjs");
 
 const VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
 const FINAL = /^v((?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))$/;
@@ -181,7 +183,10 @@ if (require.main === module) {
   try {
     process.chdir(git("rev-parse", "--show-toplevel"));
     if (cmd === "version") console.log(readVersion());
-    else if (cmd === "check-version") checkVersion(readVersion(), releaseTags());
+    else if (cmd === "check-version") {
+      checkVersion(readVersion(), releaseTags());
+      checkReleasePin(fs.readFileSync("core-version", "utf8"));
+    }
     else if (cmd === "rc") console.log(rcTag(readVersion(), releaseTags()));
     else if (cmd === "notes") console.log(changelogEntry(fs.readFileSync("CHANGELOG.md", "utf8"), readVersion()));
     else if (cmd === "latest") console.log(latestRelease(releaseTags()));
