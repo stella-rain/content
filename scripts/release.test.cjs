@@ -6,7 +6,7 @@ const assert = require("node:assert");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
-const { execFileSync } = require("child_process");
+const { execFileSync, spawnSync } = require("child_process");
 const r = require("./release.cjs");
 
 test("parseVersion wants plain x.y.z", () => {
@@ -160,4 +160,57 @@ test("the CLI check-promote reads VERSION at the rc tag, superseded and released
   git(dev, "commit", "-q", "-am", "bump");
   git(dev, "tag", "v0.0.1-rc.2");
   assert.throws(() => cli(dev, "check-promote", "v0.0.1-rc.2"), /VERSION at v0\.0\.1-rc\.2 is '0\.0\.2', not '0\.0\.1'/);
+});
+
+test("ciDone: red, waiting or ready from a commit's workflow runs; only the named workflows run by a push or dispatch count", () => {
+  const names = ["Pack checks", "Line endings"];
+  const run = (name, status, conclusion, event = "push") => ({ name, status, conclusion, event });
+  const ok = [run("Pack checks", "completed", "success"), run("Line endings", "completed", "skipped")];
+  assert.strictEqual(r.ciDone(ok, names), "ready");
+  assert.strictEqual(r.ciDone([run("Pack checks", "completed", "neutral"), run("Line endings", "completed", "success", "workflow_dispatch")], names), "ready");
+  assert.strictEqual(r.ciDone([...ok, run("Line endings", "in_progress", null)], names), "waiting");
+  assert.strictEqual(r.ciDone([...ok, run("Auto-merge", "in_progress", null)], names), "ready");
+  assert.strictEqual(r.ciDone([...ok, run("Line endings", "queued", null, "pull_request")], names), "ready");
+  for (const c of ["failure", "timed_out", "cancelled", "action_required", "stale", "startup_failure"]) {
+    assert.strictEqual(r.ciDone([...ok, run("Pack checks", "completed", c)], names), "red", c);
+  }
+  assert.strictEqual(r.ciDone([run("Pack checks", "completed", "failure"), run("Line endings", "in_progress", null)], names), "red");
+  assert.strictEqual(r.ciDone([run("Other", "completed", "success")], names), "waiting");
+  assert.strictEqual(r.ciDone([], names), "waiting");
+});
+
+test("shouldCandidate wants an unreleased VERSION above the latest, its CHANGELOG entry and a core tag", () => {
+  const changelog = "# Changelog\n\n## 0.0.2\n\nSecond.\n";
+  const good = { version: "0.0.2", tags: ["v0.0.1"], changelog, coreVersion: "v0.1.0\n" };
+  assert.doesNotThrow(() => r.shouldCandidate(good));
+  assert.throws(() => r.shouldCandidate({ ...good, tags: ["v0.0.1", "v0.0.2"] }), /v0\.0\.2 is already released/);
+  assert.throws(() => r.shouldCandidate({ ...good, tags: ["v0.0.3"] }), /not above the latest release/);
+  assert.throws(() => r.shouldCandidate({ ...good, version: "0.0.3" }), /no entry for 0\.0\.3/);
+  assert.throws(() => r.shouldCandidate({ ...good, coreVersion: "main\n" }), /core-version must hold/);
+});
+
+test("the CLI should-candidate prints true for an unreleased version, false with the reason on stderr otherwise", () => {
+  const dev = repo();
+  assert.strictEqual(cli(dev, "should-candidate"), "true");
+  git(dev, "tag", "v0.0.1");
+  const out = spawnSync(process.execPath, [path.join(__dirname, "release.cjs"), "should-candidate"], { cwd: dev, encoding: "utf8" });
+  assert.strictEqual(out.status, 0);
+  assert.strictEqual(out.stdout.trim(), "false");
+  assert.match(out.stderr, /v0\.0\.1 is already released/);
+});
+
+test("the CLI ci-done reads the runs API's JSON on stdin", () => {
+  const dev = repo();
+  const input = JSON.stringify({ workflow_runs: [{ name: "Pack checks", status: "completed", conclusion: "failure", event: "push" }] });
+  const out = (...a) => execFileSync(process.execPath, [path.join(__dirname, "release.cjs"), "ci-done", ...a], { cwd: dev, input, encoding: "utf8" }).trim();
+  assert.strictEqual(out("Pack checks"), "red");
+  assert.strictEqual(out("Line endings"), "waiting");
+});
+
+test("the job names checksPassed leaves out are the candidate workflows' jobs", () => {
+  const text = ["candidate.yml", "candidate-guard.yml", "auto-candidate.yml"]
+    .map((f) => fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", f), "utf8"))
+    .join("\n");
+  const names = [...text.matchAll(/^ {4}name: (.+)$/gm)].map((m) => m[1]);
+  assert.deepStrictEqual([...r.CANDIDATE_JOBS].sort(), names.sort());
 });
