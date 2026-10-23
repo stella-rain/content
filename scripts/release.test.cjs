@@ -214,3 +214,13 @@ test("the job names checksPassed leaves out are the candidate workflows' jobs", 
   const names = [...text.matchAll(/^ {4}name: (.+)$/gm)].map((m) => m[1]);
   assert.deepStrictEqual([...r.CANDIDATE_JOBS].sort(), names.sort());
 });
+
+test("only a successful Candidate deletes the candidate branch; a failed one keeps it", () => {
+  const text = fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", "candidate.yml"), "utf8");
+  const job = (id) => text.match(new RegExp(`^  ${id}:\\n((?:    .*\\n|\\n)+)`, "m"))[1];
+  const cleanup = job("cleanup");
+  const cond = cleanup.match(/^    if: (.+)$/m)[1];
+  assert.match(cond, /needs\.tag\.result == 'success'/);
+  assert.doesNotMatch(cond, /always\(\)/);
+  assert.match(cleanup, /^    needs: \[check, tag\]$/m);
+});
