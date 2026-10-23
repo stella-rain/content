@@ -22,6 +22,12 @@
 //                     for Promote to run from (the GitHub app lists no tags)
 //   superseded R      origin's rc branches of R's version below R, space-separated
 //   released T        origin's rc branches of version T and every older one, space-separated
+//   should-candidate  prints true when HEAD is a commit Candidate would accept on version grounds
+//                     (VERSION unreleased and above the latest release, its CHANGELOG.md entry,
+//                     core-version a tag), else false with the reason on stderr (auto-candidate.yml)
+//   ci-done W...      reads a commit's workflow runs (the API's JSON) on stdin; of the workflows
+//                     named W, run by a push or dispatch, prints red if one failed, waiting if one
+//                     is unfinished or none exists, else ready (auto-candidate.yml)
 "use strict";
 
 const fs = require("fs");
@@ -39,8 +45,11 @@ const CANDIDATE_JOBS = new Set([
   "rc tag and prerelease",
   "delete the candidate branch",
   "candidate branch unchanged",
+  "decide on a candidate",
+  "push the candidate branch",
 ]);
 const FAILED = new Set(["failure", "timed_out", "cancelled", "action_required", "stale", "startup_failure"]);
+const PASSED = new Set(["success", "skipped", "neutral"]);
 
 function parseVersion(text) {
   const v = String(text).trim();
@@ -135,6 +144,20 @@ function checksPassed(runs, runId) {
   if (bad.length) throw new Error(`checks not passed: ${bad.join("; ")}`);
 }
 
+function ciDone(runs, names) {
+  const ours = runs.filter((w) => names.includes(w.name) && (w.event === "push" || w.event === "workflow_dispatch"));
+  if (ours.some((w) => w.status === "completed" && !PASSED.has(w.conclusion))) return "red";
+  if (!ours.length || ours.some((w) => w.status !== "completed")) return "waiting";
+  return "ready";
+}
+
+// What Candidate would refuse on version grounds, from plain values: it throws the reason.
+function shouldCandidate({ version, tags, changelog, coreVersion }) {
+  checkVersion(parseVersion(version), tags);
+  changelogEntry(changelog, version.trim());
+  checkReleasePin(coreVersion);
+}
+
 function checkPromote(rc, tags, versionAtRc) {
   const m = CANDIDATE.exec(rc || "");
   if (!m) throw new Error(`${rc || "(none)"} is not a candidate tag vX.Y.Z-rc.N`);
@@ -187,6 +210,21 @@ if (require.main === module) {
       checkVersion(readVersion(), releaseTags());
       checkReleasePin(fs.readFileSync("core-version", "utf8"));
     }
+    else if (cmd === "should-candidate") {
+      try {
+        shouldCandidate({
+          version: fs.readFileSync("VERSION", "utf8"),
+          tags: releaseTags(),
+          changelog: fs.readFileSync("CHANGELOG.md", "utf8"),
+          coreVersion: fs.readFileSync("core-version", "utf8"),
+        });
+        console.log("true");
+      } catch (e) {
+        console.error(e.message);
+        console.log("false");
+      }
+    }
+    else if (cmd === "ci-done") console.log(ciDone(JSON.parse(fs.readFileSync(0, "utf8")).workflow_runs || [], rest));
     else if (cmd === "rc") console.log(rcTag(readVersion(), releaseTags()));
     else if (cmd === "notes") console.log(changelogEntry(fs.readFileSync("CHANGELOG.md", "utf8"), readVersion()));
     else if (cmd === "latest") console.log(latestRelease(releaseTags()));
@@ -199,7 +237,7 @@ if (require.main === module) {
       if (!FINAL.test(rest[0] || "")) throw new Error(`${rest[0] || "(none)"} is not a release tag`);
       console.log(releasedBranches(originBranches("rc/*"), rest[0]).join(" "));
     } else {
-      throw new Error("usage: release.cjs version | check-version | rc | notes | latest | check-candidate <branch> | checks-passed <run id> | check-promote <rc tag> | rc-branch <branch> | superseded <rc tag> | released <tag>");
+      throw new Error("usage: release.cjs version | check-version | rc | notes | latest | check-candidate <branch> | checks-passed <run id> | check-promote <rc tag> | rc-branch <branch> | superseded <rc tag> | released <tag> | should-candidate | ci-done <workflow>...");
     }
   } catch (e) {
     console.error(`release: ${e.message}`);
@@ -207,4 +245,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { parseVersion, latestRelease, checkVersion, rcTag, changelogEntry, checkCandidate, checksPassed, checkPromote, rcOfBranch, supersededBranches, releasedBranches };
+module.exports = { ciDone, shouldCandidate, CANDIDATE_JOBS, parseVersion, latestRelease, checkVersion, rcTag, changelogEntry, checkCandidate, checksPassed, checkPromote, rcOfBranch, supersededBranches, releasedBranches };
