@@ -3,6 +3,27 @@
 One section per release, `## <version>`, newest first. The version is the file `VERSION`; Candidate
 refuses a version without a non-empty section here and puts it in the release notes.
 
+## 0.0.5
+
+The pack of core v0.1.0, byte for byte, for `sim_version` 0. New files: the starting unlocks
+(giant sword, Duelist perk set, Nova stage skill, the explosion, bleed and boomerang runes), four
+constellations (Summer Triangle, Orion's Belt, Big Dipper, Winter Triangle, each with tiers at
+2 and 3 stars) and the Stardust banking rules (time_limit and trial: bank, pay 50% and bank 50%,
+cap 1000). Rewards gain 15 star rewards (the stars of the constellations and three more), a random rune
+reward, the type bonus rewards (ten damage types, six rarities each), range rewards and rune
+haste rewards (six rarities each), with a rune haste cap of 500 percent. Max HP is scaled by
+100 again: the max HP run stat steps by 10000 (it was 100), the max HP rewards (the common one
+gives 20000, was 200), the Iron Grip expertise upgrade (20000, was 200) and the trial and
+tutorial player's hit points (50000, was 500). The attack speed rewards double (common 8
+percent, legendary 40 percent, were 4 and 20), and run stats gain a max attack speed of 500
+percent and an enemy attack damage of 10000. The damage-over-time runes (bleed, poison, burn)
+tick every 20 ticks (was 30) and stack to 6 (was 5); the explosion rune hits for 2500 over a
+larger radius, every 90 ticks (was 1500 every 120); the thunder rune hits for 3000 every 60
+ticks (was 2000 every 90). The trial and tutorial star tiers gain a random rune weight (53, 176
+and 333 from levels 1, 3 and 5). The time_limit mode's elite types resist elements (they
+resisted physical), its bosses and waves are retuned, and the trial's boss is also weak to
+pyro (was strike only). No ID of 0.0.4 is renamed or removed.
+
 ## 0.0.4
 
 The pack of core v0.0.15, byte for byte, for `sim_version` 0. New files: the perk sets (Vanguard,
