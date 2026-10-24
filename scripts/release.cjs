@@ -1,18 +1,24 @@
 #!/usr/bin/env node
 // release: the commands the release workflows run (release-flow: candidate.yml, promote.yml).
-// A pushed release tag reaches every player, so only a workflow makes one: Candidate tags a main
-// commit v<VERSION>-rc.N and makes the branch rc/v<VERSION>-rc.N at it; Promote, run on that
-// branch, adds v<VERSION> on the same commit. The version is the file VERSION (x.y.z), its notes
-// the section "## <version>" of CHANGELOG.md.
+// A pushed release tag reaches every player, so only a workflow makes one. Candidate runs on main:
+// VERSION is a floor, so the final version is VERSION when that is above the latest release and that
+// release's next patch otherwise. When it is VERSION it tags the main commit v<final>-rc.N; when it
+// is not, it stamps the final into VERSION in the checked-out tree, verifies that tree and makes a
+// "Release v<final>" commit on top of the main commit, whose tree must be the tested one, and tags
+// that. Either way it makes the branch rc/v<final>-rc.N at the tagged commit; Promote, run on that
+// branch, adds v<final> on the same commit. The notes are the section "## <final>" of CHANGELOG.md.
 //
 //   version           VERSION, checked to be x.y.z
-//   check-version     refuses a VERSION that has a v<VERSION> tag or is not above the latest release,
-//                     and a core-version that is not a released core tag (a commit is for developing)
-//   rc                the next candidate tag of VERSION: v<VERSION>-rc.1, -rc.2, ...
-//   notes             the CHANGELOG.md section of VERSION; refuses a missing or empty one
+//   final             the version this release will have (the floor rule), x.y.z
+//   stamp             writes the final version into every file that holds it (VERSION)
+//   check-main        refuses unless GITHUB_REF is refs/heads/main
+//   check-candidate   refuses unless there is a commit since the latest release and HEAD is neither
+//                     a candidate's commit nor the parent of a candidate's release commit
+//   check-version     refuses a core-version that is not a released core tag (a commit is for
+//                     developing) and a final without its CHANGELOG.md entry
+//   rc                the next candidate tag of the final: v<final>-rc.1, -rc.2, ...
+//   notes             the CHANGELOG.md section of the final; refuses a missing or empty one
 //   latest            the highest release tag v<x.y.z>, or nothing
-//   check-candidate B refuses unless B is candidate/<12-character sha of HEAD>, HEAD is on
-//                     origin/main and origin has no other candidate/* branch
 //   checks-passed ID  reads a commit's check runs (the API's JSON) on stdin; refuses unless one
 //                     ran, all finished and none failed, leaving out run ID's own jobs and the
 //                     candidate workflows' jobs from any run
@@ -22,18 +28,14 @@
 //                     for Promote to run from (the GitHub app lists no tags)
 //   superseded R      origin's rc branches of R's version below R, space-separated
 //   released T        origin's rc branches of version T and every older one, space-separated
-//   should-candidate  prints true when HEAD is a commit Candidate would accept on version grounds
-//                     (VERSION unreleased and above the latest release, its CHANGELOG.md entry,
-//                     core-version a tag), else false with the reason on stderr (auto-candidate.yml)
 //   packs PREV        prints packs.json for this release: PREV is the previous release's packs.json
 //                     (a file, or - for none); its channel for the core-version's major.minor is set
-//                     to v<VERSION> and pack.json's SHA-256, seq goes up by one (needs GITHUB_REPOSITORY)
-//   ci-done W...      reads a commit's workflow runs (the API's JSON) on stdin; of the workflows
-//                     named W, run by a push or dispatch, prints red if one failed, waiting if one
-//                     is unfinished or none exists, else ready (auto-candidate.yml)
+//                     to v<VERSION> and pack.json's SHA-256, seq goes up by one (needs GITHUB_REPOSITORY);
+//                     run after stamp, so VERSION is the final
 "use strict";
 
 const fs = require("fs");
+const path = require("path");
 const { execFileSync } = require("child_process");
 const crypto = require("crypto");
 const { checkReleasePin } = require("./core_pin.cjs");
@@ -47,13 +49,11 @@ const RC_BRANCH = /^rc\/(v\d+\.\d+\.\d+-rc\.\d+)$/;
 const CANDIDATE_JOBS = new Set([
   "verify and sums",
   "rc tag and prerelease",
-  "delete the candidate branch",
   "candidate branch unchanged",
-  "decide on a candidate",
-  "push the candidate branch",
 ]);
+// Every file that holds the release version: Candidate writes the final into each.
+const STAMPED_FILES = ["VERSION"];
 const FAILED = new Set(["failure", "timed_out", "cancelled", "action_required", "stale", "startup_failure"]);
-const PASSED = new Set(["success", "skipped", "neutral"]);
 
 function parseVersion(text) {
   const v = String(text).trim();
@@ -80,6 +80,25 @@ function checkVersion(version, tags) {
   if (latest && compareVersions(tag, latest) <= 0) throw new Error(`${tag} is not above the latest release ${latest}`);
 }
 
+// VERSION is a floor: above the latest final tag it is the release, else that tag's next patch.
+function finalVersion(version, tags) {
+  const v = parseVersion(version);
+  const latest = latestRelease(tags);
+  if (!latest || compareVersions(v, latest) > 0) return v;
+  const [x, y, z] = latest.slice(1).split(".").map(Number);
+  return `${x}.${y}.${z + 1}`;
+}
+
+function stampFiles(dir, final) {
+  const v = parseVersion(final);
+  for (const f of STAMPED_FILES) fs.writeFileSync(path.join(dir, f), `${v}\n`);
+  return [...STAMPED_FILES];
+}
+
+function checkMain(ref) {
+  if (ref !== "refs/heads/main") throw new Error(`a candidate is made on main only; this run is on ${ref || "(no ref)"}`);
+}
+
 function candidates(final, tags) {
   return tags
     .map((t) => CANDIDATE.exec(t))
@@ -95,7 +114,7 @@ function rcTag(version, tags) {
 function changelogEntry(text, version) {
   const lines = text.split("\n");
   const start = lines.findIndex((l) => l === `## ${version}` || l.startsWith(`## ${version} `));
-  if (start < 0) throw new Error(`CHANGELOG.md has no entry for ${version}`);
+  if (start < 0) throw new Error(`CHANGELOG.md has no entry for ${version}: add a "## ${version}" section on main`);
   let end = lines.findIndex((l, i) => i > start && l.startsWith("## "));
   if (end < 0) end = lines.length;
   const body = lines.slice(start + 1, end).join("\n").trim();
@@ -130,12 +149,12 @@ function releasedBranches(branches, final) {
     .map(([b]) => b);
 }
 
-function checkCandidate(branch, head, onMain, others) {
-  const m = /^candidate\/([0-9a-f]{12})$/.exec(branch);
-  if (!m) throw new Error(`${branch} is not candidate/<12-character sha>`);
-  if (!head.startsWith(m[1])) throw new Error(`${branch} names ${m[1]}, not HEAD ${head}`);
-  if (!onMain) throw new Error(`${head} is not on origin/main`);
-  if (others.length) throw new Error(`${others.join(", ")} is left over; Kade deletes it first`);
+// rcCommits: [{tag, commit, parent}] of every candidate tag. A candidate's commit is HEAD itself
+// (final was VERSION) or a release commit whose parent is HEAD.
+function checkCandidate({ commitsSince, head, rcCommits, latest = "" }) {
+  if (commitsSince < 1) throw new Error(`no commit since the latest release${latest ? ` ${latest}` : ""}; nothing to release`);
+  const same = rcCommits.find((c) => c.commit === head || c.parent === head);
+  if (same) throw new Error(`this commit is already ${same.tag}`);
 }
 
 function checksPassed(runs, runId) {
@@ -146,20 +165,6 @@ function checksPassed(runs, runId) {
     .filter((c) => c.status !== "completed" || FAILED.has(c.conclusion))
     .map((c) => `${c.name}: ${c.status === "completed" ? c.conclusion : c.status}`);
   if (bad.length) throw new Error(`checks not passed: ${bad.join("; ")}`);
-}
-
-function ciDone(runs, names) {
-  const ours = runs.filter((w) => names.includes(w.name) && (w.event === "push" || w.event === "workflow_dispatch"));
-  if (ours.some((w) => w.status === "completed" && !PASSED.has(w.conclusion))) return "red";
-  if (!ours.length || ours.some((w) => w.status !== "completed")) return "waiting";
-  return "ready";
-}
-
-// What Candidate would refuse on version grounds, from plain values: it throws the reason.
-function shouldCandidate({ version, tags, changelog, coreVersion }) {
-  checkVersion(parseVersion(version), tags);
-  changelogEntry(changelog, version.trim());
-  checkReleasePin(coreVersion);
 }
 
 function checkPromote(rc, tags, versionAtRc) {
@@ -244,6 +249,10 @@ function readVersion() {
   return parseVersion(fs.readFileSync("VERSION", "utf8"));
 }
 
+function finalHere() {
+  return finalVersion(readVersion(), releaseTags());
+}
+
 function originBranches(pattern) {
   return git("ls-remote", "--heads", "origin", pattern)
     .split("\n")
@@ -251,16 +260,17 @@ function originBranches(pattern) {
     .map((line) => line.split("refs/heads/")[1]);
 }
 
-function checkCandidateHere(branch) {
+function checkCandidateHere() {
+  checkMain(process.env.GITHUB_REF);
   const head = git("rev-parse", "HEAD");
-  let onMain = true;
-  try {
-    git("merge-base", "--is-ancestor", head, "origin/main");
-  } catch {
-    onMain = false;
-  }
-  const others = originBranches("candidate/*").filter((b) => b !== branch);
-  checkCandidate(branch, head, onMain, others);
+  const latest = latestRelease(releaseTags());
+  const commitsSince = Number(git("rev-list", "--count", latest ? `refs/tags/${latest}..HEAD` : "HEAD"));
+  const rcCommits = releaseTags().filter((t) => CANDIDATE.test(t)).map((tag) => {
+    const commit = git("rev-parse", `refs/tags/${tag}^{commit}`);
+    const parent = git("rev-list", "--parents", "-n", "1", commit).split(" ")[1] || "";
+    return { tag, commit, parent };
+  });
+  checkCandidate({ commitsSince, head, rcCommits, latest });
 }
 
 if (require.main === module) {
@@ -268,30 +278,18 @@ if (require.main === module) {
   try {
     process.chdir(git("rev-parse", "--show-toplevel"));
     if (cmd === "version") console.log(readVersion());
+    else if (cmd === "final") console.log(finalHere());
+    else if (cmd === "stamp") stampFiles(".", finalHere());
+    else if (cmd === "check-main") checkMain(process.env.GITHUB_REF);
+    else if (cmd === "check-candidate") checkCandidateHere();
     else if (cmd === "check-version") {
-      checkVersion(readVersion(), releaseTags());
       checkReleasePin(fs.readFileSync("core-version", "utf8"));
-    }
-    else if (cmd === "should-candidate") {
-      try {
-        shouldCandidate({
-          version: fs.readFileSync("VERSION", "utf8"),
-          tags: releaseTags(),
-          changelog: fs.readFileSync("CHANGELOG.md", "utf8"),
-          coreVersion: fs.readFileSync("core-version", "utf8"),
-        });
-        console.log("true");
-      } catch (e) {
-        console.error(e.message);
-        console.log("false");
-      }
+      changelogEntry(fs.readFileSync("CHANGELOG.md", "utf8"), finalHere());
     }
     else if (cmd === "packs") process.stdout.write(packsHere(rest[0] || "-"));
-    else if (cmd === "ci-done") console.log(ciDone(JSON.parse(fs.readFileSync(0, "utf8")).workflow_runs || [], rest));
-    else if (cmd === "rc") console.log(rcTag(readVersion(), releaseTags()));
-    else if (cmd === "notes") console.log(changelogEntry(fs.readFileSync("CHANGELOG.md", "utf8"), readVersion()));
+    else if (cmd === "rc") console.log(rcTag(finalHere(), releaseTags()));
+    else if (cmd === "notes") console.log(changelogEntry(fs.readFileSync("CHANGELOG.md", "utf8"), finalHere()));
     else if (cmd === "latest") console.log(latestRelease(releaseTags()));
-    else if (cmd === "check-candidate") checkCandidateHere(rest[0] || "");
     else if (cmd === "checks-passed") checksPassed(JSON.parse(fs.readFileSync(0, "utf8")).check_runs || [], rest[0]);
     else if (cmd === "check-promote") console.log(checkPromote(rest[0], releaseTags(), git("show", `${rest[0]}^{commit}:VERSION`)));
     else if (cmd === "rc-branch") console.log(rcOfBranch(rest[0]));
@@ -300,7 +298,7 @@ if (require.main === module) {
       if (!FINAL.test(rest[0] || "")) throw new Error(`${rest[0] || "(none)"} is not a release tag`);
       console.log(releasedBranches(originBranches("rc/*"), rest[0]).join(" "));
     } else {
-      throw new Error("usage: release.cjs version | check-version | rc | notes | latest | check-candidate <branch> | checks-passed <run id> | check-promote <rc tag> | rc-branch <branch> | superseded <rc tag> | released <tag> | should-candidate | packs <previous packs.json or -> | ci-done <workflow>...");
+      throw new Error("usage: release.cjs version | final | stamp | check-main | check-candidate | check-version | rc | notes | latest | checks-passed <run id> | check-promote <rc tag> | rc-branch <branch> | superseded <rc tag> | released <tag> | packs <previous packs.json or ->");
     }
   } catch (e) {
     console.error(`release: ${e.message}`);
@@ -308,4 +306,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { channelKey, packUrl, packsManifest, serializePacks, ciDone, shouldCandidate, CANDIDATE_JOBS, parseVersion, latestRelease, checkVersion, rcTag, changelogEntry, checkCandidate, checksPassed, checkPromote, rcOfBranch, supersededBranches, releasedBranches };
+module.exports = { channelKey, packUrl, packsManifest, serializePacks, CANDIDATE_JOBS, STAMPED_FILES, parseVersion, latestRelease, finalVersion, stampFiles, checkMain, checkVersion, rcTag, changelogEntry, checkCandidate, checksPassed, checkPromote, rcOfBranch, supersededBranches, releasedBranches };
