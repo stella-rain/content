@@ -3,6 +3,10 @@
 One section per release, `## <version>`, newest first. The version is the file `VERSION`; Candidate
 refuses a version without a non-empty section here and puts it in the release notes.
 
+## 0.0.6
+
+First release that carries packs.json (one channel per core minor, FT1b); the pack is unchanged, core v0.1.0's.
+
 ## 0.0.5
 
 The pack of core v0.1.0, byte for byte, for `sim_version` 0. New files: the starting unlocks
