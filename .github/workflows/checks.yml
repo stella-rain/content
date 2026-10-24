@@ -1,4 +1,4 @@
-# Validates pack.json with `content-pack verify`, built from the core tag in core-version.
+# Validates pack.json with `content-pack verify` and checks that it is core's export, built from the core tag in core-version.
 # Runs on every pull request and push to main, so a check can be required.
 name: Pack checks
 
@@ -40,3 +40,14 @@ jobs:
 
       - name: Verify pack.json
         run: content-pack verify pack.json
+
+      # Provenance (D-REPO): pack.json is only ever core's export at core-version. Skipped while
+      # core-version is v0.1.0 or older, the last hand-authored pack, until the first publish PR.
+      - name: Provenance, pack.json equals the export at core-version
+        run: |
+          if [ "$(node scripts/provenance.cjs applies)" != "true" ]; then
+            echo "skipped: core-version is at or before the last hand-authored pack"
+            exit 0
+          fi
+          content-pack export > "$RUNNER_TEMP/exported.json"
+          cmp "$RUNNER_TEMP/exported.json" pack.json
