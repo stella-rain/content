@@ -42,15 +42,6 @@ test("changelogEntry is the body of the version's section", () => {
   assert.throws(() => r.changelogEntry("## 0.0.1\n\n## 0.0.0\nx\n", "0.0.1"), /entry for 0\.0\.1 is empty/);
 });
 
-test("checkCandidate wants candidate/<12-character sha of HEAD>, on main, and no other candidate", () => {
-  const head = "0123456789abcdef0123456789abcdef01234567";
-  assert.doesNotThrow(() => r.checkCandidate("candidate/0123456789ab", head, true, []));
-  assert.throws(() => r.checkCandidate("candidate/v0.0.1", head, true, []), /candidate\/<12-character sha>/);
-  assert.throws(() => r.checkCandidate("candidate/fedcba987654", head, true, []), /not HEAD/);
-  assert.throws(() => r.checkCandidate("candidate/0123456789ab", head, false, []), /not on origin\/main/);
-  assert.throws(() => r.checkCandidate("candidate/0123456789ab", head, true, ["candidate/aaaaaaaaaaaa"]), /candidate\/aaaaaaaaaaaa is left over/);
-});
-
 test("checksPassed wants one finished check run, none failed, this run's own left out", () => {
   const run = (name, status, conclusion, id = 1) => ({ name, status, conclusion, details_url: `https://github.com/o/r/actions/runs/${id}/job/9` });
   assert.doesNotThrow(() => r.checksPassed([run("test", "completed", "success"), run("guard", "completed", "skipped")], "7"));
@@ -81,6 +72,53 @@ test("checkPromote wants the highest rc of a new version whose commit holds that
   assert.throws(() => r.checkPromote("v0.0.1-rc.1", ["v0.0.1", "v0.0.1-rc.1"], "0.0.1"), /already released/);
   assert.throws(() => r.checkPromote("v0.0.1-rc.1", ["v0.0.2", "v0.0.1-rc.1"], "0.0.1"), /not above the latest release v0\.0\.2/);
   assert.throws(() => r.checkPromote("v0.0.2-rc.2", tags, "0.0.3"), /VERSION at v0\.0\.2-rc\.2 is '0\.0\.3', not '0\.0\.2'/);
+});
+
+test("finalVersion: VERSION is a floor; at or below the latest release it is that release's next patch", () => {
+  assert.strictEqual(r.finalVersion("0.0.6", ["v0.0.5"]), "0.0.6");
+  assert.strictEqual(r.finalVersion("0.1.0", ["v0.0.5"]), "0.1.0");
+  assert.strictEqual(r.finalVersion("0.0.5", ["v0.0.5"]), "0.0.6");
+  assert.strictEqual(r.finalVersion("0.0.3", ["v0.0.4", "v0.0.5", "v0.0.5-rc.1"]), "0.0.6");
+  assert.strictEqual(r.finalVersion("0.0.1", []), "0.0.1");
+  assert.strictEqual(r.finalVersion("0.0.5", ["v0.0.5", "v0.0.6-rc.1"]), "0.0.6");
+  assert.strictEqual(r.finalVersion("0.0.9", ["v0.0.9"]), "0.0.10");
+});
+
+test("the second rc of a final counts the rcs already tagged, whether VERSION is the final or below it", () => {
+  const tags = ["v0.0.5", "v0.0.6-rc.1"];
+  assert.strictEqual(r.rcTag(r.finalVersion("0.0.6", tags), tags), "v0.0.6-rc.2");
+  assert.strictEqual(r.rcTag(r.finalVersion("0.0.5", tags), tags), "v0.0.6-rc.2");
+});
+
+test("stampFiles writes the final version into every place that holds it", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "stamp-"));
+  fs.writeFileSync(path.join(dir, "VERSION"), "0.0.5\n");
+  const changed = r.stampFiles(dir, "0.0.6");
+  assert.deepStrictEqual(changed, ["VERSION"]);
+  assert.strictEqual(fs.readFileSync(path.join(dir, "VERSION"), "utf8"), "0.0.6\n");
+  assert.deepStrictEqual(r.STAMPED_FILES, ["VERSION"]);
+  assert.throws(() => r.stampFiles(dir, "v0.0.6"), /not a version/);
+});
+
+test("changelogEntry names the entry to add when the final's is missing", () => {
+  assert.throws(() => r.changelogEntry("# Changelog\n\n## 0.0.5\n\nx\n", "0.0.6"),
+    /no entry for 0\.0\.6: add a "## 0\.0\.6" section on main/);
+});
+
+test("checkMain: a candidate is made on main only", () => {
+  assert.doesNotThrow(() => r.checkMain("refs/heads/main"));
+  for (const bad of ["refs/heads/candidate/0123456789ab", "refs/heads/rc/v0.0.1-rc.1", "refs/heads/claude/x", "refs/tags/v0.0.1", ""]) {
+    assert.throws(() => r.checkMain(bad), /on main only/, bad);
+  }
+});
+
+test("checkCandidate wants a commit since the latest release and a main commit that is no candidate", () => {
+  const ok = { commitsSince: 3, head: "aaa", rcCommits: [{ tag: "v0.0.6-rc.1", commit: "bbb", parent: "ccc" }] };
+  assert.doesNotThrow(() => r.checkCandidate(ok));
+  assert.doesNotThrow(() => r.checkCandidate({ ...ok, rcCommits: [] }));
+  assert.throws(() => r.checkCandidate({ ...ok, commitsSince: 0 }), /no commit since the latest release/);
+  assert.throws(() => r.checkCandidate({ ...ok, rcCommits: [{ tag: "v0.0.6-rc.1", commit: "aaa", parent: "x" }] }), /already v0\.0\.6-rc\.1/);
+  assert.throws(() => r.checkCandidate({ ...ok, rcCommits: [{ tag: "v0.0.6-rc.1", commit: "bbb", parent: "aaa" }] }), /already v0\.0\.6-rc\.1/);
 });
 
 function git(cwd, ...args) {
@@ -119,13 +157,16 @@ test("the CLI reads VERSION, CHANGELOG.md and the tags of the clone", () => {
   assert.strictEqual(cli(dev, "version"), "0.0.1");
   assert.strictEqual(cli(dev, "check-version"), "");
   assert.strictEqual(cli(dev, "notes"), "First pack.");
+  assert.strictEqual(cli(dev, "final"), "0.0.1");
   assert.strictEqual(cli(dev, "rc"), "v0.0.1-rc.1");
   git(dev, "tag", "v0.0.1-rc.1");
   assert.strictEqual(cli(dev, "rc"), "v0.0.1-rc.2");
   assert.strictEqual(cli(dev, "latest"), "");
   git(dev, "tag", "v0.0.1");
   assert.strictEqual(cli(dev, "latest"), "v0.0.1");
-  assert.throws(() => cli(dev, "check-version"), /v0\.0\.1 is already released/);
+  assert.strictEqual(cli(dev, "final"), "0.0.2");
+  assert.throws(() => cli(dev, "check-version"), /no entry for 0\.0\.2: add a "## 0\.0\.2" section on main/);
+  assert.throws(() => cli(dev, "notes"), /no entry for 0\.0\.2/);
 });
 
 test("the CLI check-version refuses a core-version that is a commit or junk (ADR-131), accepts a tag", () => {
@@ -137,14 +178,6 @@ test("the CLI check-version refuses a core-version that is a commit or junk (ADR
   assert.throws(() => cli(dev, "check-version"), /core-version must hold/);
   fs.writeFileSync(path.join(dev, "core-version"), "v0.0.16\n");
   assert.strictEqual(cli(dev, "check-version"), "");
-});
-
-test("the CLI refuses a candidate whose branch is not at HEAD, and finds leftover candidate branches", () => {
-  const dev = repo();
-  const head = git(dev, "rev-parse", "HEAD");
-  assert.strictEqual(cli(dev, "check-candidate", `candidate/${head.slice(0, 12)}`), "");
-  git(dev, "push", "-q", "origin", `${head}:refs/heads/candidate/aaaaaaaaaaaa`);
-  assert.throws(() => cli(dev, "check-candidate", `candidate/${head.slice(0, 12)}`), /candidate\/aaaaaaaaaaaa is left over/);
 });
 
 test("the CLI check-promote reads VERSION at the rc tag, superseded and released read origin's rc branches", () => {
@@ -162,67 +195,61 @@ test("the CLI check-promote reads VERSION at the rc tag, superseded and released
   assert.throws(() => cli(dev, "check-promote", "v0.0.1-rc.2"), /VERSION at v0\.0\.1-rc\.2 is '0\.0\.2', not '0\.0\.1'/);
 });
 
-test("ciDone: red, waiting or ready from a commit's workflow runs; only the named workflows run by a push or dispatch count", () => {
-  const names = ["Pack checks", "Line endings"];
-  const run = (name, status, conclusion, event = "push") => ({ name, status, conclusion, event });
-  const ok = [run("Pack checks", "completed", "success"), run("Line endings", "completed", "skipped")];
-  assert.strictEqual(r.ciDone(ok, names), "ready");
-  assert.strictEqual(r.ciDone([run("Pack checks", "completed", "neutral"), run("Line endings", "completed", "success", "workflow_dispatch")], names), "ready");
-  assert.strictEqual(r.ciDone([...ok, run("Line endings", "in_progress", null)], names), "waiting");
-  assert.strictEqual(r.ciDone([...ok, run("Auto-merge", "in_progress", null)], names), "ready");
-  assert.strictEqual(r.ciDone([...ok, run("Line endings", "queued", null, "pull_request")], names), "ready");
-  for (const c of ["failure", "timed_out", "cancelled", "action_required", "stale", "startup_failure"]) {
-    assert.strictEqual(r.ciDone([...ok, run("Pack checks", "completed", c)], names), "red", c);
-  }
-  assert.strictEqual(r.ciDone([run("Pack checks", "completed", "failure"), run("Line endings", "in_progress", null)], names), "red");
-  assert.strictEqual(r.ciDone([run("Other", "completed", "success")], names), "waiting");
-  assert.strictEqual(r.ciDone([], names), "waiting");
-});
-
-test("shouldCandidate wants an unreleased VERSION above the latest, its CHANGELOG entry and a core tag", () => {
-  const changelog = "# Changelog\n\n## 0.0.2\n\nSecond.\n";
-  const good = { version: "0.0.2", tags: ["v0.0.1"], changelog, coreVersion: "v0.1.0\n" };
-  assert.doesNotThrow(() => r.shouldCandidate(good));
-  assert.throws(() => r.shouldCandidate({ ...good, tags: ["v0.0.1", "v0.0.2"] }), /v0\.0\.2 is already released/);
-  assert.throws(() => r.shouldCandidate({ ...good, tags: ["v0.0.3"] }), /not above the latest release/);
-  assert.throws(() => r.shouldCandidate({ ...good, version: "0.0.3" }), /no entry for 0\.0\.3/);
-  assert.throws(() => r.shouldCandidate({ ...good, coreVersion: "main\n" }), /core-version must hold/);
-});
-
-test("the CLI should-candidate prints true for an unreleased version, false with the reason on stderr otherwise", () => {
+test("the CLI check-candidate: main only, a commit since the latest release, not already a candidate", () => {
   const dev = repo();
-  assert.strictEqual(cli(dev, "should-candidate"), "true");
+  const env = { ...process.env, GITHUB_REF: "refs/heads/main" };
+  const run = (e, ...a) => spawnSync(process.execPath, [path.join(__dirname, "release.cjs"), ...a], { cwd: dev, encoding: "utf8", env: e });
+  assert.strictEqual(run(env, "check-candidate").status, 0);
+  assert.match(run({ ...env, GITHUB_REF: "refs/heads/candidate/0123456789ab" }, "check-candidate").stderr, /on main only/);
+  const head = git(dev, "rev-parse", "HEAD");
+  git(dev, "tag", "v0.0.1-rc.1");
+  assert.match(run(env, "check-candidate").stderr, /already v0\.0\.1-rc\.1/);
+  git(dev, "tag", "-d", "v0.0.1-rc.1");
   git(dev, "tag", "v0.0.1");
-  const out = spawnSync(process.execPath, [path.join(__dirname, "release.cjs"), "should-candidate"], { cwd: dev, encoding: "utf8" });
-  assert.strictEqual(out.status, 0);
-  assert.strictEqual(out.stdout.trim(), "false");
-  assert.match(out.stderr, /v0\.0\.1 is already released/);
+  assert.match(run(env, "check-candidate").stderr, /no commit since the latest release v0\.0\.1/);
+  fs.writeFileSync(path.join(dev, "x"), "x");
+  git(dev, "add", "-A");
+  git(dev, "commit", "-q", "-m", "second");
+  assert.strictEqual(run(env, "check-candidate").status, 0);
+  // a release commit made on top of this one makes it a candidate already
+  const main = git(dev, "rev-parse", "HEAD");
+  fs.writeFileSync(path.join(dev, "VERSION"), "0.0.2\n");
+  git(dev, "commit", "-q", "-am", "Release v0.0.2");
+  git(dev, "tag", "v0.0.2-rc.1");
+  git(dev, "reset", "-q", "--hard", main);
+  assert.match(run(env, "check-candidate").stderr, /already v0\.0\.2-rc\.1/);
+  assert.ok(head);
 });
 
-test("the CLI ci-done reads the runs API's JSON on stdin", () => {
+test("the CLI stamp writes the final into VERSION, and packs then names the final", () => {
   const dev = repo();
-  const input = JSON.stringify({ workflow_runs: [{ name: "Pack checks", status: "completed", conclusion: "failure", event: "push" }] });
-  const out = (...a) => execFileSync(process.execPath, [path.join(__dirname, "release.cjs"), "ci-done", ...a], { cwd: dev, input, encoding: "utf8" }).trim();
-  assert.strictEqual(out("Pack checks"), "red");
-  assert.strictEqual(out("Line endings"), "waiting");
+  git(dev, "tag", "v0.0.1");
+  fs.writeFileSync(path.join(dev, "pack.json"), "{}\n");
+  assert.strictEqual(cli(dev, "stamp"), "");
+  assert.strictEqual(fs.readFileSync(path.join(dev, "VERSION"), "utf8"), "0.0.2\n");
+  const out = execFileSync(process.execPath, [path.join(__dirname, "release.cjs"), "packs", "-"], { cwd: dev, encoding: "utf8", env: { ...process.env, GITHUB_REPOSITORY: "stella-rain/content" } });
+  assert.strictEqual(JSON.parse(out).channels["0.0"].tag, "v0.0.2");
+});
+
+test("Candidate runs on main only, makes a release commit on top of main and the guard watches rc/** only", () => {
+  const wf = (f) => fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", f), "utf8");
+  const cand = wf("candidate.yml");
+  assert.match(cand, /release\.cjs check-main/);
+  assert.match(cand, /release\.cjs check-candidate/);
+  assert.match(cand, /release\.cjs stamp/);
+  assert.match(cand, /Release \$\{?FINAL/);
+  assert.doesNotMatch(cand, /candidate\//);
+  assert.doesNotMatch(wf("candidate-guard.yml"), /candidate\/\*\*|candidate\/\[/);
+  assert.match(wf("candidate-guard.yml"), /branches: \["rc\/\*\*"\]/);
+  assert.ok(!fs.existsSync(path.join(__dirname, "..", ".github", "workflows", "auto-candidate.yml")));
 });
 
 test("the job names checksPassed leaves out are the candidate workflows' jobs", () => {
-  const text = ["candidate.yml", "candidate-guard.yml", "auto-candidate.yml"]
+  const text = ["candidate.yml", "candidate-guard.yml"]
     .map((f) => fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", f), "utf8"))
     .join("\n");
   const names = [...text.matchAll(/^ {4}name: (.+)$/gm)].map((m) => m[1]);
   assert.deepStrictEqual([...r.CANDIDATE_JOBS].sort(), names.sort());
-});
-
-test("only a successful Candidate deletes the candidate branch; a failed one keeps it", () => {
-  const text = fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", "candidate.yml"), "utf8");
-  const job = (id) => text.match(new RegExp(`^  ${id}:\\n((?:    .*\\n|\\n)+)`, "m"))[1];
-  const cleanup = job("cleanup");
-  const cond = cleanup.match(/^    if: (.+)$/m)[1];
-  assert.match(cond, /needs\.tag\.result == 'success'/);
-  assert.doesNotMatch(cond, /always\(\)/);
-  assert.match(cleanup, /^    needs: \[check, tag\]$/m);
 });
 
 // packs.json: one channel per core minor (DS49 D-FETCH). FT1a's parser and FT1c's fetch read it.
