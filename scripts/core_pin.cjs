@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // core_pin: reads `core-version`, the core ref whose `content-pack` validates pack.json (ADR-131).
 // It holds a release tag vX.Y.Z, or while developing a full 40-hex commit on core's main; a content
-// release needs a tag (release.cjs check-version). The workflows and playtest.cjs call:
+// release needs a tag (release.cjs check-version). The workflows and provenance.cjs call:
 //
 //   kind   prints `tag` or `commit`
 //   ref    prints the value
