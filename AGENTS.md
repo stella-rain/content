@@ -18,8 +18,8 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
 - A pack names the `sim_version` it is for. Content that needs new rules is a new `sim_version`
   in core first; never edit a released pack to fit rules it was not made for.
 - Released content IDs are never renamed or removed, only deprecated (ADR-026).
-- A pack is hashed as its exact bytes (SHA-256): keep it LF, and write it with
-  `content-pack export` or by hand, never re-formatted by an editor.
+- A pack is hashed as its exact bytes (SHA-256): keep it LF, and it is written by core's
+  `content-pack export`, never by hand or re-formatted by an editor.
 - A pack is untrusted input to the game; `content-pack verify` is the gate, not a promise.
 
 ## Core pin
@@ -30,19 +30,21 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
   `content-pack` at whatever it names (`--tag` for a tag, `--rev` for a commit).
 - A content release needs a tag: `release.cjs check-version` (Candidate) refuses a commit. The
   release's version PR sets the tag the latest app release pins.
-- To bump it: change `core-version` only, run `content-pack verify pack.json` at the new ref,
-  and say in the PR why. A bump that makes the current pack invalid also ships a fixed pack.
+- `core-version` is set by core's publish PR together with `pack.json`; a bump alone is not made
+  here (a pin whose `content-pack verify` fails on the pack is a core bug: fix it in core).
 
-## Balancing (ADR-131)
+## Publish-only (D-REPO, ADR-131)
 
-- Numbers only: same `sim_version`, no schema change, no new rule or ID; more starts in core.
-- Tune `pack.json` on a PR here (by hand, LF), then play-test: `node scripts/playtest.cjs
-  [--app ../app] [--profile test-env] [--build]`. It refuses unless `../app`'s core pin
-  (`godot-ext/Cargo.toml`) equals `core-version`, runs `content-pack verify`, optionally builds
-  the app's debug extension, and launches `$GODOT` (else `godot`) with `--content-path` and
-  `--profile`. It changes nothing in either checkout.
-- When balancing is done, merge the PR; the merge opens a sync PR to core's `content/`, which
-  Kade merges. Then the release flow (a pack-only tuning pass is a content release alone).
+- Core is the only writer of balance numbers. They are tuned and play-tested in core's `tune/`
+  lane; there is no hand-authored pack and no balancing on this side.
+- `pack.json` and `core-version` change only through core's publish PR: branch
+  `bot/publish-<ref>`, title `Publish core <version>`, opened by core's `content-publish.yml`
+  on a core release. Never edit `pack.json` by hand; a PR that does is wrong.
+- Provenance (`checks.yml`): `content-pack export` at `core-version` must equal `pack.json`
+  byte for byte. `scripts/provenance.cjs applies` decides whether it runs: it is skipped while
+  `core-version` is `v0.1.0` or older (the last hand-authored pack, before the first publish
+  PR), and never skipped after. Merge the publish PR, then follow the release flow.
+- Two-way sync with core's `content/` stays dropped; nothing here syncs back.
 
 ## Release
 
