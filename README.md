@@ -8,6 +8,11 @@ Public content packs for **Stella Rain**, an action shooter for phones and compu
 - Each release also carries `pack.json.sha256`, the file's SHA-256 in `sha256sum` format, and
   `SHA256SUMS` for both files. Releases are tagged `v<version>` (see `VERSION` and `CHANGELOG.md`);
   a prerelease `v<version>-rc.N` is a candidate that no player gets.
+- Each release also carries `packs.json`, the manifest that keeps one channel per core minor, so a
+  game built for one core minor finds the pack made for it:
+  `{"schema":1,"seq":N,"channels":{"0.2":{"tag":"v<version>","pack_sha256":"<hex>","text_sha256":null,"url":"<pack.json URL>"}}}`.
+  The channel is the `major.minor` of `core-version`; a release sets its channel and leaves the others,
+  and `seq` goes up by one. `text_sha256` is `null` until the text pack exists.
 - A pack names the simulation version it is for (`sim_version`) and is checked with the
   `content-pack` tool from [stella-rain/core](https://github.com/stella-rain/core) before it is
   released. The core tag in `core-version` is the one used here.

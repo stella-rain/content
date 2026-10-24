@@ -4,7 +4,8 @@
 #     the branch has not moved, every check run on HEAD passed and VERSION is new, with a CHANGELOG
 #     entry (scripts/release.cjs),
 #   - verifies pack.json with content-pack built from the core tag in core-version, and writes
-#     pack.json.sha256 and SHA256SUMS,
+#     pack.json.sha256, packs.json (the latest release's channels with this core minor's set to
+#     v<VERSION>, scripts/release.cjs packs) and SHA256SUMS,
 #   - tags HEAD v<VERSION>-rc.N and makes a GitHub prerelease with the assets. GitHub's "latest"
 #     skips prereleases, so no player gets it,
 #   - makes the branch rc/<rc tag> at that commit, for Promote (promote.yml) to run from, and
@@ -98,6 +99,8 @@ jobs:
 
       - name: Verify pack.json and write the assets
         env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
           VERSION: ${{ steps.plan.outputs.version }}
           RC: ${{ steps.plan.outputs.rc }}
         run: |
@@ -116,7 +119,18 @@ jobs:
           cp pack.json "$assets/pack.json"
           cd "$assets"
           printf '%s  pack.json\n' "$computed" > pack.json.sha256
-          sha256sum pack.json pack.json.sha256 > SHA256SUMS
+          latest=$(cd "$GITHUB_WORKSPACE" && node scripts/release.cjs latest)
+          prev=-
+          if [ -n "$latest" ]; then
+            names=$(gh release view "$latest" --repo "$REPO" --json assets --jq '.assets[].name')
+            if printf '%s\n' "$names" | grep -qx packs.json; then
+              gh release download "$latest" --repo "$REPO" --pattern packs.json --output "$RUNNER_TEMP/previous-packs.json"
+              prev="$RUNNER_TEMP/previous-packs.json"
+            fi
+          fi
+          (cd "$GITHUB_WORKSPACE" && node scripts/release.cjs packs "$prev") > packs.json
+          cat packs.json >> "$GITHUB_STEP_SUMMARY"
+          sha256sum pack.json pack.json.sha256 packs.json > SHA256SUMS
           sha256sum -c SHA256SUMS
           previous=$(cd "$GITHUB_WORKSPACE" && node scripts/release.cjs latest)
           {
@@ -142,6 +156,7 @@ jobs:
           path: |
             ${{ runner.temp }}/assets/pack.json
             ${{ runner.temp }}/assets/pack.json.sha256
+            ${{ runner.temp }}/assets/packs.json
             ${{ runner.temp }}/assets/SHA256SUMS
             ${{ runner.temp }}/assets/notes.md
           if-no-files-found: error
@@ -178,7 +193,7 @@ jobs:
                      '{tag: $tag, message: ("Content pack " + $tag), object: $sha, type: "commit"}' \
                    | gh api "repos/$REPO/git/tags" --input - --jq .sha)
           gh api "repos/$REPO/git/refs" -f ref="refs/tags/$RC" -f sha="$object" > /dev/null
-          gh release create "$RC" assets/pack.json assets/pack.json.sha256 assets/SHA256SUMS \
+          gh release create "$RC" assets/pack.json assets/pack.json.sha256 assets/packs.json assets/SHA256SUMS \
             --repo "$REPO" --verify-tag --prerelease --title "$RC" --notes-file assets/notes.md
           gh api "repos/$REPO/git/refs" -f ref="refs/heads/rc/$RC" -f sha="$GITHUB_SHA" > /dev/null
           for b in $SUPERSEDED; do
