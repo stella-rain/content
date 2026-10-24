@@ -25,6 +25,9 @@
 //   should-candidate  prints true when HEAD is a commit Candidate would accept on version grounds
 //                     (VERSION unreleased and above the latest release, its CHANGELOG.md entry,
 //                     core-version a tag), else false with the reason on stderr (auto-candidate.yml)
+//   packs PREV        prints packs.json for this release: PREV is the previous release's packs.json
+//                     (a file, or - for none); its channel for the core-version's major.minor is set
+//                     to v<VERSION> and pack.json's SHA-256, seq goes up by one (needs GITHUB_REPOSITORY)
 //   ci-done W...      reads a commit's workflow runs (the API's JSON) on stdin; of the workflows
 //                     named W, run by a push or dispatch, prints red if one failed, waiting if one
 //                     is unfinished or none exists, else ready (auto-candidate.yml)
@@ -32,6 +35,7 @@
 
 const fs = require("fs");
 const { execFileSync } = require("child_process");
+const crypto = require("crypto");
 const { checkReleasePin } = require("./core_pin.cjs");
 
 const VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
@@ -170,6 +174,64 @@ function checkPromote(rc, tags, versionAtRc) {
   return final;
 }
 
+// packs.json (DS49 D-FETCH): {"schema":1,"seq":N,"channels":{"<major.minor>":{tag,pack_sha256,
+// text_sha256,url}}}, one channel per core minor, so an app finds the pack of its own core minor.
+function channelKey(coreVersion) {
+  const m = /^v?(\d+)\.(\d+)\.\d+$/.exec(String(coreVersion).trim());
+  if (!m) throw new Error(`core-version '${String(coreVersion).trim()}' has no minor: a channel needs a core tag vX.Y.Z`);
+  return `${m[1]}.${m[2]}`;
+}
+
+// The only place the pack's download URL is built (D-ORIGIN moves the host later).
+function packUrl(repo, tag) {
+  return `https://github.com/${repo}/releases/download/${tag}/pack.json`;
+}
+
+function parsePacks(text) {
+  if (text === null || text === undefined) return { schema: 1, seq: 0, channels: {} };
+  let p;
+  try {
+    p = JSON.parse(text);
+  } catch {
+    throw new Error("the previous packs.json is not JSON");
+  }
+  const ok = p && typeof p === "object" && p.schema === 1 && Number.isInteger(p.seq) && p.seq >= 0 &&
+    p.channels && typeof p.channels === "object" && !Array.isArray(p.channels);
+  if (!ok) throw new Error("the previous packs.json is not schema 1 with a seq and channels");
+  return p;
+}
+
+function packsManifest({ previous, coreVersion, tag, packSha256, textSha256 = null, repo }) {
+  const key = channelKey(coreVersion);
+  const prev = parsePacks(previous);
+  const entry = { tag, pack_sha256: packSha256, text_sha256: textSha256, url: packUrl(repo, tag) };
+  return { schema: 1, seq: prev.seq + 1, channels: { ...prev.channels, [key]: entry } };
+}
+
+function sortKeys(v) {
+  if (Array.isArray(v)) return v.map(sortKeys);
+  if (v && typeof v === "object") return Object.fromEntries(Object.keys(v).sort().map((k) => [k, sortKeys(v[k])]));
+  return v;
+}
+
+function serializePacks(manifest) {
+  return `${JSON.stringify(sortKeys(manifest), null, 2)}
+`;
+}
+
+function packsHere(prevPath) {
+  const previous = prevPath === "-" ? null : fs.readFileSync(prevPath, "utf8");
+  const repo = process.env.GITHUB_REPOSITORY;
+  if (!repo) throw new Error("GITHUB_REPOSITORY is not set");
+  return serializePacks(packsManifest({
+    previous,
+    coreVersion: fs.readFileSync("core-version", "utf8"),
+    tag: `v${readVersion()}`,
+    packSha256: crypto.createHash("sha256").update(fs.readFileSync("pack.json")).digest("hex"),
+    repo,
+  }));
+}
+
 function git(...args) {
   return execFileSync("git", args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 }
@@ -224,6 +286,7 @@ if (require.main === module) {
         console.log("false");
       }
     }
+    else if (cmd === "packs") process.stdout.write(packsHere(rest[0] || "-"));
     else if (cmd === "ci-done") console.log(ciDone(JSON.parse(fs.readFileSync(0, "utf8")).workflow_runs || [], rest));
     else if (cmd === "rc") console.log(rcTag(readVersion(), releaseTags()));
     else if (cmd === "notes") console.log(changelogEntry(fs.readFileSync("CHANGELOG.md", "utf8"), readVersion()));
@@ -237,7 +300,7 @@ if (require.main === module) {
       if (!FINAL.test(rest[0] || "")) throw new Error(`${rest[0] || "(none)"} is not a release tag`);
       console.log(releasedBranches(originBranches("rc/*"), rest[0]).join(" "));
     } else {
-      throw new Error("usage: release.cjs version | check-version | rc | notes | latest | check-candidate <branch> | checks-passed <run id> | check-promote <rc tag> | rc-branch <branch> | superseded <rc tag> | released <tag> | should-candidate | ci-done <workflow>...");
+      throw new Error("usage: release.cjs version | check-version | rc | notes | latest | check-candidate <branch> | checks-passed <run id> | check-promote <rc tag> | rc-branch <branch> | superseded <rc tag> | released <tag> | should-candidate | packs <previous packs.json or -> | ci-done <workflow>...");
     }
   } catch (e) {
     console.error(`release: ${e.message}`);
@@ -245,4 +308,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { ciDone, shouldCandidate, CANDIDATE_JOBS, parseVersion, latestRelease, checkVersion, rcTag, changelogEntry, checkCandidate, checksPassed, checkPromote, rcOfBranch, supersededBranches, releasedBranches };
+module.exports = { channelKey, packUrl, packsManifest, serializePacks, ciDone, shouldCandidate, CANDIDATE_JOBS, parseVersion, latestRelease, checkVersion, rcTag, changelogEntry, checkCandidate, checksPassed, checkPromote, rcOfBranch, supersededBranches, releasedBranches };
