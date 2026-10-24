@@ -224,3 +224,86 @@ test("only a successful Candidate deletes the candidate branch; a failed one kee
   assert.doesNotMatch(cond, /always\(\)/);
   assert.match(cleanup, /^    needs: \[check, tag\]$/m);
 });
+
+// packs.json: one channel per core minor (DS49 D-FETCH). FT1a's parser and FT1c's fetch read it.
+const SHA_A = "a".repeat(64);
+const SHA_B = "b".repeat(64);
+const SHA_C = "c".repeat(64);
+const entry = (tag, sha, url) => ({ tag, pack_sha256: sha, text_sha256: null, url: url || r.packUrl("stella-rain/content", tag) });
+const release = (previous, coreVersion, tag, sha) =>
+  r.packsManifest({ previous, coreVersion, tag, packSha256: sha, repo: "stella-rain/content" });
+
+test("channelKey is the major.minor of a core tag, and a commit has none", () => {
+  assert.strictEqual(r.channelKey("v0.2.5\n"), "0.2");
+  assert.strictEqual(r.channelKey("v10.31.0"), "10.31");
+  assert.throws(() => r.channelKey("f108f4f718557c7d41ce8ab7900ff5180d9e09eb"), /no minor/);
+  assert.throws(() => r.channelKey("main"), /no minor/);
+});
+
+test("packUrl is the release asset URL of the tag's pack.json", () => {
+  assert.strictEqual(r.packUrl("stella-rain/content", "v0.0.2"), "https://github.com/stella-rain/content/releases/download/v0.0.2/pack.json");
+});
+
+test("the first release starts at seq 1 with one channel", () => {
+  const m = release(null, "v0.2.5", "v0.0.1", SHA_A);
+  assert.deepStrictEqual(m, { schema: 1, seq: 1, channels: { "0.2": entry("v0.0.1", SHA_A) } });
+  assert.strictEqual(m.channels["0.2"].text_sha256, null);
+});
+
+test("a second release for the same minor replaces that channel and gives seq 2", () => {
+  const first = release(null, "v0.2.5", "v0.0.1", SHA_A);
+  const m = release(r.serializePacks(first), "v0.2.6", "v0.0.2", SHA_B);
+  assert.deepStrictEqual(m, { schema: 1, seq: 2, channels: { "0.2": entry("v0.0.2", SHA_B) } });
+});
+
+test("a release for a new minor adds a channel and keeps the old one", () => {
+  const first = release(null, "v0.2.5", "v0.0.1", SHA_A);
+  const m = release(r.serializePacks(first), "v0.3.0", "v0.0.2", SHA_B);
+  assert.strictEqual(m.seq, 2);
+  assert.deepStrictEqual(m.channels, { "0.2": entry("v0.0.1", SHA_A), "0.3": entry("v0.0.2", SHA_B) });
+});
+
+test("a core-version that is a commit refuses the release", () => {
+  assert.throws(() => release(null, "f108f4f718557c7d41ce8ab7900ff5180d9e09eb", "v0.0.1", SHA_A), /no minor/);
+});
+
+test("a previous manifest that is not schema 1 is refused", () => {
+  for (const bad of ["", "{", "[]", '{"schema":2,"seq":1,"channels":{}}', '{"schema":1,"seq":-1,"channels":{}}', '{"schema":1,"seq":1}']) {
+    assert.throws(() => release(bad, "v0.2.5", "v0.0.2", SHA_A), /packs\.json/, bad);
+  }
+});
+
+test("serializePacks is byte-stable: sorted keys, 2-space indent, LF, one trailing newline", () => {
+  const prev = JSON.stringify({
+    channels: { "0.3": { url: "u3", text_sha256: null, tag: "v0.0.2", pack_sha256: SHA_B }, "0.2": entry("v0.0.1", SHA_A) },
+    seq: 1,
+    schema: 1,
+  });
+  const text = r.serializePacks(release(prev, "v0.2.9", "v0.0.3", SHA_C));
+  assert.ok(text.endsWith("}\n") && !text.endsWith("\n\n") && !text.includes("\r"));
+  assert.deepStrictEqual(Object.keys(JSON.parse(text)), ["channels", "schema", "seq"]);
+  assert.deepStrictEqual(Object.keys(JSON.parse(text).channels), ["0.2", "0.3"]);
+  assert.deepStrictEqual(Object.keys(JSON.parse(text).channels["0.2"]), ["pack_sha256", "tag", "text_sha256", "url"]);
+  assert.strictEqual(r.serializePacks(JSON.parse(text)), text);
+});
+
+test("the CLI packs prints the manifest of this clone's pack.json, VERSION and core-version", () => {
+  const dev = repo();
+  fs.writeFileSync(path.join(dev, "pack.json"), '{"sim_version":1}\n');
+  const sha = require("crypto").createHash("sha256").update('{"sim_version":1}\n').digest("hex");
+  const run = (...a) => execFileSync(process.execPath, [path.join(__dirname, "release.cjs"), "packs", ...a], { cwd: dev, encoding: "utf8", env: { ...process.env, GITHUB_REPOSITORY: "stella-rain/content" } });
+  const first = run("-");
+  assert.deepStrictEqual(JSON.parse(first), { schema: 1, seq: 1, channels: { "0.0": entry("v0.0.1", sha) } });
+  fs.writeFileSync(path.join(dev, "previous.json"), first);
+  assert.strictEqual(JSON.parse(run("previous.json")).seq, 2);
+  fs.writeFileSync(path.join(dev, "core-version"), "f108f4f718557c7d41ce8ab7900ff5180d9e09eb\n");
+  assert.throws(() => run("-"), /no minor/);
+});
+
+test("Candidate and Promote carry packs.json beside pack.json", () => {
+  for (const f of ["candidate.yml", "promote.yml"]) {
+    const text = fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", f), "utf8");
+    assert.match(text, /assets\/packs\.json/, f);
+    assert.match(text, /packs\.json/, f);
+  }
+});
