@@ -1,18 +1,19 @@
-# Candidate (release-flow, step 3). An agent pushes candidate/<12-character sha> at a commit on
-# main, adding no commit; Kade runs this workflow on that branch. It
-#   - refuses unless the branch names HEAD, HEAD is on main, no other candidate branch is left over,
-#     the branch has not moved, every check run on HEAD passed and VERSION is new, with a CHANGELOG
-#     entry (scripts/release.cjs),
+# Candidate (release-flow, step 3). Kade runs this workflow on main itself; there is no candidate
+# branch. VERSION is a floor: the release is VERSION when it is above the latest release, else that
+# release's next patch (scripts/release.cjs final). It
+#   - refuses unless this run is on main, main has not moved, there is a commit since the latest
+#     release, this commit is not a candidate already, every check run on it passed, core-version is a
+#     core tag and CHANGELOG.md has the entry for the release (scripts/release.cjs),
+#   - when the release is not VERSION, stamps it into VERSION in the checked-out tree,
 #   - verifies pack.json with content-pack built from the core tag in core-version, and writes
 #     pack.json.sha256, packs.json (the latest release's channels with this core minor's set to
-#     v<VERSION>, scripts/release.cjs packs) and SHA256SUMS,
-#   - tags HEAD v<VERSION>-rc.N and makes a GitHub prerelease with the assets. GitHub's "latest"
-#     skips prereleases, so no player gets it,
-#   - makes the branch rc/<rc tag> at that commit, for Promote (promote.yml) to run from, and
+#     v<release>, scripts/release.cjs packs) and SHA256SUMS, all from that stamped tree,
+#   - tags the main commit v<release>-rc.N, or, when VERSION was stamped, a "Release v<release>"
+#     commit made through the API on top of it, only if its tree equals the tested tree; makes a
+#     GitHub prerelease with the assets (GitHub's "latest" skips prereleases, so no player gets it),
+#   - makes the branch rc/<rc tag> at the tagged commit, for Promote (promote.yml) to run from, and
 #     deletes the same version's lower rc branches.
-# A successful run deletes the candidate/<sha> branch; a failed or refused one keeps it, so Candidate
-# can run again on it. auto-candidate deletes it when main gets a newer candidate, or Kade does.
-# Only the tag and cleanup jobs can write, and they run none of the repository's code.
+# Nothing is written to main. Only the tag job can write, and it runs none of the repository's code.
 name: Candidate
 
 on:
@@ -31,17 +32,19 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: read
-      checks: read  # the check runs on HEAD
+      checks: read  # the check runs on main's commit
     outputs:
       version: ${{ steps.plan.outputs.version }}
       rc: ${{ steps.plan.outputs.rc }}
       superseded: ${{ steps.plan.outputs.superseded }}
+      stamped: ${{ steps.stamp.outputs.stamped }}
+      tree: ${{ steps.stamp.outputs.tree }}
     steps:
-      - name: Only a candidate branch is a candidate
+      - name: Only main is a candidate
         run: |
           case "$GITHUB_REF" in
-            refs/heads/candidate/*) ;;
-            *) echo "::error::a candidate is made from a candidate/* branch only; this run is on $GITHUB_REF"; exit 1 ;;
+            refs/heads/main) ;;
+            *) echo "::error::a candidate is made on main only; this run is on $GITHUB_REF"; exit 1 ;;
           esac
 
       - uses: actions/checkout@v7
@@ -53,27 +56,28 @@ jobs:
         with:
           node-version: 22
 
-      - name: The branch names a commit on main, has not moved, and its checks passed
+      - name: Main has not moved, has something to release, is no candidate yet, and its checks passed
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          node scripts/release.cjs check-candidate "$GITHUB_REF_NAME"
-          head=$(gh api "repos/$REPO/git/ref/heads/$GITHUB_REF_NAME" --jq .object.sha)
+          node scripts/release.cjs check-main
+          head=$(gh api "repos/$REPO/git/ref/heads/main" --jq .object.sha)
           if [ "$head" != "$GITHUB_SHA" ]; then
-            echo "::error::$GITHUB_REF_NAME moved from $GITHUB_SHA to $head"
+            echo "::error::main moved from $GITHUB_SHA to $head"
             exit 1
           fi
+          node scripts/release.cjs check-candidate
           gh api "repos/$REPO/commits/$GITHUB_SHA/check-runs?per_page=100" \
             | node scripts/release.cjs checks-passed "$GITHUB_RUN_ID"
 
-      - name: The version is new and has notes
+      - name: The release is new and has notes
         id: plan
         run: |
           set -euo pipefail
           node scripts/release.cjs check-version
-          version=$(node scripts/release.cjs version)
+          version=$(node scripts/release.cjs final)
           rc=$(node scripts/release.cjs rc)
           node scripts/release.cjs notes > /dev/null
           {
@@ -81,6 +85,28 @@ jobs:
             echo "rc=$rc"
             echo "superseded=$(node scripts/release.cjs superseded "$rc")"
           } >> "$GITHUB_OUTPUT"
+
+      - name: Stamp the release into the tree when VERSION is not it
+        id: stamp
+        env:
+          FINAL: ${{ steps.plan.outputs.version }}
+        run: |
+          set -euo pipefail
+          stamped=false
+          if [ "$(node scripts/release.cjs version)" != "$FINAL" ]; then
+            stamped=true
+            node scripts/release.cjs stamp
+            changed=$(git diff --name-only)
+            if [ "$changed" != "VERSION" ]; then
+              echo "::error::stamping changed '$changed', not VERSION only"
+              exit 1
+            fi
+            git add VERSION
+          fi
+          tree=$(git write-tree)
+          echo "stamped=$stamped" >> "$GITHUB_OUTPUT"
+          echo "tree=$tree" >> "$GITHUB_OUTPUT"
+          echo "Tested tree $tree (VERSION stamped: $stamped)." >> "$GITHUB_STEP_SUMMARY"
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -168,7 +194,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: write  # the rc tag, the prerelease and the rc branches
+      contents: write  # the release commit, the rc tag, the prerelease and the rc branches
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -179,53 +205,51 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
+          FINAL: ${{ needs.check.outputs.version }}
           RC: ${{ needs.check.outputs.rc }}
           SUPERSEDED: ${{ needs.check.outputs.superseded }}
+          STAMPED: ${{ needs.check.outputs.stamped }}
+          TREE: ${{ needs.check.outputs.tree }}
         run: |
           set -euo pipefail
-          head=$(gh api "repos/$REPO/git/ref/heads/$GITHUB_REF_NAME" --jq .object.sha)
+          head=$(gh api "repos/$REPO/git/ref/heads/main" --jq .object.sha)
           if [ "$head" != "$GITHUB_SHA" ]; then
-            echo "::error::$GITHUB_REF_NAME moved from $GITHUB_SHA to $head"
+            echo "::error::main moved from $GITHUB_SHA to $head"
             exit 1
           fi
           (cd assets && sha256sum -c SHA256SUMS)
-          object=$(jq -n --arg tag "$RC" --arg sha "$GITHUB_SHA" \
+          target=$GITHUB_SHA
+          if [ "$STAMPED" = true ]; then
+            # The release commit: main's tree with VERSION replaced, parent the main commit. It is
+            # made only if its tree is the tree the checks ran on.
+            base=$(gh api "repos/$REPO/git/commits/$GITHUB_SHA" --jq .tree.sha)
+            blob=$(jq -n --arg c "$FINAL"$'\n' '{content: $c, encoding: "utf-8"}' \
+                   | gh api "repos/$REPO/git/blobs" --input - --jq .sha)
+            tree=$(jq -n --arg base "$base" --arg blob "$blob" \
+                     '{base_tree: $base, tree: [{path: "VERSION", mode: "100644", type: "blob", sha: $blob}]}' \
+                   | gh api "repos/$REPO/git/trees" --input - --jq .sha)
+            if [ "$tree" != "$TREE" ]; then
+              echo "::error::the release tree $tree is not the tested tree $TREE; no release commit made"
+              exit 1
+            fi
+            target=$(jq -n --arg msg "Release v$FINAL" --arg tree "$tree" --arg parent "$GITHUB_SHA" \
+                       '{message: $msg, tree: $tree, parents: [$parent]}' \
+                     | gh api "repos/$REPO/git/commits" --input - --jq .sha)
+          fi
+          object=$(jq -n --arg tag "$RC" --arg sha "$target" \
                      '{tag: $tag, message: ("Content pack " + $tag), object: $sha, type: "commit"}' \
                    | gh api "repos/$REPO/git/tags" --input - --jq .sha)
           gh api "repos/$REPO/git/refs" -f ref="refs/tags/$RC" -f sha="$object" > /dev/null
           gh release create "$RC" assets/pack.json assets/pack.json.sha256 assets/packs.json assets/SHA256SUMS \
             --repo "$REPO" --verify-tag --prerelease --title "$RC" --notes-file assets/notes.md
-          gh api "repos/$REPO/git/refs" -f ref="refs/heads/rc/$RC" -f sha="$GITHUB_SHA" > /dev/null
+          gh api "repos/$REPO/git/refs" -f ref="refs/heads/rc/$RC" -f sha="$target" > /dev/null
           for b in $SUPERSEDED; do
             gh api -X DELETE "repos/$REPO/git/refs/heads/$b" > /dev/null || echo "::warning::could not delete $b"
           done
           {
-            echo "Candidate $RC at $GITHUB_SHA on main."
+            echo "Candidate $RC at $target, on main's $GITHUB_SHA."
+            if [ "$STAMPED" = true ]; then echo "A release commit (VERSION $FINAL) on top of it; main is unchanged."; fi
             if [ -n "$SUPERSEDED" ]; then echo "Deleted the superseded $SUPERSEDED."; fi
             echo "Try it: download pack.json from the prerelease and run content-pack verify on it,"
             echo "then Actions > Promote > Run workflow > branch rc/$RC."
           } >> "$GITHUB_STEP_SUMMARY"
-
-  cleanup:
-    name: delete the candidate branch
-    needs: [check, tag]
-    if: needs.tag.result == 'success' && startsWith(github.ref, 'refs/heads/candidate/')
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      contents: write  # deleting the branch
-    steps:
-      - name: Delete the branch of a candidate that was made
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
-        run: |
-          if gh api -X DELETE "repos/$REPO/git/refs/heads/$GITHUB_REF_NAME" > /dev/null; then
-            echo "Deleted $GITHUB_REF_NAME." >> "$GITHUB_STEP_SUMMARY"
-          elif [ "$(gh api "repos/$REPO/git/matching-refs/heads/$GITHUB_REF_NAME" \
-                      --jq 'map(select(.ref == "refs/heads/" + env.GITHUB_REF_NAME)) | length')" = 0 ]; then
-            echo "$GITHUB_REF_NAME was already deleted." >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "::error::could not delete $GITHUB_REF_NAME; Kade deletes it"
-            exit 1
-          fi
