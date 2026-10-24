@@ -84,7 +84,7 @@ jobs:
           assets="$RUNNER_TEMP/assets"
           mkdir "$assets"
           gh release download "$RC" --repo "$REPO" --dir "$assets" \
-            --pattern pack.json --pattern pack.json.sha256 --pattern SHA256SUMS
+            --pattern pack.json --pattern pack.json.sha256 --pattern packs.json --pattern SHA256SUMS
           (cd "$assets" && sha256sum -c SHA256SUMS)
           if ! cmp -s pack.json "$assets/pack.json"; then
             echo "::error::the prerelease's pack.json is not pack.json at $RC"
@@ -103,6 +103,7 @@ jobs:
           path: |
             ${{ runner.temp }}/assets/pack.json
             ${{ runner.temp }}/assets/pack.json.sha256
+            ${{ runner.temp }}/assets/packs.json
             ${{ runner.temp }}/assets/SHA256SUMS
             ${{ runner.temp }}/assets/notes.md
           if-no-files-found: error
@@ -141,7 +142,7 @@ jobs:
                      '{tag: $tag, message: ("Content pack " + $tag), object: $sha, type: "commit"}' \
                    | gh api "repos/$REPO/git/tags" --input - --jq .sha)
           gh api "repos/$REPO/git/refs" -f ref="refs/tags/$FINAL" -f sha="$object" > /dev/null
-          gh release create "$FINAL" assets/pack.json assets/pack.json.sha256 assets/SHA256SUMS \
+          gh release create "$FINAL" assets/pack.json assets/pack.json.sha256 assets/packs.json assets/SHA256SUMS \
             --repo "$REPO" --verify-tag --latest --title "$FINAL" --notes-file assets/notes.md
           for b in $RELEASED; do
             gh api -X DELETE "repos/$REPO/git/refs/heads/$b" > /dev/null || echo "::warning::could not delete $b"
