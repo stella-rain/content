@@ -237,7 +237,7 @@ test("Candidate runs on main only, makes a release commit on top of main and the
   assert.match(cand, /release\.cjs check-main/);
   assert.match(cand, /release\.cjs check-candidate/);
   assert.match(cand, /release\.cjs stamp/);
-  assert.match(cand, /Release \$\{?FINAL/);
+  assert.match(cand, /Release v\$FINAL/);
   assert.doesNotMatch(cand, /candidate\//);
   assert.doesNotMatch(wf("candidate-guard.yml"), /candidate\/\*\*|candidate\/\[/);
   assert.match(wf("candidate-guard.yml"), /branches: \["rc\/\*\*"\]/);
