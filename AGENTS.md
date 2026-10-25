@@ -7,17 +7,17 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
 
 - Private planning goes in `stella-rain/app` issues, never here; nothing here names internal
   URLs or personal data. Actions logs and issues are public too.
-- Architecture decisions live in the private app repository; cite them by number (ADR-080),
+- Architecture decisions live in the private app repository; cite them by area ID (ADR-CONT-3),
   copy no text from them.
 
 ## The pack
 
-- `pack.json` is the content pack of ADR-080: values only (numbers, lists, ids), no code and no
+- `pack.json` is the content pack of ADR-CONT-3: values only (numbers, lists, ids), no code and no
   schema. The schema and the parser live in `stella-rain/core` (`schema/pack.schema.json`,
   `src/pack.rs`); change them there first and bump `core-version` here.
 - A pack names the `sim_version` it is for. Content that needs new rules is a new `sim_version`
   in core first; never edit a released pack to fit rules it was not made for.
-- Released content IDs are never renamed or removed, only deprecated (ADR-026).
+- Released content IDs are never renamed or removed, only deprecated (ADR-CONT-2).
 - A pack is hashed as its exact bytes (SHA-256): keep it LF, and it is written by core's
   `content-pack export`, never by hand or re-formatted by an editor.
 - A pack is untrusted input to the game; `content-pack verify` is the gate, not a promise.
@@ -25,7 +25,7 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
 ## Core pin
 
 - `core-version` names the core ref whose `content-pack` validates packs here: a release tag
-  (`v0.0.15`) or, while developing, a full 40-hex commit on core's `main` (ADR-131, as ADR-125
+  (`v0.0.15`) or, while developing, a full 40-hex commit on core's `main` (ADR-CONT-5, as ADR-REL-2
   for the app). `scripts/core_pin.cjs kind|ref` reads it and refuses anything else. CI installs
   `content-pack` at whatever it names (`--tag` for a tag, `--rev` for a commit).
 - A content release needs a tag: `release.cjs check-version` (Candidate) refuses a commit. The
@@ -33,7 +33,7 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
 - `core-version` is set by core's publish PR together with `pack.json`; a bump alone is not made
   here (a pin whose `content-pack verify` fails on the pack is a core bug: fix it in core).
 
-## Publish-only (D-REPO, ADR-131)
+## Publish-only (D-REPO, ADR-CONT-5)
 
 - Core is the only writer of balance numbers. They are tuned and play-tested in core's `tune/`
   lane; there is no hand-authored pack and no balancing on this side.
