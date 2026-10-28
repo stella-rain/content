@@ -334,3 +334,97 @@ test("Candidate and Promote carry packs.json beside pack.json", () => {
     assert.match(text, /packs\.json/, f);
   }
 });
+
+function createMinisigFixture(data) {
+  const crypto = require("crypto");
+  const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519");
+  const rawPub = publicKey.export({ type: "spki", format: "der" }).subarray(-32);
+  const keyId = crypto.randomBytes(8);
+  const pubBuf = Buffer.concat([Buffer.from([0x45, 0x64]), keyId, rawPub]);
+  const pubKeyStr = pubBuf.toString("base64");
+
+  const dataBuf = Buffer.isBuffer(data) ? data : Buffer.from(data);
+  const sig64 = crypto.sign(null, dataBuf, privateKey);
+  const sigBuf = Buffer.concat([Buffer.from([0x45, 0x64]), keyId, sig64]);
+  const sigStr = sigBuf.toString("base64");
+
+  const trustedComment = `timestamp:${Math.floor(Date.now() / 1000)}`;
+  const trustedSig = crypto.sign(null, Buffer.concat([sig64, Buffer.from(trustedComment, "utf8")]), privateKey);
+  const trustedSigStr = trustedSig.toString("base64");
+
+  const minisigText = `untrusted comment: test signature\n${sigStr}\ntrusted comment: ${trustedComment}\n${trustedSigStr}\n`;
+  return { pubKeyStr, minisigText, keyId: keyId.toString("hex") };
+}
+
+test("Promote workflow downloads, verifies and carries packs.json.minisig", () => {
+  const text = fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", "promote.yml"), "utf8");
+  assert.match(text, /--pattern packs\.json\.minisig/, "Promote downloads packs.json.minisig");
+  assert.match(text, /MINISIGN_PUBLIC_KEY/, "Promote uses MINISIGN_PUBLIC_KEY");
+  assert.match(text, /minisign/, "Promote verifies with minisign");
+  assert.match(text, /assets\/packs\.json\.minisig/, "Promote carries packs.json.minisig in assets");
+  assert.match(text, /Kade signs offline[\s\S]*minisign -Sm/i, "Promote documents offline signing");
+});
+
+test("checkMinisig refuses missing packs.json.minisig", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "minisig-"));
+  const packsPath = path.join(dir, "packs.json");
+  const sigPath = path.join(dir, "packs.json.minisig");
+  fs.writeFileSync(packsPath, '{"test":true}');
+  const { pubKeyStr } = createMinisigFixture('{"test":true}');
+  assert.throws(() => r.checkMinisig(packsPath, sigPath, pubKeyStr), /missing/);
+});
+
+test("checkMinisig refuses invalid signature or wrong key", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "minisig-"));
+  const packsPath = path.join(dir, "packs.json");
+  const sigPath = path.join(dir, "packs.json.minisig");
+  const { pubKeyStr, minisigText } = createMinisigFixture('{"test":true}');
+  fs.writeFileSync(packsPath, '{"test":true}');
+  fs.writeFileSync(sigPath, minisigText);
+
+  // Tampered packs.json
+  fs.writeFileSync(packsPath, '{"test":false}');
+  assert.throws(() => r.checkMinisig(packsPath, sigPath, pubKeyStr), /verification failed/);
+
+  // Wrong public key
+  const other = createMinisigFixture('{"test":true}');
+  assert.throws(() => r.checkMinisig(packsPath, sigPath, other.pubKeyStr), /does not match/);
+});
+
+test("checkMinisig accepts valid packs.json.minisig signature", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "minisig-"));
+  const packsPath = path.join(dir, "packs.json");
+  const sigPath = path.join(dir, "packs.json.minisig");
+  const data = '{"schema":1,"seq":1,"channels":{}}';
+  const { pubKeyStr, minisigText } = createMinisigFixture(data);
+  fs.writeFileSync(packsPath, data);
+  fs.writeFileSync(sigPath, minisigText);
+  assert.doesNotThrow(() => r.checkMinisig(packsPath, sigPath, pubKeyStr));
+});
+
+test("simulate Promote workflow asset check: missing, invalid and valid minisig", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "promote-sim-"));
+  const data = '{"schema":1,"seq":1,"channels":{}}';
+  const packsPath = path.join(dir, "packs.json");
+  const sigPath = path.join(dir, "packs.json.minisig");
+  const { pubKeyStr, minisigText } = createMinisigFixture(data);
+  fs.writeFileSync(packsPath, data);
+
+  const simulateStep = (key) => {
+    if (!fs.existsSync(sigPath)) {
+      throw new Error("packs.json.minisig is missing from candidate release");
+    }
+    r.checkMinisig(packsPath, sigPath, key);
+  };
+
+  // Missing minisig -> job fails
+  assert.throws(() => simulateStep(pubKeyStr), /packs\.json\.minisig is missing/);
+
+  // Invalid minisig -> job fails
+  fs.writeFileSync(sigPath, "corrupted");
+  assert.throws(() => simulateStep(pubKeyStr));
+
+  // Valid minisig -> job succeeds
+  fs.writeFileSync(sigPath, minisigText);
+  assert.doesNotThrow(() => simulateStep(pubKeyStr));
+});
