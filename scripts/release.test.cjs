@@ -362,7 +362,7 @@ test("Promote workflow downloads, verifies and carries packs.json.minisig", () =
   assert.match(text, /MINISIGN_PUBLIC_KEY/, "Promote uses MINISIGN_PUBLIC_KEY");
   assert.match(text, /minisign/, "Promote verifies with minisign");
   assert.match(text, /assets\/packs\.json\.minisig/, "Promote carries packs.json.minisig in assets");
-  assert.match(text, /Kade signs offline.*minisign -Sm/i, "Promote documents offline signing");
+  assert.match(text, /Kade signs offline[\s\S]*minisign -Sm/i, "Promote documents offline signing");
 });
 
 test("checkMinisig refuses missing packs.json.minisig", () => {

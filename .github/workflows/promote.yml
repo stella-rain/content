@@ -1,13 +1,15 @@
 # Promote (release-flow, step 4). Kade runs it on the branch rc/v<version>-rc.N that Candidate
-# made, after trying that prerelease. The tag is the record and the branch only a handle: it
-# refuses unless the branch head is the rc tag's commit, the tag is the highest rc of a version
-# that is not released yet and is above the latest release, VERSION at that commit is the version,
-# and its prerelease exists (scripts/release.cjs rc-branch, check-promote). It downloads the
-# prerelease's assets and checks them against SHA256SUMS and the commit's pack.json, then tags the
-# same commit v<version> and makes the GitHub release, marked latest, with the same assets:
-# nothing is built again. That release is what the app fetches. Last, it deletes the rc branches
-# of that version and every older one; a failed run deletes nothing. Only the tag job can write,
-# and it runs none of the repository's code.
+# made, after trying that prerelease. Between Candidate and Promote, Kade signs offline (minisign -Sm packs.json)
+# and attaches packs.json.minisig to the candidate prerelease (DS49). The tag is the record and the
+# branch only a handle: it refuses unless the branch head is the rc tag's commit, the tag is the highest
+# rc of a version that is not released yet and is above the latest release, VERSION at that commit is
+# the version, its prerelease exists (scripts/release.cjs rc-branch, check-promote), and packs.json.minisig
+# is attached and verifies against MINISIGN_PUBLIC_KEY. It downloads the prerelease's assets and checks
+# them against SHA256SUMS, the commit's pack.json, and the minisign signature, then tags the same
+# commit v<version> and makes the GitHub release, marked latest, with the same assets: nothing is built
+# again. That release is what the app fetches. Last, it deletes the rc branches of that version and
+# every older one; a failed run deletes nothing. Only the tag job can write, and it runs none of the
+# repository's code.
 name: Promote
 
 on:
@@ -73,22 +75,38 @@ jobs:
             echo "rc=$rc"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Install minisign
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y minisign
+
       - name: Download the prerelease's assets and check them, with no rebuild
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           RC: ${{ steps.check.outputs.rc }}
           FINAL: ${{ steps.check.outputs.final }}
+          MINISIGN_PUBLIC_KEY: ${{ secrets.MINISIGN_PUBLIC_KEY }}
         run: |
           set -euo pipefail
           assets="$RUNNER_TEMP/assets"
           mkdir "$assets"
           gh release download "$RC" --repo "$REPO" --dir "$assets" \
-            --pattern pack.json --pattern pack.json.sha256 --pattern packs.json --pattern SHA256SUMS
+            --pattern pack.json --pattern pack.json.sha256 --pattern packs.json --pattern packs.json.minisig --pattern SHA256SUMS
           (cd "$assets" && sha256sum -c SHA256SUMS)
           if ! cmp -s pack.json "$assets/pack.json"; then
             echo "::error::the prerelease's pack.json is not pack.json at $RC"
             exit 1
+          fi
+          if [ ! -f "$assets/packs.json.minisig" ]; then
+            echo "::error::packs.json.minisig is missing from candidate release"
+            exit 1
+          fi
+          key="${MINISIGN_PUBLIC_KEY:-RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3}"
+          if command -v minisign >/dev/null 2>&1; then
+            minisign -Vm "$assets/packs.json" -x "$assets/packs.json.minisig" -P "$key"
+          else
+            node scripts/release.cjs check-minisig "$assets/packs.json" "$assets/packs.json.minisig" "$key"
           fi
           {
             echo "Content pack ${FINAL#v}, promoted from $RC."
@@ -104,6 +122,7 @@ jobs:
             ${{ runner.temp }}/assets/pack.json
             ${{ runner.temp }}/assets/pack.json.sha256
             ${{ runner.temp }}/assets/packs.json
+            ${{ runner.temp }}/assets/packs.json.minisig
             ${{ runner.temp }}/assets/SHA256SUMS
             ${{ runner.temp }}/assets/notes.md
           if-no-files-found: error
@@ -142,7 +161,7 @@ jobs:
                      '{tag: $tag, message: ("Content pack " + $tag), object: $sha, type: "commit"}' \
                    | gh api "repos/$REPO/git/tags" --input - --jq .sha)
           gh api "repos/$REPO/git/refs" -f ref="refs/tags/$FINAL" -f sha="$object" > /dev/null
-          gh release create "$FINAL" assets/pack.json assets/pack.json.sha256 assets/packs.json assets/SHA256SUMS \
+          gh release create "$FINAL" assets/pack.json assets/pack.json.sha256 assets/packs.json assets/packs.json.minisig assets/SHA256SUMS \
             --repo "$REPO" --verify-tag --latest --title "$FINAL" --notes-file assets/notes.md
           for b in $RELEASED; do
             gh api -X DELETE "repos/$REPO/git/refs/heads/$b" > /dev/null || echo "::warning::could not delete $b"
