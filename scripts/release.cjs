@@ -32,6 +32,7 @@
 //                     (a file, or - for none); its channel for the core-version's major.minor is set
 //                     to v<VERSION> and pack.json's SHA-256, seq goes up by one (needs GITHUB_REPOSITORY);
 //                     run after stamp, so VERSION is the final
+//   check-minisig P S K verifies packs.json P against minisig S using public key K
 "use strict";
 
 const fs = require("fs");
@@ -237,6 +238,61 @@ function packsHere(prevPath) {
   }));
 }
 
+// Minisign verification (DS49 D-SIGN). Detached signature packs.json.minisig checked in Promote.
+const ED25519_SPKI_PREFIX = Buffer.from("302a300506032b6570032100", "hex");
+
+function parseMinisignPublicKey(pubKeyStr) {
+  if (!pubKeyStr || typeof pubKeyStr !== "string") throw new Error("public key is required");
+  const b = Buffer.from(pubKeyStr.trim(), "base64");
+  if (b.length !== 42) throw new Error(`minisign public key must be 42 bytes, got ${b.length}`);
+  if (b[0] !== 0x45 || b[1] !== 0x64) throw new Error("minisign public key algorithm must be 'Ed'");
+  const keyId = b.subarray(2, 10);
+  const rawPub = b.subarray(10, 42);
+  const keyObj = crypto.createPublicKey({
+    key: Buffer.concat([ED25519_SPKI_PREFIX, rawPub]),
+    format: "der",
+    type: "spki",
+  });
+  return { keyId, keyObj };
+}
+
+function verifyMinisig(data, sigText, pubKeyStr) {
+  const { keyId, keyObj } = parseMinisignPublicKey(pubKeyStr);
+  if (!sigText || typeof sigText !== "string") throw new Error("signature is required");
+  const lines = sigText.trim().split(/\r?\n/);
+  if (lines.length < 2) throw new Error("minisig file must have at least 2 lines");
+  const sigBytes = Buffer.from(lines[1].trim(), "base64");
+  if (sigBytes.length !== 74) throw new Error(`minisig signature line must be 74 bytes, got ${sigBytes.length}`);
+  if (sigBytes[0] !== 0x45 || sigBytes[1] !== 0x64) throw new Error("signature algorithm must be 'Ed'");
+  const sigKeyId = sigBytes.subarray(2, 10);
+  if (!keyId.equals(sigKeyId)) throw new Error("signature key id does not match public key id");
+  const rawSig = sigBytes.subarray(10, 74);
+  const dataBuf = Buffer.isBuffer(data) ? data : Buffer.from(data);
+  const ok = crypto.verify(null, dataBuf, keyObj, rawSig);
+  if (!ok) throw new Error("signature verification failed");
+
+  let trustedComment = null;
+  if (lines.length >= 4 && lines[2].startsWith("trusted comment: ")) {
+    trustedComment = lines[2].slice("trusted comment: ".length);
+    const commentSigBytes = Buffer.from(lines[3].trim(), "base64");
+    if (commentSigBytes.length === 64) {
+      const commentPayload = Buffer.concat([rawSig, Buffer.from(trustedComment, "utf8")]);
+      const commentOk = crypto.verify(null, commentPayload, keyObj, commentSigBytes);
+      if (!commentOk) throw new Error("trusted comment signature verification failed");
+    }
+  }
+
+  return { verified: true, keyId: keyId.toString("hex"), trustedComment };
+}
+
+function checkMinisig(packsFile, sigFile, pubKeyStr) {
+  if (!fs.existsSync(sigFile)) throw new Error("packs.json.minisig is missing");
+  if (!fs.existsSync(packsFile)) throw new Error("packs.json is missing");
+  const data = fs.readFileSync(packsFile);
+  const sigText = fs.readFileSync(sigFile, "utf8");
+  return verifyMinisig(data, sigText, pubKeyStr);
+}
+
 function git(...args) {
   return execFileSync("git", args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 }
@@ -297,8 +353,10 @@ if (require.main === module) {
     else if (cmd === "released") {
       if (!FINAL.test(rest[0] || "")) throw new Error(`${rest[0] || "(none)"} is not a release tag`);
       console.log(releasedBranches(originBranches("rc/*"), rest[0]).join(" "));
-    } else {
-      throw new Error("usage: release.cjs version | final | stamp | check-main | check-candidate | check-version | rc | notes | latest | checks-passed <run id> | check-promote <rc tag> | rc-branch <branch> | superseded <rc tag> | released <tag> | packs <previous packs.json or ->");
+    }
+    else if (cmd === "check-minisig") checkMinisig(rest[0], rest[1], rest[2]);
+    else {
+      throw new Error("usage: release.cjs version | final | stamp | check-main | check-candidate | check-version | rc | notes | latest | checks-passed <run id> | check-promote <rc tag> | rc-branch <branch> | superseded <rc tag> | released <tag> | packs <previous packs.json or -> | check-minisig <packs.json> <packs.json.minisig> <pubkey>");
     }
   } catch (e) {
     console.error(`release: ${e.message}`);
@@ -306,4 +364,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { channelKey, packUrl, packsManifest, serializePacks, CANDIDATE_JOBS, STAMPED_FILES, parseVersion, latestRelease, finalVersion, stampFiles, checkMain, checkVersion, rcTag, changelogEntry, checkCandidate, checksPassed, checkPromote, rcOfBranch, supersededBranches, releasedBranches };
+module.exports = { channelKey, packUrl, packsManifest, serializePacks, CANDIDATE_JOBS, STAMPED_FILES, parseVersion, latestRelease, finalVersion, stampFiles, checkMain, checkVersion, rcTag, changelogEntry, checkCandidate, checksPassed, checkPromote, rcOfBranch, supersededBranches, releasedBranches, parseMinisignPublicKey, verifyMinisig, checkMinisig };
