@@ -363,6 +363,12 @@ test("Promote workflow downloads, verifies and carries packs.json.minisig", () =
   assert.match(text, /minisign/, "Promote verifies with minisign");
   assert.match(text, /assets\/packs\.json\.minisig/, "Promote carries packs.json.minisig in assets");
   assert.match(text, /Kade signs offline[\s\S]*minisign -Sm/i, "Promote documents offline signing");
+  assert.doesNotMatch(text, /RWQf/, "Promote has no hard-coded public key");
+  assert.match(text, /-z "\$\{MINISIGN_PUBLIC_KEY:-\}"/, "Promote guards an empty or unset MINISIGN_PUBLIC_KEY");
+  assert.match(text, /::error::MINISIGN_PUBLIC_KEY/, "the guard reports with ::error::");
+  const guard = text.indexOf("::error::MINISIGN_PUBLIC_KEY");
+  assert.ok(guard > 0 && guard < text.indexOf("minisign -Vm"), "the guard comes before minisign runs");
+  assert.doesNotMatch(text, /MINISIGN_PUBLIC_KEY:-[^}"]/, "no default value for MINISIGN_PUBLIC_KEY");
 });
 
 test("checkMinisig refuses missing packs.json.minisig", () => {

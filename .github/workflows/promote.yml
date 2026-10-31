@@ -102,7 +102,11 @@ jobs:
             echo "::error::packs.json.minisig is missing from candidate release"
             exit 1
           fi
-          key="${MINISIGN_PUBLIC_KEY:-RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3}"
+          if [ -z "${MINISIGN_PUBLIC_KEY:-}" ]; then
+            echo "::error::MINISIGN_PUBLIC_KEY is empty or unset: Promote has no fallback key"
+            exit 1
+          fi
+          key="$MINISIGN_PUBLIC_KEY"
           if command -v minisign >/dev/null 2>&1; then
             minisign -Vm "$assets/packs.json" -x "$assets/packs.json.minisig" -P "$key"
           else
