@@ -1,627 +1,627 @@
 {
-  "schema_version": 0,
-  "sim_version": 0,
+  "schema_version": 1,
+  "sim_version": 1,
   "introduced": {
     "run_stats": [
       {
         "id": "max_hp",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_speed",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "evade",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "speed",
-        "sim_version": 0
+        "sim_version": 1
       }
     ],
     "rewards": [
       {
         "id": "max_hp_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "max_hp_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "max_hp_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_speed_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_speed_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_speed_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "evade_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "evade_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "evade_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "speed_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "speed_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "speed_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "xp_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "xp_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "xp_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "black_hole_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "war_cry_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "hex_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "nova_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "aegis_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "regen_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "regen_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "regen_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "max_hp_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "max_hp_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "max_hp_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_speed_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_speed_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "attack_speed_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "evade_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "evade_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "evade_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "speed_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "speed_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "speed_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "xp_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "xp_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "xp_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "regen_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "regen_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "regen_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "rune_haste_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "rune_haste_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "rune_haste_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "rune_haste_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "rune_haste_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "rune_haste_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "range_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "range_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "range_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "range_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "range_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "range_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_slash_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_slash_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_slash_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_slash_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_slash_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_slash_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pierce_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pierce_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pierce_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pierce_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pierce_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pierce_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_strike_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_strike_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_strike_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_strike_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_strike_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_strike_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pyro_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pyro_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pyro_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pyro_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pyro_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_pyro_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_hydro_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_hydro_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_hydro_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_hydro_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_hydro_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_hydro_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_electro_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_electro_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_electro_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_electro_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_electro_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_electro_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_cryo_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_cryo_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_cryo_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_cryo_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_cryo_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_cryo_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_anemo_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_anemo_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_anemo_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_anemo_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_anemo_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_anemo_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_geo_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_geo_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_geo_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_geo_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_geo_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_geo_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_dendro_common",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_dendro_uncommon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_dendro_rare",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_dendro_epic",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_dendro_legendary",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "type_bonus_dendro_supernova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "random_rune",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_altair",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_alnitak",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_alnilam",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_mintaka",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_dubhe",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_rigel",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_deneb",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_vega",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_mizar",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_alkaid",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_procyon",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_antares",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_sirius",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_betelgeuse",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "star_polaris",
-        "sim_version": 0
+        "sim_version": 1
       }
     ],
     "stage_skills": [
       {
         "id": "black_hole",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "war_cry",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "hex",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "nova",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "aegis",
-        "sim_version": 0
+        "sim_version": 1
       }
     ],
     "perk_sets": [
       {
         "id": "vanguard",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "duelist",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "scout",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "scholar",
-        "sim_version": 0
+        "sim_version": 1
       }
     ],
     "difficulties": [
       {
         "id": "easy",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "normal",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "hard",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "rainy",
-        "sim_version": 0
+        "sim_version": 1
       }
     ],
     "expertise": [
@@ -630,71 +630,71 @@
         "ids": [
           {
             "id": "crush",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "crush_6",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "crush_9",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "crush_10",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "quake",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "quake_6",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "quake_9",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "quake_10",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "bulwark",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "bulwark_6",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "bulwark_9",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "bulwark_10",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "damage",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "attack_speed",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "hit_box",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "vitality",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "swiftness",
-            "sim_version": 0
+            "sim_version": 1
           }
         ]
       },
@@ -703,71 +703,71 @@
         "ids": [
           {
             "id": "edge",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "edge_6",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "edge_9",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "edge_10",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "tempo",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "tempo_6",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "tempo_9",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "tempo_10",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "reach",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "reach_6",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "reach_9",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "reach_10",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "damage",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "attack_speed",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "hit_box",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "vitality",
-            "sim_version": 0
+            "sim_version": 1
           },
           {
             "id": "swiftness",
-            "sim_version": 0
+            "sim_version": 1
           }
         ]
       }
@@ -775,95 +775,83 @@
     "elite_types": [
       {
         "id": "elite_low",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "elite_mid",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "elite_high",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "elite_goblin",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "elite_shrine",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "elite_leader",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "elite_mimic",
-        "sim_version": 0
+        "sim_version": 1
       }
     ],
     "constellations": [
       {
         "id": "summer_triangle",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "orions_belt",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "big_dipper",
-        "sim_version": 0
+        "sim_version": 1
       },
       {
         "id": "winter_triangle",
-        "sim_version": 0
+        "sim_version": 1
       }
     ]
   },
   "run_stats": {
-  "schema_version": 0,
-  "sim_version": 0,
   "stats": [
     {
       "id": "max_hp",
       "effect": "max_hp",
       "step": 10000,
-      "limit": 5,
-      "title": "Max HP",
-      "description": "100 more hit points at most, and as many healed"
+      "limit": 5
     },
     {
       "id": "attack",
       "effect": "attack_pct",
       "step": 10,
-      "limit": 5,
-      "title": "Attack",
-      "description": "More damage from every attack"
+      "limit": 5
     },
     {
       "id": "attack_speed",
       "effect": "attack_speed_pct",
       "step": 8,
-      "limit": 5,
-      "title": "Attack Speed",
-      "description": "Every attack is faster"
+      "limit": 5
     },
     {
       "id": "evade",
       "effect": "evade_pct",
       "step": 10,
-      "limit": 5,
-      "title": "Evade",
-      "description": "A shorter evade cooldown"
+      "limit": 5
     },
     {
       "id": "speed",
       "effect": "speed_pct",
       "step": 8,
-      "limit": 5,
-      "title": "Speed",
-      "description": "Move faster"
+      "limit": 5
     }
   ],
   "stun": {
@@ -874,171 +862,159 @@
   "enemy_attack_damage": 10000
 },
   "rewards": {
-  "schema_version": 0,
-  "sim_version": 0,
   "max_rune_haste_pct": 500,
+  "rarities": [
+    {
+      "rarity": "common",
+      "lumine_cost": 1
+    },
+    {
+      "rarity": "uncommon",
+      "lumine_cost": 2
+    },
+    {
+      "rarity": "rare",
+      "lumine_cost": 3
+    },
+    {
+      "rarity": "epic",
+      "lumine_cost": 4
+    },
+    {
+      "rarity": "legendary",
+      "lumine_cost": 6
+    },
+    {
+      "rarity": "supernova",
+      "lumine_cost": 10
+    }
+  ],
   "rewards": [
     {
       "id": "max_hp_common",
       "rarity": "common",
       "effect": "max_hp",
       "amount": 20000,
-      "limit": 5,
-      "title": "Vigour (Common)",
-      "description": "200 more hit points at most, and as many healed"
+      "limit": 5
     },
     {
       "id": "max_hp_rare",
       "rarity": "rare",
       "effect": "max_hp",
       "amount": 50000,
-      "limit": 3,
-      "title": "Vigour (Rare)",
-      "description": "500 more hit points at most, and as many healed"
+      "limit": 3
     },
     {
       "id": "max_hp_legendary",
       "rarity": "legendary",
       "effect": "max_hp",
       "amount": 100000,
-      "limit": 2,
-      "title": "Vigour (Legendary)",
-      "description": "1000 more hit points at most, and as many healed"
+      "limit": 2
     },
     {
       "id": "attack_common",
       "rarity": "common",
       "effect": "attack_pct",
       "amount": 5,
-      "limit": 5,
-      "title": "Might (Common)",
-      "description": "5 percent more damage"
+      "limit": 5
     },
     {
       "id": "attack_rare",
       "rarity": "rare",
       "effect": "attack_pct",
       "amount": 12,
-      "limit": 3,
-      "title": "Might (Rare)",
-      "description": "12 percent more damage"
+      "limit": 3
     },
     {
       "id": "attack_legendary",
       "rarity": "legendary",
       "effect": "attack_pct",
       "amount": 25,
-      "limit": 2,
-      "title": "Might (Legendary)",
-      "description": "25 percent more damage"
+      "limit": 2
     },
     {
       "id": "attack_speed_common",
       "rarity": "common",
       "effect": "attack_speed_pct",
       "amount": 8,
-      "limit": 5,
-      "title": "Swiftness (Common)",
-      "description": "Attacks 8 percent faster"
+      "limit": 5
     },
     {
       "id": "attack_speed_rare",
       "rarity": "rare",
       "effect": "attack_speed_pct",
       "amount": 20,
-      "limit": 3,
-      "title": "Swiftness (Rare)",
-      "description": "Attacks 20 percent faster"
+      "limit": 3
     },
     {
       "id": "attack_speed_legendary",
       "rarity": "legendary",
       "effect": "attack_speed_pct",
       "amount": 40,
-      "limit": 2,
-      "title": "Swiftness (Legendary)",
-      "description": "Attacks 40 percent faster"
+      "limit": 2
     },
     {
       "id": "evade_common",
       "rarity": "common",
       "effect": "evade_pct",
       "amount": 5,
-      "limit": 5,
-      "title": "Grace (Common)",
-      "description": "5 percent shorter evade cooldown"
+      "limit": 5
     },
     {
       "id": "evade_rare",
       "rarity": "rare",
       "effect": "evade_pct",
       "amount": 12,
-      "limit": 3,
-      "title": "Grace (Rare)",
-      "description": "12 percent shorter evade cooldown"
+      "limit": 3
     },
     {
       "id": "evade_legendary",
       "rarity": "legendary",
       "effect": "evade_pct",
       "amount": 25,
-      "limit": 2,
-      "title": "Grace (Legendary)",
-      "description": "25 percent shorter evade cooldown"
+      "limit": 2
     },
     {
       "id": "speed_common",
       "rarity": "common",
       "effect": "speed_pct",
       "amount": 4,
-      "limit": 5,
-      "title": "Swiftness (Common)",
-      "description": "4 percent more speed"
+      "limit": 5
     },
     {
       "id": "speed_rare",
       "rarity": "rare",
       "effect": "speed_pct",
       "amount": 10,
-      "limit": 3,
-      "title": "Swiftness (Rare)",
-      "description": "10 percent more speed"
+      "limit": 3
     },
     {
       "id": "speed_legendary",
       "rarity": "legendary",
       "effect": "speed_pct",
       "amount": 20,
-      "limit": 2,
-      "title": "Swiftness (Legendary)",
-      "description": "20 percent more speed"
+      "limit": 2
     },
     {
       "id": "xp_common",
       "rarity": "common",
       "effect": "xp_pct",
       "amount": 10,
-      "limit": 5,
-      "title": "Insight (Common)",
-      "description": "10 percent more experience"
+      "limit": 5
     },
     {
       "id": "xp_rare",
       "rarity": "rare",
       "effect": "xp_pct",
       "amount": 25,
-      "limit": 3,
-      "title": "Insight (Rare)",
-      "description": "25 percent more experience"
+      "limit": 3
     },
     {
       "id": "xp_legendary",
       "rarity": "legendary",
       "effect": "xp_pct",
       "amount": 50,
-      "limit": 2,
-      "title": "Insight (Legendary)",
-      "description": "50 percent more experience"
+      "limit": 2
     },
     {
       "id": "black_hole_rare",
@@ -1046,9 +1022,7 @@
       "effect": "stage_skill",
       "skill": "black_hole",
       "amount": 1,
-      "limit": 3,
-      "title": "Black Hole",
-      "description": "Pulls the enemies ahead into one point and holds them there"
+      "limit": 3
     },
     {
       "id": "war_cry_rare",
@@ -1056,9 +1030,7 @@
       "effect": "stage_skill",
       "skill": "war_cry",
       "amount": 1,
-      "limit": 3,
-      "title": "War Cry",
-      "description": "Your attacks hit harder for 5 seconds"
+      "limit": 3
     },
     {
       "id": "hex_rare",
@@ -1066,9 +1038,7 @@
       "effect": "stage_skill",
       "skill": "hex",
       "amount": 1,
-      "limit": 3,
-      "title": "Hex",
-      "description": "The enemies ahead take more damage for 5 seconds"
+      "limit": 3
     },
     {
       "id": "nova_rare",
@@ -1076,9 +1046,7 @@
       "effect": "stage_skill",
       "skill": "nova",
       "amount": 1,
-      "limit": 3,
-      "title": "Nova",
-      "description": "A burst of starlight strikes the area ahead"
+      "limit": 3
     },
     {
       "id": "aegis_rare",
@@ -1086,333 +1054,259 @@
       "effect": "stage_skill",
       "skill": "aegis",
       "amount": 1,
-      "limit": 3,
-      "title": "Aegis",
-      "description": "A shield absorbs the next hits for a while"
+      "limit": 3
     },
     {
       "id": "regen_common",
       "rarity": "common",
       "effect": "regen",
       "amount": 1000,
-      "limit": 5,
-      "title": "Regeneration",
-      "description": "Hit points come back every second, a little"
+      "limit": 5
     },
     {
       "id": "regen_rare",
       "rarity": "rare",
       "effect": "regen",
       "amount": 3000,
-      "limit": 3,
-      "title": "Regeneration",
-      "description": "Hit points come back every second"
+      "limit": 3
     },
     {
       "id": "regen_legendary",
       "rarity": "legendary",
       "effect": "regen",
       "amount": 6000,
-      "limit": 2,
-      "title": "Regeneration",
-      "description": "Hit points come back every second, a lot"
+      "limit": 2
     },
     {
       "id": "max_hp_uncommon",
       "rarity": "uncommon",
       "effect": "max_hp",
       "amount": 30000,
-      "limit": 4,
-      "title": "Vigour (Uncommon)",
-      "description": "300 more hit points at most, and as many healed"
+      "limit": 4
     },
     {
       "id": "max_hp_epic",
       "rarity": "epic",
       "effect": "max_hp",
       "amount": 70000,
-      "limit": 2,
-      "title": "Vigour (Epic)",
-      "description": "700 more hit points at most, and as many healed"
+      "limit": 2
     },
     {
       "id": "max_hp_supernova",
       "rarity": "supernova",
       "effect": "max_hp",
       "amount": 160000,
-      "limit": 2,
-      "title": "Vigour (Supernova)",
-      "description": "1600 more hit points at most, and as many healed"
+      "limit": 2
     },
     {
       "id": "attack_uncommon",
       "rarity": "uncommon",
       "effect": "attack_pct",
       "amount": 7,
-      "limit": 4,
-      "title": "Might (Uncommon)",
-      "description": "7 percent more damage"
+      "limit": 4
     },
     {
       "id": "attack_epic",
       "rarity": "epic",
       "effect": "attack_pct",
       "amount": 17,
-      "limit": 2,
-      "title": "Might (Epic)",
-      "description": "17 percent more damage"
+      "limit": 2
     },
     {
       "id": "attack_supernova",
       "rarity": "supernova",
       "effect": "attack_pct",
       "amount": 40,
-      "limit": 2,
-      "title": "Might (Supernova)",
-      "description": "40 percent more damage"
+      "limit": 2
     },
     {
       "id": "attack_speed_uncommon",
       "rarity": "uncommon",
       "effect": "attack_speed_pct",
       "amount": 12,
-      "limit": 4,
-      "title": "Swiftness (Uncommon)",
-      "description": "Attacks 12 percent faster"
+      "limit": 4
     },
     {
       "id": "attack_speed_epic",
       "rarity": "epic",
       "effect": "attack_speed_pct",
       "amount": 28,
-      "limit": 2,
-      "title": "Swiftness (Epic)",
-      "description": "Attacks 28 percent faster"
+      "limit": 2
     },
     {
       "id": "attack_speed_supernova",
       "rarity": "supernova",
       "effect": "attack_speed_pct",
       "amount": 64,
-      "limit": 2,
-      "title": "Swiftness (Supernova)",
-      "description": "Attacks 64 percent faster"
+      "limit": 2
     },
     {
       "id": "evade_uncommon",
       "rarity": "uncommon",
       "effect": "evade_pct",
       "amount": 7,
-      "limit": 4,
-      "title": "Grace (Uncommon)",
-      "description": "7 percent shorter evade cooldown"
+      "limit": 4
     },
     {
       "id": "evade_epic",
       "rarity": "epic",
       "effect": "evade_pct",
       "amount": 17,
-      "limit": 2,
-      "title": "Grace (Epic)",
-      "description": "17 percent shorter evade cooldown"
+      "limit": 2
     },
     {
       "id": "evade_supernova",
       "rarity": "supernova",
       "effect": "evade_pct",
       "amount": 40,
-      "limit": 2,
-      "title": "Grace (Supernova)",
-      "description": "40 percent shorter evade cooldown"
+      "limit": 2
     },
     {
       "id": "speed_uncommon",
       "rarity": "uncommon",
       "effect": "speed_pct",
       "amount": 6,
-      "limit": 4,
-      "title": "Swiftness (Uncommon)",
-      "description": "6 percent more speed"
+      "limit": 4
     },
     {
       "id": "speed_epic",
       "rarity": "epic",
       "effect": "speed_pct",
       "amount": 14,
-      "limit": 2,
-      "title": "Swiftness (Epic)",
-      "description": "14 percent more speed"
+      "limit": 2
     },
     {
       "id": "speed_supernova",
       "rarity": "supernova",
       "effect": "speed_pct",
       "amount": 32,
-      "limit": 2,
-      "title": "Swiftness (Supernova)",
-      "description": "32 percent more speed"
+      "limit": 2
     },
     {
       "id": "xp_uncommon",
       "rarity": "uncommon",
       "effect": "xp_pct",
       "amount": 15,
-      "limit": 4,
-      "title": "Insight (Uncommon)",
-      "description": "15 percent more experience"
+      "limit": 4
     },
     {
       "id": "xp_epic",
       "rarity": "epic",
       "effect": "xp_pct",
       "amount": 35,
-      "limit": 2,
-      "title": "Insight (Epic)",
-      "description": "35 percent more experience"
+      "limit": 2
     },
     {
       "id": "xp_supernova",
       "rarity": "supernova",
       "effect": "xp_pct",
       "amount": 80,
-      "limit": 2,
-      "title": "Insight (Supernova)",
-      "description": "80 percent more experience"
+      "limit": 2
     },
     {
       "id": "regen_uncommon",
       "rarity": "uncommon",
       "effect": "regen",
       "amount": 1500,
-      "limit": 4,
-      "title": "Regeneration (Uncommon)",
-      "description": "Hit points come back every second, some"
+      "limit": 4
     },
     {
       "id": "regen_epic",
       "rarity": "epic",
       "effect": "regen",
       "amount": 3500,
-      "limit": 2,
-      "title": "Regeneration (Epic)",
-      "description": "Hit points come back every second, much"
+      "limit": 2
     },
     {
       "id": "regen_supernova",
       "rarity": "supernova",
       "effect": "regen",
       "amount": 8000,
-      "limit": 2,
-      "title": "Regeneration (Supernova)",
-      "description": "Hit points come back every second, a huge amount"
+      "limit": 2
     },
     {
       "id": "rune_haste_common",
       "rarity": "common",
       "effect": "rune_haste",
       "amount": 25,
-      "limit": 5,
-      "title": "Quickening (Common)",
-      "description": "Runes recover 25 percent sooner"
+      "limit": 5
     },
     {
       "id": "rune_haste_uncommon",
       "rarity": "uncommon",
       "effect": "rune_haste",
       "amount": 38,
-      "limit": 4,
-      "title": "Quickening (Uncommon)",
-      "description": "Runes recover 38 percent sooner"
+      "limit": 4
     },
     {
       "id": "rune_haste_rare",
       "rarity": "rare",
       "effect": "rune_haste",
       "amount": 50,
-      "limit": 3,
-      "title": "Quickening (Rare)",
-      "description": "Runes recover 50 percent sooner"
+      "limit": 3
     },
     {
       "id": "rune_haste_epic",
       "rarity": "epic",
       "effect": "rune_haste",
       "amount": 70,
-      "limit": 2,
-      "title": "Quickening (Epic)",
-      "description": "Runes recover 70 percent sooner"
+      "limit": 2
     },
     {
       "id": "rune_haste_legendary",
       "rarity": "legendary",
       "effect": "rune_haste",
       "amount": 100,
-      "limit": 2,
-      "title": "Quickening (Legendary)",
-      "description": "Runes recover 100 percent sooner"
+      "limit": 2
     },
     {
       "id": "rune_haste_supernova",
       "rarity": "supernova",
       "effect": "rune_haste",
       "amount": 160,
-      "limit": 2,
-      "title": "Quickening (Supernova)",
-      "description": "Runes recover 160 percent sooner"
+      "limit": 2
     },
     {
       "id": "range_common",
       "rarity": "common",
       "effect": "range_pct",
       "amount": 15,
-      "limit": 5,
-      "title": "Reach (Common)",
-      "description": "Attacks reach 15 percent wider"
+      "limit": 5
     },
     {
       "id": "range_uncommon",
       "rarity": "uncommon",
       "effect": "range_pct",
       "amount": 23,
-      "limit": 4,
-      "title": "Reach (Uncommon)",
-      "description": "Attacks reach 23 percent wider"
+      "limit": 4
     },
     {
       "id": "range_rare",
       "rarity": "rare",
       "effect": "range_pct",
       "amount": 30,
-      "limit": 3,
-      "title": "Reach (Rare)",
-      "description": "Attacks reach 30 percent wider"
+      "limit": 3
     },
     {
       "id": "range_epic",
       "rarity": "epic",
       "effect": "range_pct",
       "amount": 42,
-      "limit": 2,
-      "title": "Reach (Epic)",
-      "description": "Attacks reach 42 percent wider"
+      "limit": 2
     },
     {
       "id": "range_legendary",
       "rarity": "legendary",
       "effect": "range_pct",
       "amount": 50,
-      "limit": 2,
-      "title": "Reach (Legendary)",
-      "description": "Attacks reach 50 percent wider"
+      "limit": 2
     },
     {
       "id": "range_supernova",
       "rarity": "supernova",
       "effect": "range_pct",
       "amount": 80,
-      "limit": 2,
-      "title": "Reach (Supernova)",
-      "description": "Attacks reach 80 percent wider"
+      "limit": 2
     },
     {
       "id": "type_bonus_slash_common",
@@ -1421,9 +1315,7 @@
       "type": "slash",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Slash Mastery (Common)",
-      "description": "25 percent more Slash damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_slash_uncommon",
@@ -1432,9 +1324,7 @@
       "type": "slash",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Slash Mastery (Uncommon)",
-      "description": "38 percent more Slash damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_slash_rare",
@@ -1443,9 +1333,7 @@
       "type": "slash",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Slash Mastery (Rare)",
-      "description": "50 percent more Slash damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_slash_epic",
@@ -1454,9 +1342,7 @@
       "type": "slash",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Slash Mastery (Epic)",
-      "description": "70 percent more Slash damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_slash_legendary",
@@ -1465,9 +1351,7 @@
       "type": "slash",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Slash Mastery (Legendary)",
-      "description": "80 percent more Slash damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_slash_supernova",
@@ -1476,9 +1360,7 @@
       "type": "slash",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Slash Mastery (Supernova)",
-      "description": "128 percent more Slash damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pierce_common",
@@ -1487,9 +1369,7 @@
       "type": "pierce",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Pierce Mastery (Common)",
-      "description": "25 percent more Pierce damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pierce_uncommon",
@@ -1498,9 +1378,7 @@
       "type": "pierce",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Pierce Mastery (Uncommon)",
-      "description": "38 percent more Pierce damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pierce_rare",
@@ -1509,9 +1387,7 @@
       "type": "pierce",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Pierce Mastery (Rare)",
-      "description": "50 percent more Pierce damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pierce_epic",
@@ -1520,9 +1396,7 @@
       "type": "pierce",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Pierce Mastery (Epic)",
-      "description": "70 percent more Pierce damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pierce_legendary",
@@ -1531,9 +1405,7 @@
       "type": "pierce",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Pierce Mastery (Legendary)",
-      "description": "80 percent more Pierce damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pierce_supernova",
@@ -1542,9 +1414,7 @@
       "type": "pierce",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Pierce Mastery (Supernova)",
-      "description": "128 percent more Pierce damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_strike_common",
@@ -1553,9 +1423,7 @@
       "type": "strike",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Strike Mastery (Common)",
-      "description": "25 percent more Strike damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_strike_uncommon",
@@ -1564,9 +1432,7 @@
       "type": "strike",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Strike Mastery (Uncommon)",
-      "description": "38 percent more Strike damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_strike_rare",
@@ -1575,9 +1441,7 @@
       "type": "strike",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Strike Mastery (Rare)",
-      "description": "50 percent more Strike damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_strike_epic",
@@ -1586,9 +1450,7 @@
       "type": "strike",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Strike Mastery (Epic)",
-      "description": "70 percent more Strike damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_strike_legendary",
@@ -1597,9 +1459,7 @@
       "type": "strike",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Strike Mastery (Legendary)",
-      "description": "80 percent more Strike damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_strike_supernova",
@@ -1608,9 +1468,7 @@
       "type": "strike",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Strike Mastery (Supernova)",
-      "description": "128 percent more Strike damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pyro_common",
@@ -1619,9 +1477,7 @@
       "type": "pyro",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Pyro Mastery (Common)",
-      "description": "25 percent more Pyro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pyro_uncommon",
@@ -1630,9 +1486,7 @@
       "type": "pyro",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Pyro Mastery (Uncommon)",
-      "description": "38 percent more Pyro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pyro_rare",
@@ -1641,9 +1495,7 @@
       "type": "pyro",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Pyro Mastery (Rare)",
-      "description": "50 percent more Pyro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pyro_epic",
@@ -1652,9 +1504,7 @@
       "type": "pyro",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Pyro Mastery (Epic)",
-      "description": "70 percent more Pyro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pyro_legendary",
@@ -1663,9 +1513,7 @@
       "type": "pyro",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Pyro Mastery (Legendary)",
-      "description": "80 percent more Pyro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_pyro_supernova",
@@ -1674,9 +1522,7 @@
       "type": "pyro",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Pyro Mastery (Supernova)",
-      "description": "128 percent more Pyro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_hydro_common",
@@ -1685,9 +1531,7 @@
       "type": "hydro",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Hydro Mastery (Common)",
-      "description": "25 percent more Hydro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_hydro_uncommon",
@@ -1696,9 +1540,7 @@
       "type": "hydro",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Hydro Mastery (Uncommon)",
-      "description": "38 percent more Hydro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_hydro_rare",
@@ -1707,9 +1549,7 @@
       "type": "hydro",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Hydro Mastery (Rare)",
-      "description": "50 percent more Hydro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_hydro_epic",
@@ -1718,9 +1558,7 @@
       "type": "hydro",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Hydro Mastery (Epic)",
-      "description": "70 percent more Hydro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_hydro_legendary",
@@ -1729,9 +1567,7 @@
       "type": "hydro",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Hydro Mastery (Legendary)",
-      "description": "80 percent more Hydro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_hydro_supernova",
@@ -1740,9 +1576,7 @@
       "type": "hydro",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Hydro Mastery (Supernova)",
-      "description": "128 percent more Hydro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_electro_common",
@@ -1751,9 +1585,7 @@
       "type": "electro",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Electro Mastery (Common)",
-      "description": "25 percent more Electro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_electro_uncommon",
@@ -1762,9 +1594,7 @@
       "type": "electro",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Electro Mastery (Uncommon)",
-      "description": "38 percent more Electro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_electro_rare",
@@ -1773,9 +1603,7 @@
       "type": "electro",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Electro Mastery (Rare)",
-      "description": "50 percent more Electro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_electro_epic",
@@ -1784,9 +1612,7 @@
       "type": "electro",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Electro Mastery (Epic)",
-      "description": "70 percent more Electro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_electro_legendary",
@@ -1795,9 +1621,7 @@
       "type": "electro",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Electro Mastery (Legendary)",
-      "description": "80 percent more Electro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_electro_supernova",
@@ -1806,9 +1630,7 @@
       "type": "electro",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Electro Mastery (Supernova)",
-      "description": "128 percent more Electro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_cryo_common",
@@ -1817,9 +1639,7 @@
       "type": "cryo",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Cryo Mastery (Common)",
-      "description": "25 percent more Cryo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_cryo_uncommon",
@@ -1828,9 +1648,7 @@
       "type": "cryo",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Cryo Mastery (Uncommon)",
-      "description": "38 percent more Cryo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_cryo_rare",
@@ -1839,9 +1657,7 @@
       "type": "cryo",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Cryo Mastery (Rare)",
-      "description": "50 percent more Cryo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_cryo_epic",
@@ -1850,9 +1666,7 @@
       "type": "cryo",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Cryo Mastery (Epic)",
-      "description": "70 percent more Cryo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_cryo_legendary",
@@ -1861,9 +1675,7 @@
       "type": "cryo",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Cryo Mastery (Legendary)",
-      "description": "80 percent more Cryo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_cryo_supernova",
@@ -1872,9 +1684,7 @@
       "type": "cryo",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Cryo Mastery (Supernova)",
-      "description": "128 percent more Cryo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_anemo_common",
@@ -1883,9 +1693,7 @@
       "type": "anemo",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Anemo Mastery (Common)",
-      "description": "25 percent more Anemo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_anemo_uncommon",
@@ -1894,9 +1702,7 @@
       "type": "anemo",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Anemo Mastery (Uncommon)",
-      "description": "38 percent more Anemo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_anemo_rare",
@@ -1905,9 +1711,7 @@
       "type": "anemo",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Anemo Mastery (Rare)",
-      "description": "50 percent more Anemo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_anemo_epic",
@@ -1916,9 +1720,7 @@
       "type": "anemo",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Anemo Mastery (Epic)",
-      "description": "70 percent more Anemo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_anemo_legendary",
@@ -1927,9 +1729,7 @@
       "type": "anemo",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Anemo Mastery (Legendary)",
-      "description": "80 percent more Anemo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_anemo_supernova",
@@ -1938,9 +1738,7 @@
       "type": "anemo",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Anemo Mastery (Supernova)",
-      "description": "128 percent more Anemo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_geo_common",
@@ -1949,9 +1747,7 @@
       "type": "geo",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Geo Mastery (Common)",
-      "description": "25 percent more Geo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_geo_uncommon",
@@ -1960,9 +1756,7 @@
       "type": "geo",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Geo Mastery (Uncommon)",
-      "description": "38 percent more Geo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_geo_rare",
@@ -1971,9 +1765,7 @@
       "type": "geo",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Geo Mastery (Rare)",
-      "description": "50 percent more Geo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_geo_epic",
@@ -1982,9 +1774,7 @@
       "type": "geo",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Geo Mastery (Epic)",
-      "description": "70 percent more Geo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_geo_legendary",
@@ -1993,9 +1783,7 @@
       "type": "geo",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Geo Mastery (Legendary)",
-      "description": "80 percent more Geo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_geo_supernova",
@@ -2004,9 +1792,7 @@
       "type": "geo",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Geo Mastery (Supernova)",
-      "description": "128 percent more Geo damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_dendro_common",
@@ -2015,9 +1801,7 @@
       "type": "dendro",
       "amount": 25,
       "limit": 5,
-      "weight": 10,
-      "title": "Dendro Mastery (Common)",
-      "description": "25 percent more Dendro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_dendro_uncommon",
@@ -2026,9 +1810,7 @@
       "type": "dendro",
       "amount": 38,
       "limit": 4,
-      "weight": 10,
-      "title": "Dendro Mastery (Uncommon)",
-      "description": "38 percent more Dendro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_dendro_rare",
@@ -2037,9 +1819,7 @@
       "type": "dendro",
       "amount": 50,
       "limit": 3,
-      "weight": 10,
-      "title": "Dendro Mastery (Rare)",
-      "description": "50 percent more Dendro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_dendro_epic",
@@ -2048,9 +1828,7 @@
       "type": "dendro",
       "amount": 70,
       "limit": 2,
-      "weight": 10,
-      "title": "Dendro Mastery (Epic)",
-      "description": "70 percent more Dendro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_dendro_legendary",
@@ -2059,9 +1837,7 @@
       "type": "dendro",
       "amount": 80,
       "limit": 2,
-      "weight": 10,
-      "title": "Dendro Mastery (Legendary)",
-      "description": "80 percent more Dendro damage"
+      "weight": 10
     },
     {
       "id": "type_bonus_dendro_supernova",
@@ -2070,17 +1846,13 @@
       "type": "dendro",
       "amount": 128,
       "limit": 2,
-      "weight": 10,
-      "title": "Dendro Mastery (Supernova)",
-      "description": "128 percent more Dendro damage"
+      "weight": 10
     },
     {
       "id": "random_rune",
       "rarity": "common",
       "effect": "random_rune",
-      "weight": 200,
-      "title": "Rune",
-      "description": "A rune you do not hold yet, drawn when you take it"
+      "weight": 200
     },
     {
       "id": "star_altair",
@@ -2098,9 +1870,7 @@
       "limit": 1,
       "named": true,
       "star": "Altair",
-      "weight": 50,
-      "title": "Altair",
-      "description": "The flier: 20 percent faster, and one more evade charge"
+      "weight": 50
     },
     {
       "id": "star_alnitak",
@@ -2119,9 +1889,7 @@
       "limit": 1,
       "named": true,
       "star": "Alnitak",
-      "weight": 50,
-      "title": "Alnitak",
-      "description": "The flame: 30 percent more Pyro damage, and runes recover 40 percent sooner"
+      "weight": 50
     },
     {
       "id": "star_alnilam",
@@ -2139,9 +1907,7 @@
       "limit": 1,
       "named": true,
       "star": "Alnilam",
-      "weight": 50,
-      "title": "Alnilam",
-      "description": "The brightest of the Belt: 20 percent more damage and 15 percent more range"
+      "weight": 50
     },
     {
       "id": "star_mintaka",
@@ -2159,9 +1925,7 @@
       "limit": 1,
       "named": true,
       "star": "Mintaka",
-      "weight": 50,
-      "title": "Mintaka",
-      "description": "The sturdy one: 500 more hit points at most, and 30 hit points a second"
+      "weight": 50
     },
     {
       "id": "star_dubhe",
@@ -2179,9 +1943,7 @@
       "limit": 1,
       "named": true,
       "star": "Dubhe",
-      "weight": 50,
-      "title": "Dubhe",
-      "description": "A pointer: falling stars are picked up from 60 percent farther, and 25 percent more experience"
+      "weight": 50
     },
     {
       "id": "star_rigel",
@@ -2200,9 +1962,7 @@
       "limit": 1,
       "named": true,
       "star": "Rigel",
-      "weight": 50,
-      "title": "Rigel",
-      "description": "The blue giant: 30 percent more Cryo damage and 10 percent faster attacks"
+      "weight": 50
     },
     {
       "id": "star_deneb",
@@ -2220,9 +1980,7 @@
       "limit": 1,
       "named": true,
       "star": "Deneb",
-      "weight": 50,
-      "title": "Deneb",
-      "description": "The far lamp: a 15 percent chance of a critical hit, and 50 percent more damage on one"
+      "weight": 50
     },
     {
       "id": "star_vega",
@@ -2240,9 +1998,7 @@
       "limit": 1,
       "named": true,
       "star": "Vega",
-      "weight": 50,
-      "title": "Vega",
-      "description": "The standard star: stage skills recover 30 percent sooner, and 12 percent more damage"
+      "weight": 50
     },
     {
       "id": "star_mizar",
@@ -2256,9 +2012,7 @@
       "limit": 1,
       "named": true,
       "star": "Mizar",
-      "weight": 50,
-      "title": "Mizar",
-      "description": "The double star: each hit lands again as an echo of 35 percent"
+      "weight": 50
     },
     {
       "id": "star_alkaid",
@@ -2276,9 +2030,7 @@
       "limit": 1,
       "named": true,
       "star": "Alkaid",
-      "weight": 50,
-      "title": "Alkaid",
-      "description": "The tail of the Dipper: 35 percent more range, and 25 percent more Slash, Pierce and Strike damage"
+      "weight": 50
     },
     {
       "id": "star_procyon",
@@ -2295,9 +2047,7 @@
       "limit": 1,
       "named": true,
       "star": "Procyon",
-      "weight": 50,
-      "title": "Procyon",
-      "description": "Before the dog: a rune for free, and runes recover twice as fast"
+      "weight": 50
     },
     {
       "id": "star_antares",
@@ -2316,9 +2066,7 @@
       "limit": 1,
       "named": true,
       "star": "Antares",
-      "weight": 50,
-      "title": "Antares",
-      "description": "The red heart: 100 hit points back every 20 kills, and 800 more hit points at most"
+      "weight": 50
     },
     {
       "id": "star_sirius",
@@ -2357,9 +2105,7 @@
       "limit": 1,
       "named": true,
       "star": "Sirius",
-      "weight": 50,
-      "title": "Sirius",
-      "description": "The Dog Star: a companion of four orbs that attack on their own, and 30 percent more damage"
+      "weight": 50
     },
     {
       "id": "star_betelgeuse",
@@ -2379,9 +2125,7 @@
       "limit": 1,
       "named": true,
       "star": "Betelgeuse",
-      "weight": 50,
-      "title": "Betelgeuse",
-      "description": "The dying giant: a kill bursts for 40 percent of its hit points in 120 pixels, chaining 3 times, and 800 more hit points at most"
+      "weight": 50
     },
     {
       "id": "star_polaris",
@@ -2407,21 +2151,15 @@
       "limit": 1,
       "named": true,
       "star": "Polaris",
-      "weight": 50,
-      "title": "Polaris",
-      "description": "The guide: a fourth candidate in every offer, 3 rerolls, 2 banishes and 40 percent more experience"
+      "weight": 50
     }
   ]
 },
   "stage_skills": {
-  "schema_version": 0,
-  "sim_version": 0,
   "stage_skills": [
     {
       "id": "black_hole",
       "icon": "icon_black_hole",
-      "title": "Black Hole",
-      "description": "Pulls the enemies ahead into one point and holds them there",
       "ahead": 24576,
       "levels": [
         {
@@ -2462,8 +2200,6 @@
     {
       "id": "war_cry",
       "icon": "icon_war_cry",
-      "title": "War Cry",
-      "description": "Your attacks hit harder for 5 seconds",
       "levels": [
         {
           "cooldown_ticks": 1200,
@@ -2503,8 +2239,6 @@
     {
       "id": "hex",
       "icon": "icon_hex",
-      "title": "Hex",
-      "description": "The enemies ahead take more damage for 5 seconds",
       "ahead": 24576,
       "levels": [
         {
@@ -2548,8 +2282,6 @@
     {
       "id": "nova",
       "icon": "icon_nova",
-      "title": "Nova",
-      "description": "A burst of starlight strikes the area ahead",
       "levels": [
         {
           "cooldown_ticks": 600,
@@ -2673,8 +2405,6 @@
     {
       "id": "aegis",
       "icon": "icon_aegis",
-      "title": "Aegis",
-      "description": "A shield absorbs the next hits for a while",
       "levels": [
         {
           "cooldown_ticks": 1200,
@@ -2711,8 +2441,6 @@
   ]
 },
   "expertise": {
-  "schema_version": 0,
-  "sim_version": 0,
   "thresholds": [
     30,
     45,
@@ -2735,33 +2463,25 @@
           "id": "crush",
           "effect": "attack_pct",
           "amount": 15,
-          "title": "Crush",
-          "description": "15 percent more damage",
           "upgrade_1": [
             {
               "id": "crush_6",
               "effect": "attack_pct",
-              "amount": 20,
-              "title": "Heavy Head",
-              "description": "20 percent more damage"
+              "amount": 20
             }
           ],
           "upgrade_2": [
             {
               "id": "crush_9",
               "effect": "max_hp",
-              "amount": 20000,
-              "title": "Iron Grip",
-              "description": "200 more hit points at most, and as many healed"
+              "amount": 20000
             }
           ],
           "capstone": [
             {
               "id": "crush_10",
               "effect": "attack_pct",
-              "amount": 40,
-              "title": "Shatter",
-              "description": "40 percent more damage"
+              "amount": 40
             }
           ]
         },
@@ -2769,33 +2489,25 @@
           "id": "quake",
           "effect": "range_pct",
           "amount": 20,
-          "title": "Quake",
-          "description": "Every combo step's hit box 20 percent larger",
           "upgrade_1": [
             {
               "id": "quake_6",
               "effect": "range_pct",
-              "amount": 20,
-              "title": "Tremor",
-              "description": "Every combo step's hit box 20 percent larger"
+              "amount": 20
             }
           ],
           "upgrade_2": [
             {
               "id": "quake_9",
               "effect": "attack_pct",
-              "amount": 15,
-              "title": "Aftershock",
-              "description": "15 percent more damage"
+              "amount": 15
             }
           ],
           "capstone": [
             {
               "id": "quake_10",
               "effect": "range_pct",
-              "amount": 40,
-              "title": "Earthshaker",
-              "description": "Every combo step's hit box 40 percent larger"
+              "amount": 40
             }
           ]
         },
@@ -2803,33 +2515,25 @@
           "id": "bulwark",
           "effect": "max_hp",
           "amount": 20000,
-          "title": "Bulwark",
-          "description": "200 more hit points at most, and as many healed",
           "upgrade_1": [
             {
               "id": "bulwark_6",
               "effect": "evade_pct",
-              "amount": 15,
-              "title": "Brace",
-              "description": "15 percent shorter evade cooldown"
+              "amount": 15
             }
           ],
           "upgrade_2": [
             {
               "id": "bulwark_9",
               "effect": "max_hp",
-              "amount": 30000,
-              "title": "Stone Skin",
-              "description": "300 more hit points at most, and as many healed"
+              "amount": 30000
             }
           ],
           "capstone": [
             {
               "id": "bulwark_10",
               "effect": "evade_pct",
-              "amount": 30,
-              "title": "Fortress",
-              "description": "30 percent shorter evade cooldown"
+              "amount": 30
             }
           ]
         }
@@ -2838,37 +2542,27 @@
         {
           "id": "damage",
           "effect": "attack_pct",
-          "amount": 10,
-          "title": "Damage",
-          "description": "10 percent more damage"
+          "amount": 10
         },
         {
           "id": "attack_speed",
           "effect": "attack_speed_pct",
-          "amount": 10,
-          "title": "Attack Speed",
-          "description": "Attacks 10 percent faster"
+          "amount": 10
         },
         {
           "id": "hit_box",
           "effect": "range_pct",
-          "amount": 10,
-          "title": "Hit Box",
-          "description": "Every combo step's hit box 10 percent larger"
+          "amount": 10
         },
         {
           "id": "vitality",
           "effect": "max_hp",
-          "amount": 10000,
-          "title": "Vitality",
-          "description": "100 more hit points at most, and as many healed"
+          "amount": 10000
         },
         {
           "id": "swiftness",
           "effect": "speed_pct",
-          "amount": 5,
-          "title": "Swiftness",
-          "description": "5 percent faster movement"
+          "amount": 5
         }
       ]
     },
@@ -2879,33 +2573,25 @@
           "id": "edge",
           "effect": "attack_pct",
           "amount": 10,
-          "title": "Edge",
-          "description": "10 percent more damage",
           "upgrade_1": [
             {
               "id": "edge_6",
               "effect": "attack_pct",
-              "amount": 15,
-              "title": "Keen Edge",
-              "description": "15 percent more damage"
+              "amount": 15
             }
           ],
           "upgrade_2": [
             {
               "id": "edge_9",
               "effect": "range_pct",
-              "amount": 15,
-              "title": "Long Edge",
-              "description": "Every combo step's hit box 15 percent larger"
+              "amount": 15
             }
           ],
           "capstone": [
             {
               "id": "edge_10",
               "effect": "attack_pct",
-              "amount": 30,
-              "title": "Master Edge",
-              "description": "30 percent more damage"
+              "amount": 30
             }
           ]
         },
@@ -2913,33 +2599,25 @@
           "id": "tempo",
           "effect": "attack_speed_pct",
           "amount": 8,
-          "title": "Tempo",
-          "description": "Attacks 8 percent faster",
           "upgrade_1": [
             {
               "id": "tempo_6",
               "effect": "speed_pct",
-              "amount": 10,
-              "title": "Light Step",
-              "description": "10 percent more speed"
+              "amount": 10
             }
           ],
           "upgrade_2": [
             {
               "id": "tempo_9",
               "effect": "attack_speed_pct",
-              "amount": 10,
-              "title": "Quick Hands",
-              "description": "Attacks 10 percent faster"
+              "amount": 10
             }
           ],
           "capstone": [
             {
               "id": "tempo_10",
               "effect": "evade_pct",
-              "amount": 25,
-              "title": "Flow",
-              "description": "25 percent shorter evade cooldown"
+              "amount": 25
             }
           ]
         },
@@ -2947,33 +2625,25 @@
           "id": "reach",
           "effect": "range_pct",
           "amount": 15,
-          "title": "Reach",
-          "description": "Every combo step's hit box 15 percent larger",
           "upgrade_1": [
             {
               "id": "reach_6",
               "effect": "range_pct",
-              "amount": 15,
-              "title": "Wide Arc",
-              "description": "Every combo step's hit box 15 percent larger"
+              "amount": 15
             }
           ],
           "upgrade_2": [
             {
               "id": "reach_9",
               "effect": "attack_pct",
-              "amount": 15,
-              "title": "Sure Strike",
-              "description": "15 percent more damage"
+              "amount": 15
             }
           ],
           "capstone": [
             {
               "id": "reach_10",
               "effect": "range_pct",
-              "amount": 30,
-              "title": "Far Reach",
-              "description": "Every combo step's hit box 30 percent larger"
+              "amount": 30
             }
           ]
         }
@@ -2982,53 +2652,39 @@
         {
           "id": "damage",
           "effect": "attack_pct",
-          "amount": 10,
-          "title": "Damage",
-          "description": "10 percent more damage"
+          "amount": 10
         },
         {
           "id": "attack_speed",
           "effect": "attack_speed_pct",
-          "amount": 10,
-          "title": "Attack Speed",
-          "description": "Attacks 10 percent faster"
+          "amount": 10
         },
         {
           "id": "hit_box",
           "effect": "range_pct",
-          "amount": 10,
-          "title": "Hit Box",
-          "description": "Every combo step's hit box 10 percent larger"
+          "amount": 10
         },
         {
           "id": "vitality",
           "effect": "max_hp",
-          "amount": 10000,
-          "title": "Vitality",
-          "description": "100 more hit points at most, and as many healed"
+          "amount": 10000
         },
         {
           "id": "swiftness",
           "effect": "speed_pct",
-          "amount": 5,
-          "title": "Swiftness",
-          "description": "5 percent faster movement"
+          "amount": 5
         }
       ]
     }
   ]
 },
   "match_ups": {
-  "schema_version": 0,
-  "sim_version": 0,
   "weak_pct": 20,
   "strong_pct": 20,
   "resisted_pct": 20,
   "max_type_bonus_pct": 1000
 },
   "runes": {
-  "schema_version": 0,
-  "sim_version": 0,
   "on_hit": [
     {
       "rune": "explosion",
@@ -3121,13 +2777,9 @@
   ]
 },
   "perk_sets": {
-  "schema_version": 0,
-  "sim_version": 0,
   "perk_sets": [
     {
       "id": "vanguard",
-      "title": "Vanguard",
-      "description": "More hit points, and they come back on their own",
       "effects": [
         { "effect": "max_hp", "amount": 30000 },
         { "effect": "regen", "amount": 1000 }
@@ -3135,8 +2787,6 @@
     },
     {
       "id": "duelist",
-      "title": "Duelist",
-      "description": "Hits harder and faster",
       "effects": [
         { "effect": "attack_pct", "amount": 15 },
         { "effect": "attack_speed_pct", "amount": 8 }
@@ -3144,8 +2794,6 @@
     },
     {
       "id": "scout",
-      "title": "Scout",
-      "description": "Moves and evades more freely",
       "effects": [
         { "effect": "speed_pct", "amount": 12 },
         { "effect": "evade_pct", "amount": 20 }
@@ -3153,8 +2801,6 @@
     },
     {
       "id": "scholar",
-      "title": "Scholar",
-      "description": "More say in the offers",
       "effects": [
         { "effect": "extra_rerolls", "amount": 2 },
         { "effect": "extra_banishes", "amount": 1 }
@@ -3163,47 +2809,43 @@
   ]
 },
   "difficulties": {
-  "schema_version": 0,
-  "sim_version": 0,
   "difficulties": [
     {
       "id": "easy",
-      "title": "Easy",
-      "description": "Weaker enemies, a 10-minute Time Limit and no rarer reward than rare",
       "hp_pct": 70,
       "damage_pct": 75,
       "rarity_min": "common",
       "rarity_max": "rare",
+      "rune_shards": 10,
       "length_ticks": 36000,
       "boss_ticks": [18000, 36000],
       "level_table": { "style": 2, "upgrades": [4, 6], "capstone": 8 }
     },
     {
       "id": "normal",
-      "title": "Normal",
-      "description": "The game as designed",
       "hp_pct": 100,
       "damage_pct": 100,
       "rarity_min": "common",
-      "rarity_max": "legendary"
+      "rarity_max": "legendary",
+      "rune_shards": 15
     },
     {
       "id": "hard",
-      "title": "Hard",
-      "description": "Tougher enemies that hit harder, and every rarity may drop",
       "hp_pct": 150,
       "damage_pct": 125,
       "rarity_min": "common",
-      "rarity_max": "supernova"
+      "rarity_max": "supernova",
+      "rune_shards": 20,
+      "opens_after": "normal"
     },
     {
       "id": "rainy",
-      "title": "Rainy",
-      "description": "Enemies with twice the hit points, and nothing common drops",
       "hp_pct": 200,
       "damage_pct": 150,
       "rarity_min": "uncommon",
       "rarity_max": "supernova",
+      "rune_shards": 30,
+      "opens_after": "hard",
       "stardust_tiers": [
         { "start_tick": 0, "pct": 200 },
         { "start_tick": 18000, "pct": 240 },
@@ -3214,17 +2856,1063 @@
     }
   ]
 },
+  "attack_presets": {
+  "presets": [
+    {
+      "args": [
+        {
+          "name": "wind_up_ticks"
+        }
+      ],
+      "id": "aimed_single",
+      "phases": [
+        {
+          "kind": "active",
+          "spawn": [
+            {
+              "active_ticks": 2,
+              "anchor": "target",
+              "direction": {
+                "offset": 0,
+                "type": "aimed"
+              },
+              "offset": {
+                "forward": 0,
+                "right": 0
+              },
+              "shape": {
+                "radius": 3072,
+                "type": "circle"
+              },
+              "type": "zone",
+              "wind_up_ticks": {
+                "arg": 0
+              }
+            }
+          ],
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "args": [
+        {
+          "name": "wind_up_ticks"
+        }
+      ],
+      "id": "aimed_spread",
+      "phases": [
+        {
+          "kind": "active",
+          "spawn": [
+            {
+              "angle": 7680,
+              "body": [
+                {
+                  "active_ticks": 2,
+                  "direction": {
+                    "offset": 0,
+                    "type": "aimed"
+                  },
+                  "offset": {
+                    "forward": 0,
+                    "right": 0
+                  },
+                  "shape": {
+                    "length": 65536,
+                    "type": "line",
+                    "width": 3072
+                  },
+                  "type": "zone",
+                  "wind_up_ticks": {
+                    "arg": 0
+                  }
+                }
+              ],
+              "count": 7,
+              "type": "spread"
+            }
+          ],
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "args": [],
+      "id": "elite_slam",
+      "phases": [
+        {
+          "kind": "wind_up",
+          "move_pct": 50,
+          "ticks": 90
+        },
+        {
+          "damage": 300,
+          "hit_box": {
+            "offset": {
+              "forward": 0,
+              "right": 0
+            },
+            "radius": 10240,
+            "type": "circle"
+          },
+          "kind": "active",
+          "move_pct": 50,
+          "ticks": 4,
+          "type": "strike"
+        },
+        {
+          "kind": "recovery",
+          "move_pct": 50,
+          "ticks": 20
+        }
+      ]
+    },
+    {
+      "args": [],
+      "id": "slam",
+      "phases": [
+        {
+          "kind": "wind_up",
+          "move_pct": 50,
+          "ticks": 12
+        },
+        {
+          "hit_box": {
+            "offset": {
+              "forward": 0,
+              "right": 0
+            },
+            "radius": 10240,
+            "type": "circle"
+          },
+          "kind": "active",
+          "move_pct": 50,
+          "ticks": 4,
+          "type": "strike"
+        },
+        {
+          "kind": "recovery",
+          "move_pct": 50,
+          "ticks": 20
+        }
+      ]
+    },
+    {
+      "args": [],
+      "id": "slash",
+      "phases": [
+        {
+          "kind": "wind_up",
+          "ticks": 4
+        },
+        {
+          "hit_box": {
+            "half_angle": 15360,
+            "offset": {
+              "forward": 2048,
+              "right": 0
+            },
+            "radius": 8192,
+            "type": "arc"
+          },
+          "kind": "active",
+          "ticks": 3,
+          "type": "slash"
+        },
+        {
+          "kind": "recovery",
+          "ticks": 10
+        }
+      ]
+    },
+    {
+      "args": [
+        {
+          "name": "wind_up_ticks"
+        }
+      ],
+      "id": "spiral",
+      "phases": [
+        {
+          "kind": "active",
+          "spawn": [
+            {
+              "body": [
+                {
+                  "active_ticks": 2,
+                  "direction": {
+                    "step": 1536,
+                    "type": "sequential"
+                  },
+                  "offset": {
+                    "forward": 0,
+                    "right": 0
+                  },
+                  "shape": {
+                    "length": 65536,
+                    "type": "line",
+                    "width": 3072
+                  },
+                  "type": "zone",
+                  "wind_up_ticks": {
+                    "arg": 0
+                  }
+                }
+              ],
+              "count": 40,
+              "interval_ticks": 3,
+              "type": "repeat"
+            }
+          ],
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "args": [],
+      "id": "spread_5",
+      "phases": [
+        {
+          "kind": "active",
+          "spawn": [
+            {
+              "angle": 5120,
+              "body": [
+                {
+                  "active_ticks": 2,
+                  "direction": {
+                    "offset": 0,
+                    "type": "aimed"
+                  },
+                  "offset": {
+                    "forward": 0,
+                    "right": 0
+                  },
+                  "shape": {
+                    "length": 65536,
+                    "type": "line",
+                    "width": 3072
+                  },
+                  "type": "zone",
+                  "wind_up_ticks": 15
+                }
+              ],
+              "count": 5,
+              "type": "spread"
+            }
+          ],
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "args": [],
+      "id": "thrust",
+      "phases": [
+        {
+          "kind": "wind_up",
+          "ticks": 6
+        },
+        {
+          "hit_box": {
+            "offset": {
+              "forward": 7168,
+              "right": 0
+            },
+            "radius": 3072,
+            "type": "circle"
+          },
+          "kind": "active",
+          "ticks": 3,
+          "type": "pierce"
+        },
+        {
+          "kind": "recovery",
+          "ticks": 12
+        }
+      ]
+    },
+    {
+      "args": [],
+      "id": "twin_shot",
+      "phases": [
+        {
+          "kind": "active",
+          "spawn": [
+            {
+              "angle": 1280,
+              "body": [
+                {
+                  "active_ticks": 2,
+                  "direction": {
+                    "offset": 0,
+                    "type": "aimed"
+                  },
+                  "offset": {
+                    "forward": 0,
+                    "right": 0
+                  },
+                  "shape": {
+                    "length": 65536,
+                    "type": "line",
+                    "width": 3072
+                  },
+                  "type": "zone",
+                  "wind_up_ticks": 15
+                }
+              ],
+              "count": 2,
+              "type": "spread"
+            }
+          ],
+          "ticks": 1
+        }
+      ]
+    }
+  ]
+},
+  "weapons": {
+  "weapons": [
+    {
+      "id": "giant_hammer",
+      "trees": [
+        {
+          "id": "giant_hammer_base",
+          "weapon": {
+            "assist_range": 32768,
+            "combo": {
+              "main": {
+                "attack": {
+                  "inline": [
+                    {
+                      "kind": "wind_up",
+                      "ticks": 6
+                    },
+                    {
+                      "hit_box": {
+                        "offset": {
+                          "forward": 0,
+                          "right": 0
+                        },
+                        "radius": 8192,
+                        "type": "circle"
+                      },
+                      "kind": "active",
+                      "ticks": 4,
+                      "type": "strike"
+                    },
+                    {
+                      "kind": "recovery",
+                      "ticks": 14
+                    }
+                  ]
+                },
+                "next": {
+                  "main": {
+                    "attack": {
+                      "inline": [
+                        {
+                          "kind": "wind_up",
+                          "ticks": 6
+                        },
+                        {
+                          "hit_box": {
+                            "offset": {
+                              "forward": 0,
+                              "right": 0
+                            },
+                            "radius": 10240,
+                            "type": "circle"
+                          },
+                          "kind": "active",
+                          "ticks": 5,
+                          "type": "strike"
+                        },
+                        {
+                          "kind": "recovery",
+                          "ticks": 14
+                        }
+                      ]
+                    },
+                    "next": {
+                      "main": {
+                        "attack": {
+                          "inline": [
+                            {
+                              "kind": "wind_up",
+                              "ticks": 8
+                            },
+                            {
+                              "hit_box": {
+                                "offset": {
+                                  "forward": 0,
+                                  "right": 0
+                                },
+                                "radius": 12288,
+                                "type": "circle"
+                              },
+                              "kind": "active",
+                              "ticks": 6,
+                              "type": "strike"
+                            },
+                            {
+                              "kind": "recovery",
+                              "ticks": 20
+                            }
+                          ]
+                        },
+                        "hold": {
+                          "loop": {
+                            "inline": [
+                              {
+                                "hit_box": {
+                                  "offset": {
+                                    "forward": 0,
+                                    "right": 0
+                                  },
+                                  "radius": 12288,
+                                  "type": "circle"
+                                },
+                                "kind": "active",
+                                "rehit_ticks": 8,
+                                "ticks": 8,
+                                "type": "strike"
+                              }
+                            ]
+                          },
+                          "max_ticks": 180,
+                          "move_pct": 50,
+                          "release": {
+                            "inline": [
+                              {
+                                "kind": "wind_up",
+                                "ticks": 10
+                              },
+                              {
+                                "damage": 10000,
+                                "hit_box": {
+                                  "offset": {
+                                    "forward": 4096,
+                                    "right": 0
+                                  },
+                                  "radius": 16384,
+                                  "type": "circle"
+                                },
+                                "kind": "active",
+                                "ticks": 5,
+                                "type": "strike"
+                              },
+                              {
+                                "kind": "recovery",
+                                "ticks": 24
+                              }
+                            ]
+                          }
+                        },
+                        "next": {
+                          "main": {
+                            "attack": {
+                              "inline": [
+                                {
+                                  "kind": "wind_up",
+                                  "ticks": 8
+                                },
+                                {
+                                  "hit_box": {
+                                    "offset": {
+                                      "forward": 0,
+                                      "right": 0
+                                    },
+                                    "radius": 14336,
+                                    "type": "circle"
+                                  },
+                                  "kind": "active",
+                                  "ticks": 6,
+                                  "type": "strike"
+                                },
+                                {
+                                  "kind": "recovery",
+                                  "ticks": 20
+                                }
+                              ]
+                            },
+                            "next": {
+                              "main": {
+                                "attack": {
+                                  "inline": [
+                                    {
+                                      "kind": "wind_up",
+                                      "ticks": 10
+                                    },
+                                    {
+                                      "hit_box": {
+                                        "offset": {
+                                          "forward": 0,
+                                          "right": 0
+                                        },
+                                        "radius": 16384,
+                                        "type": "circle"
+                                      },
+                                      "kind": "active",
+                                      "ticks": 6,
+                                      "type": "strike"
+                                    },
+                                    {
+                                      "kind": "recovery",
+                                      "ticks": 24
+                                    }
+                                  ]
+                                },
+                                "next": {
+                                  "smash": {
+                                    "attack": {
+                                      "inline": [
+                                        {
+                                          "kind": "wind_up",
+                                          "move_pct": 50,
+                                          "ticks": 22
+                                        },
+                                        {
+                                          "damage": 16000,
+                                          "hit_box": {
+                                            "offset": {
+                                              "forward": 0,
+                                              "right": 0
+                                            },
+                                            "radius": 22528,
+                                            "type": "circle"
+                                          },
+                                          "kind": "active",
+                                          "move_pct": 50,
+                                          "ticks": 6,
+                                          "type": "strike"
+                                        },
+                                        {
+                                          "kind": "recovery",
+                                          "move_pct": 50,
+                                          "ticks": 30
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              },
+                              "smash": {
+                                "attack": {
+                                  "inline": [
+                                    {
+                                      "kind": "wind_up",
+                                      "move_pct": 50,
+                                      "ticks": 18
+                                    },
+                                    {
+                                      "damage": 12000,
+                                      "hit_box": {
+                                        "offset": {
+                                          "forward": 0,
+                                          "right": 0
+                                        },
+                                        "radius": 18432,
+                                        "type": "circle"
+                                      },
+                                      "kind": "active",
+                                      "move_pct": 50,
+                                      "ticks": 5,
+                                      "type": "strike"
+                                    },
+                                    {
+                                      "kind": "recovery",
+                                      "move_pct": 50,
+                                      "ticks": 28
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          },
+                          "smash": {
+                            "attack": {
+                              "inline": [
+                                {
+                                  "kind": "wind_up",
+                                  "move_pct": 50,
+                                  "ticks": 16
+                                },
+                                {
+                                  "damage": 10000,
+                                  "hit_box": {
+                                    "offset": {
+                                      "forward": 0,
+                                      "right": 0
+                                    },
+                                    "radius": 16384,
+                                    "type": "circle"
+                                  },
+                                  "kind": "active",
+                                  "move_pct": 50,
+                                  "ticks": 5,
+                                  "type": "strike"
+                                },
+                                {
+                                  "kind": "recovery",
+                                  "move_pct": 50,
+                                  "ticks": 26
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      "smash": {
+                        "attack": {
+                          "inline": [
+                            {
+                              "kind": "wind_up",
+                              "move_pct": 50,
+                              "ticks": 12
+                            },
+                            {
+                              "damage": 10000,
+                              "hit_box": {
+                                "half_angle": 24576,
+                                "offset": {
+                                  "forward": 4096,
+                                  "right": 0
+                                },
+                                "radius": 14336,
+                                "type": "arc"
+                              },
+                              "kind": "active",
+                              "move_pct": 50,
+                              "ticks": 4,
+                              "type": "strike"
+                            },
+                            {
+                              "kind": "recovery",
+                              "move_pct": 50,
+                              "ticks": 22
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "smash": {
+                    "attack": {
+                      "inline": [
+                        {
+                          "kind": "wind_up",
+                          "move_pct": 50,
+                          "ticks": 14
+                        },
+                        {
+                          "hit_box": {
+                            "half_angle": 20480,
+                            "offset": {
+                              "forward": 4096,
+                              "right": 0
+                            },
+                            "radius": 12288,
+                            "type": "arc"
+                          },
+                          "kind": "active",
+                          "move_pct": 50,
+                          "ticks": 4,
+                          "type": "strike"
+                        },
+                        {
+                          "kind": "recovery",
+                          "move_pct": 50,
+                          "ticks": 22
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "smash": {
+                "attack": {
+                  "preset": {
+                    "args": [],
+                    "id": "slam"
+                  }
+                }
+              }
+            },
+            "dash": {
+              "main": {
+                "attack": {
+                  "inline": [
+                    {
+                      "kind": "wind_up",
+                      "ticks": 2
+                    },
+                    {
+                      "hit_box": {
+                        "offset": {
+                          "forward": 0,
+                          "right": 0
+                        },
+                        "radius": 8192,
+                        "type": "circle"
+                      },
+                      "kind": "active",
+                      "ticks": 3,
+                      "type": "strike"
+                    },
+                    {
+                      "kind": "recovery",
+                      "ticks": 8
+                    }
+                  ]
+                }
+              },
+              "smash": {
+                "attack": {
+                  "preset": {
+                    "args": [],
+                    "id": "slam"
+                  }
+                }
+              }
+            },
+            "dash_strike_ticks": 10,
+            "smash": {
+              "ticks": 30,
+              "type": "stun"
+            },
+            "window_ticks": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "giant_sword",
+      "trees": [
+        {
+          "id": "giant_sword_base",
+          "weapon": {
+            "assist_range": 40960,
+            "combo": {
+              "main": {
+                "attack": {
+                  "preset": {
+                    "args": [],
+                    "id": "slash"
+                  }
+                },
+                "next": {
+                  "main": {
+                    "attack": {
+                      "preset": {
+                        "args": [],
+                        "id": "slash"
+                      }
+                    },
+                    "next": {
+                      "main": {
+                        "attack": {
+                          "preset": {
+                            "args": [],
+                            "id": "thrust"
+                          }
+                        },
+                        "charge": {
+                          "levels": [
+                            {
+                              "at_ticks": 20,
+                              "attack": {
+                                "inline": [
+                                  {
+                                    "kind": "wind_up",
+                                    "move_pct": 50,
+                                    "ticks": 10
+                                  },
+                                  {
+                                    "hit_box": {
+                                      "half_angle": 22528,
+                                      "offset": {
+                                        "forward": 2048,
+                                        "right": 0
+                                      },
+                                      "radius": 8192,
+                                      "type": "arc"
+                                    },
+                                    "kind": "active",
+                                    "move_pct": 50,
+                                    "ticks": 5,
+                                    "type": "slash"
+                                  },
+                                  {
+                                    "kind": "recovery",
+                                    "move_pct": 50,
+                                    "ticks": 18
+                                  }
+                                ]
+                              },
+                              "perfect_pct": 50,
+                              "perfect_ticks": 6
+                            },
+                            {
+                              "at_ticks": 50,
+                              "attack": {
+                                "inline": [
+                                  {
+                                    "kind": "wind_up",
+                                    "move_pct": 50,
+                                    "ticks": 15
+                                  },
+                                  {
+                                    "hit_box": {
+                                      "offset": {
+                                        "forward": 0,
+                                        "right": 0
+                                      },
+                                      "radius": 10240,
+                                      "type": "circle"
+                                    },
+                                    "kind": "active",
+                                    "move_pct": 50,
+                                    "ticks": 5,
+                                    "type": "slash"
+                                  },
+                                  {
+                                    "kind": "recovery",
+                                    "move_pct": 50,
+                                    "ticks": 25
+                                  }
+                                ]
+                              },
+                              "perfect_pct": 50,
+                              "perfect_ticks": 6
+                            }
+                          ],
+                          "max_ticks": 90,
+                          "move_pct": 50
+                        },
+                        "next": {
+                          "main": {
+                            "attack": {
+                              "preset": {
+                                "args": [],
+                                "id": "slash"
+                              }
+                            },
+                            "next": {
+                              "main": {
+                                "attack": {
+                                  "preset": {
+                                    "args": [],
+                                    "id": "thrust"
+                                  }
+                                },
+                                "next": {
+                                  "smash": {
+                                    "attack": {
+                                      "inline": [
+                                        {
+                                          "kind": "wind_up",
+                                          "ticks": 15
+                                        },
+                                        {
+                                          "damage": 16000,
+                                          "hit_box": {
+                                            "offset": {
+                                              "forward": 10240,
+                                              "right": 0
+                                            },
+                                            "radius": 6144,
+                                            "type": "circle"
+                                          },
+                                          "kind": "active",
+                                          "ticks": 5,
+                                          "type": "pierce"
+                                        },
+                                        {
+                                          "kind": "recovery",
+                                          "ticks": 28
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              },
+                              "smash": {
+                                "attack": {
+                                  "inline": [
+                                    {
+                                      "kind": "wind_up",
+                                      "ticks": 13
+                                    },
+                                    {
+                                      "damage": 12000,
+                                      "hit_box": {
+                                        "half_angle": 24576,
+                                        "offset": {
+                                          "forward": 2048,
+                                          "right": 0
+                                        },
+                                        "radius": 12288,
+                                        "type": "arc"
+                                      },
+                                      "kind": "active",
+                                      "ticks": 5,
+                                      "type": "slash"
+                                    },
+                                    {
+                                      "kind": "recovery",
+                                      "ticks": 20
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          },
+                          "smash": {
+                            "attack": {
+                              "inline": [
+                                {
+                                  "kind": "wind_up",
+                                  "ticks": 13
+                                },
+                                {
+                                  "damage": 10000,
+                                  "hit_box": {
+                                    "offset": {
+                                      "forward": 8192,
+                                      "right": 0
+                                    },
+                                    "radius": 4096,
+                                    "type": "circle"
+                                  },
+                                  "kind": "active",
+                                  "ticks": 4,
+                                  "type": "pierce"
+                                },
+                                {
+                                  "kind": "recovery",
+                                  "ticks": 23
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      "smash": {
+                        "attack": {
+                          "inline": [
+                            {
+                              "kind": "wind_up",
+                              "ticks": 10
+                            },
+                            {
+                              "damage": 10000,
+                              "hit_box": {
+                                "half_angle": 20480,
+                                "offset": {
+                                  "forward": 2048,
+                                  "right": 0
+                                },
+                                "radius": 10240,
+                                "type": "arc"
+                              },
+                              "kind": "active",
+                              "ticks": 5,
+                              "type": "slash"
+                            },
+                            {
+                              "kind": "recovery",
+                              "ticks": 18
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "smash": {
+                    "attack": {
+                      "preset": {
+                        "args": [],
+                        "id": "thrust"
+                      }
+                    }
+                  }
+                }
+              },
+              "smash": {
+                "attack": {
+                  "preset": {
+                    "args": [],
+                    "id": "slash"
+                  }
+                }
+              }
+            },
+            "dash": {
+              "main": {
+                "attack": {
+                  "preset": {
+                    "args": [],
+                    "id": "thrust"
+                  }
+                }
+              },
+              "smash": {
+                "attack": {
+                  "preset": {
+                    "args": [],
+                    "id": "slash"
+                  }
+                }
+              }
+            },
+            "dash_strike_ticks": 10,
+            "smash": {
+              "type": "bleed"
+            },
+            "window_ticks": 36
+          }
+        }
+      ]
+    }
+  ]
+},
+  "rules": {
+  "crowd_target": 200,
+  "cap_headroom_pct": 30,
+  "player_speed": 768,
+  "player_radius": 512,
+  "orb_radius": 768,
+  "hit_invulnerable_ticks": 60,
+  "aggro_per_damage": 1,
+  "aggro_per_buff": 4000,
+  "aggro_per_heal_point": 2,
+  "aggro_decay": 100,
+  "leash_reach_x": 215040,
+  "leash_reach_y": 92160,
+  "leash_land_x": 123904,
+  "leash_land_y": 62464,
+  "spawn_margin": 16384,
+  "ranged_token_cooldown_ticks": 30,
+  "ranged_zone_tokens": 3,
+  "ranged_line_tokens": 1,
+  "orbit_step": 384,
+  "boss_arrival_above": 30720,
+  "default_xp": 1,
+  "offer_size": 3,
+  "defence_k": 10000,
+  "crit_damage_base_pct": 200
+},
   "starting_unlocks": {
-  "schema_version": 0,
-  "sim_version": 0,
+  "free_weapon": "giant_sword",
+  "free_perk_set": "duelist",
   "weapons": ["giant_sword"],
   "perk_sets": ["duelist"],
   "stage_skills": ["nova"],
   "runes": ["explosion", "bleed", "boomerang"]
 },
   "constellations": {
-  "schema_version": 0,
-  "sim_version": 0,
   "constellations": [
     {
       "id": "summer_triangle",
@@ -3406,8 +4094,6 @@
   ]
 },
   "stardust": {
-  "schema_version": 0,
-  "sim_version": 0,
   "modes": [
     { "id": "time_limit", "bank": true, "pay_pct": 50, "bank_pct": 50, "bank_cap": 1000 },
     { "id": "trial", "bank": true, "pay_pct": 50, "bank_pct": 50, "bank_cap": 1000 }
@@ -3415,8 +4101,8 @@
 },
   "modes": {
     "trial": {
-  "schema_version": 0,
-  "sim_version": 0,
+  "schema_version": 1,
+  "sim_version": 1,
   "id": "trial",
   "title": "Trial",
   "description": "The trial mode: one placeholder stage of bats in waves, a fairy that heals, and a golem whose horn breaks. Defeated enemies give experience, and each level gives a stat point to spend. Two elites hold their places until the golem calls them. Placeholder match-ups: the bats are weak to Slash, the elites strong against Pierce and resist every other attack type, the golem weak to Strike and resists every other attack type; its horn has none. The weapons and the seed come from the run setup.",
@@ -3490,9 +4176,8 @@
           ]
         },
         "movement": {
-          "type": "straight",
-          "vx": 0,
-          "vy": 192
+          "type": "follow",
+          "distance": 12288
         },
         "rules": [
           {
@@ -3504,10 +4189,7 @@
               "type": "attack",
               "attack": {
                 "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
+                  "id": "slash"
                 }
               }
             },
@@ -3516,9 +4198,9 @@
           }
         ]
       },
-      "spawn": {
-        "x": 61440,
-        "y": 0
+      "edge": {
+        "side": "top",
+        "along": -423
       },
       "count": 5,
       "every_ticks": 40,
@@ -3540,9 +4222,8 @@
           ]
         },
         "movement": {
-          "type": "straight",
-          "vx": 0,
-          "vy": 192
+          "type": "follow",
+          "distance": 12288
         },
         "rules": [
           {
@@ -3554,10 +4235,7 @@
               "type": "attack",
               "attack": {
                 "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
+                  "id": "slash"
                 }
               }
             },
@@ -3566,9 +4244,9 @@
           }
         ]
       },
-      "spawn": {
-        "x": 266240,
-        "y": 0
+      "edge": {
+        "side": "top",
+        "along": 423
       },
       "count": 5,
       "every_ticks": 40,
@@ -3599,23 +4277,15 @@
               "type": "always"
             },
             "target": "nearest_ally",
-            "do": {
-              "type": "attack",
-              "attack": {
-                "preset": {
-                  "id": "spread_5",
-                  "args": []
-                }
-              }
-            },
+            "do": {"type": "attack", "attack": {"inline": [{"kind": "wind_up", "ticks": 45, "spawn": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "anchor": "target", "wind_up_ticks": 45, "active_ticks": 4}]}, {"kind": "active", "ticks": 4}, {"kind": "recovery", "ticks": 15}]}, "ranged": true},
             "cooldown_ticks": 120,
             "once": false
           }
         ]
       },
-      "spawn": {
-        "x": 102400,
-        "y": 0
+      "edge": {
+        "side": "top",
+        "along": -254
       },
       "count": 4,
       "every_ticks": 60,
@@ -3651,10 +4321,7 @@
               "type": "attack",
               "attack": {
                 "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
+                  "id": "slash"
                 }
               }
             },
@@ -3666,9 +4333,9 @@
           "range": 51200
         }
       },
-      "spawn": {
-        "x": 133120,
-        "y": 120320
+      "edge": {
+        "side": "top",
+        "along": -586
       },
       "count": 1,
       "every_ticks": 0,
@@ -3704,10 +4371,7 @@
               "type": "attack",
               "attack": {
                 "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
+                  "id": "slash"
                 }
               }
             },
@@ -3719,9 +4383,9 @@
           "range": 40960
         }
       },
-      "spawn": {
-        "x": 266240,
-        "y": 76800
+      "edge": {
+        "side": "top",
+        "along": 847
       },
       "count": 1,
       "every_ticks": 0,
@@ -3769,68 +4433,93 @@
         "timeline": [
           {
             "type": "wait",
-            "ticks": 90
+            "ticks": 120
           },
           {
             "type": "telegraph",
-            "ticks": 30
-          },
-          {
-            "type": "attack",
-            "attack": {
-              "preset": {
-                "id": "aimed_spread",
-                "args": [
-                  768
-                ]
-              }
-            }
-          },
-          {
-            "type": "move_to",
-            "to": {
-              "x": 92160,
-              "y": 35840
-            },
             "ticks": 60
           },
           {
             "type": "attack",
             "attack": {
               "preset": {
-                "id": "aimed_spread",
-                "args": [
-                  768
-                ]
+                "id": "elite_slam",
+                "args": []
               }
+            },
+            "big": true
+          },
+          {
+            "type": "wait",
+            "ticks": 150
+          },
+          {
+            "type": "attack",
+            "attack": {
+              "inline": [
+                {
+                  "kind": "active",
+                  "ticks": 1,
+                  "damage": 5000,
+                  "spawn": [
+                    {
+                      "type": "spread",
+                      "count": 10,
+                      "angle": 69120,
+                      "body": [
+                        {
+                          "type": "zone",
+                          "shape": {
+                            "type": "circle",
+                            "radius": 7680
+                          },
+                          "offset": {
+                            "forward": 28672
+                          },
+                          "direction": {
+                            "type": "aimed",
+                            "offset": 46080
+                          },
+                          "wind_up_ticks": 45,
+                          "active_ticks": 4
+                        }
+                      ]
+                    },
+                    {
+                      "type": "wait",
+                      "ticks": 30
+                    },
+                    {
+                      "type": "spread",
+                      "count": 14,
+                      "angle": 69120,
+                      "body": [
+                        {
+                          "type": "zone",
+                          "shape": {
+                            "type": "circle",
+                            "radius": 8192
+                          },
+                          "offset": {
+                            "forward": 45056
+                          },
+                          "direction": {
+                            "type": "aimed",
+                            "offset": 46080
+                          },
+                          "wind_up_ticks": 45,
+                          "active_ticks": 4
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           },
           {
-            "type": "move_to",
-            "to": {
-              "x": 235520,
-              "y": 35840
-            },
+            "type": "wait",
             "ticks": 90
-          },
-          {
-            "type": "attack",
-            "attack": {
-              "preset": {
-                "id": "aimed_spread",
-                "args": [
-                  768
-                ]
-              }
-            }
-          },
-          {
-            "type": "move_to",
-            "to": {
-              "x": 163840,
-              "y": 35840
-            },
-            "ticks": 60
           },
           {
             "type": "loop"
@@ -3841,7 +4530,7 @@
       {
         "transition": [
           {
-            "type": "clear_bullets"
+            "type": "clear_zones"
           },
           {
             "type": "invulnerable_ticks",
@@ -3851,38 +4540,108 @@
         "timeline": [
           {
             "type": "telegraph",
-            "ticks": 40
+            "ticks": 60
           },
           {
             "type": "attack",
-            "big": true,
             "attack": {
               "preset": {
-                "id": "spiral",
-                "args": [
-                  512
-                ]
+                "id": "elite_slam",
+                "args": []
               }
-            }
+            },
+            "big": true
           },
           {
             "type": "wait",
-            "ticks": 150
+            "ticks": 130
           },
           {
             "type": "attack",
             "attack": {
-              "preset": {
-                "id": "aimed_spread",
-                "args": [
-                  896
-                ]
-              }
+              "inline": [
+                {
+                  "kind": "active",
+                  "ticks": 1,
+                  "damage": 5000,
+                  "spawn": [
+                    {
+                      "type": "spread",
+                      "count": 10,
+                      "angle": 69120,
+                      "body": [
+                        {
+                          "type": "zone",
+                          "shape": {
+                            "type": "circle",
+                            "radius": 7680
+                          },
+                          "offset": {
+                            "forward": 28672
+                          },
+                          "direction": {
+                            "type": "aimed",
+                            "offset": 46080
+                          },
+                          "wind_up_ticks": 45,
+                          "active_ticks": 4
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           },
           {
             "type": "wait",
             "ticks": 60
+          },
+          {
+            "type": "attack",
+            "attack": {
+              "inline": [
+                {
+                  "kind": "active",
+                  "ticks": 1,
+                  "damage": 5000,
+                  "spawn": [
+                    {
+                      "type": "spread",
+                      "count": 3,
+                      "angle": 10240,
+                      "body": [
+                        {
+                          "type": "orb",
+                          "speed": 256,
+                          "direction": {
+                            "type": "aimed",
+                            "offset": 0
+                          },
+                          "ticks": 240,
+                          "breakable": true,
+                          "burst": [
+                            {
+                              "type": "zone",
+                              "shape": {
+                                "type": "circle",
+                                "radius": 10240
+                              },
+                              "wind_up_ticks": 40,
+                              "active_ticks": 4
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "wait",
+            "ticks": 150
           },
           {
             "type": "loop"
@@ -3964,8 +4723,6 @@
   }
 },
     "time_limit": {
-  "schema_version": 0,
-  "sim_version": 0,
   "id": "time_limit",
   "length_ticks": 72000,
   "boss_ticks": [
@@ -4027,10 +4784,7 @@
               "type": "attack",
               "attack": {
                 "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
+                  "id": "slash"
                 }
               }
             },
@@ -4039,13 +4793,12 @@
           }
         ]
       },
-      "spawn": {
-        "x": 524288,
-        "y": 524288
+      "edge": {
+        "side": "any"
       },
-      "around": 102400,
       "count": 1199,
       "every_ticks": 60,
+      "xp": 10,
       "expertise": {
         "hit": 1,
         "kill": 3
@@ -4078,10 +4831,7 @@
               "type": "attack",
               "attack": {
                 "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
+                  "id": "slash"
                 }
               }
             },
@@ -4090,13 +4840,12 @@
           }
         ]
       },
-      "spawn": {
-        "x": 524288,
-        "y": 524288
+      "edge": {
+        "side": "any"
       },
-      "around": 115200,
       "count": 798,
       "every_ticks": 90,
+      "xp": 10,
       "expertise": {
         "hit": 1,
         "kill": 3
@@ -4122,14 +4871,12 @@
         },
         "rules": []
       },
-      "spawn": {
-        "x": 524288,
-        "y": 524288
+      "edge": {
+        "side": "any"
       },
-      "around": 102400,
       "count": 1200,
       "every_ticks": 60,
-      "xp": 1,
+      "xp": 10,
       "expertise": {
         "hit": 1,
         "kill": 3
@@ -4154,14 +4901,12 @@
         },
         "rules": []
       },
-      "spawn": {
-        "x": 524288,
-        "y": 524288
+      "edge": {
+        "side": "any"
       },
-      "around": 102400,
       "count": 400,
       "every_ticks": 180,
-      "xp": 1,
+      "xp": 10,
       "expertise": {
         "hit": 1,
         "kill": 3
@@ -4193,27 +4938,46 @@
             "do": {
               "type": "attack",
               "attack": {
-                "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
-                }
-              }
+                "inline": [
+                  {
+                    "kind": "wind_up",
+                    "ticks": 45,
+                    "spawn": [
+                      {
+                        "type": "zone",
+                        "shape": {
+                          "type": "circle",
+                          "radius": 7168
+                        },
+                        "anchor": "target",
+                        "wind_up_ticks": 45,
+                        "active_ticks": 4
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 4
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 15
+                  }
+                ]
+              },
+              "ranged": true
             },
             "cooldown_ticks": 90,
             "once": false
           }
         ]
       },
-      "spawn": {
-        "x": 524288,
-        "y": 524288
+      "edge": {
+        "side": "any"
       },
-      "around": 102400,
       "count": 204,
       "every_ticks": 300,
-      "xp": 1,
+      "xp": 10,
       "expertise": {
         "hit": 1,
         "kill": 3
@@ -4257,14 +5021,12 @@
           }
         ]
       },
-      "spawn": {
-        "x": 524288,
-        "y": 524288
+      "edge": {
+        "side": "any"
       },
-      "around": 102400,
       "count": 84,
       "every_ticks": 600,
-      "xp": 1,
+      "xp": 10,
       "expertise": {
         "hit": 1,
         "kill": 3
@@ -4297,9 +5059,23 @@
             "do": {
               "type": "attack",
               "attack": {
-                "preset": {
-                  "id": "spread_5"
-                }
+                "inline": [
+                  {
+                    "kind": "active",
+                    "ticks": 1,
+                    "spawn": [
+                      {
+                        "type": "zone",
+                        "shape": {
+                          "type": "circle",
+                          "radius": 9216
+                        },
+                        "wind_up_ticks": 45,
+                        "active_ticks": 4
+                      }
+                    ]
+                  }
+                ]
               }
             },
             "cooldown_ticks": 0,
@@ -4308,14 +5084,12 @@
           }
         ]
       },
-      "spawn": {
-        "x": 524288,
-        "y": 524288
+      "edge": {
+        "side": "any"
       },
-      "around": 102400,
       "count": 132,
       "every_ticks": 300,
-      "xp": 1,
+      "xp": 10,
       "expertise": {
         "hit": 1,
         "kill": 3
@@ -4371,14 +5145,99 @@
           }
         ]
       },
-      "spawn": {
-        "x": 524288,
-        "y": 524288
+      "edge": {
+        "side": "any"
       },
-      "around": 102400,
       "count": 48,
       "every_ticks": 600,
-      "xp": 1,
+      "xp": 10,
+      "expertise": {
+        "hit": 1,
+        "kill": 3
+      },
+      "stardust": 10
+    },
+    {
+      "id": "line_caster",
+      "at_tick": 25200,
+      "enemy": {
+        "base": "fairy_a",
+        "hp": 6000,
+        "radius": 2048,
+        "profile": {
+          "weak": [
+            "strike"
+          ]
+        },
+        "movement": {
+          "type": "follow",
+          "distance": 71680
+        },
+        "rules": [
+          {
+            "when": {
+              "type": "always"
+            },
+            "target": "nearest_ally",
+            "do": {
+              "type": "attack",
+              "attack": {
+                "inline": [
+                  {
+                    "kind": "wind_up",
+                    "ticks": 90,
+                    "spawn": [
+                      {
+                        "type": "zone",
+                        "shape": {
+                          "type": "line",
+                          "length": 61440,
+                          "width": 5120
+                        },
+                        "offset": {
+                          "forward": 0
+                        },
+                        "wind_up_ticks": 90,
+                        "active_ticks": 6
+                      },
+                      {
+                        "type": "zone",
+                        "shape": {
+                          "type": "line",
+                          "length": 61440,
+                          "width": 5120
+                        },
+                        "offset": {
+                          "forward": 61440
+                        },
+                        "wind_up_ticks": 90,
+                        "active_ticks": 6
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 6
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 15
+                  }
+                ]
+              },
+              "ranged": true
+            },
+            "cooldown_ticks": 240,
+            "once": false
+          }
+        ]
+      },
+      "edge": {
+        "side": "any"
+      },
+      "count": 78,
+      "every_ticks": 600,
+      "xp": 10,
       "expertise": {
         "hit": 1,
         "kill": 3
@@ -4445,15 +5304,36 @@
             "do": {
               "type": "attack",
               "attack": {
-                "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
-                }
+                "inline": [
+                  {
+                    "kind": "wind_up",
+                    "ticks": 50,
+                    "damage": 3000,
+                    "spawn": [
+                      {
+                        "type": "zone",
+                        "shape": {
+                          "type": "circle",
+                          "radius": 7168
+                        },
+                        "anchor": "target",
+                        "wind_up_ticks": 50,
+                        "active_ticks": 4
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 4
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 20
+                  }
+                ]
               }
             },
-            "cooldown_ticks": 90,
+            "cooldown_ticks": 120,
             "once": false
           }
         ],
@@ -4461,7 +5341,7 @@
           "range": 51200
         }
       },
-      "xp": 3,
+      "xp": 30,
       "expertise": {
         "hit": 4,
         "kill": 60
@@ -4495,24 +5375,43 @@
               "attack": {
                 "inline": [
                   {
-                    "kind": "active",
-                    "ticks": 1,
-                    "damage": 200,
+                    "kind": "wind_up",
+                    "ticks": 55,
+                    "damage": 4000,
                     "spawn": [
                       {
-                        "type": "fire",
-                        "speed": 640,
-                        "direction": {
-                          "type": "aimed",
-                          "offset": 0
-                        }
+                        "type": "ring",
+                        "count": 3,
+                        "body": [
+                          {
+                            "type": "zone",
+                            "shape": {
+                              "type": "circle",
+                              "radius": 7168
+                            },
+                            "anchor": "target",
+                            "offset": {
+                              "forward": 10240
+                            },
+                            "wind_up_ticks": 55,
+                            "active_ticks": 4
+                          }
+                        ]
                       }
                     ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 4
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 20
                   }
                 ]
               }
             },
-            "cooldown_ticks": 90,
+            "cooldown_ticks": 120,
             "once": false
           },
           {
@@ -4523,15 +5422,54 @@
             "do": {
               "type": "attack",
               "attack": {
-                "preset": {
-                  "id": "aimed_spread",
-                  "args": [
-                    768
-                  ]
-                }
+                "inline": [
+                  {
+                    "kind": "wind_up",
+                    "ticks": 50,
+                    "damage": 6000,
+                    "move_pct": 0,
+                    "spawn": [
+                      {
+                        "type": "zone",
+                        "shape": {
+                          "type": "line",
+                          "length": 61440,
+                          "width": 10240
+                        },
+                        "offset": {
+                          "forward": 0
+                        },
+                        "direction": {
+                          "type": "aimed",
+                          "offset": 0
+                        },
+                        "wind_up_ticks": 50,
+                        "warn_only": true
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 14,
+                    "damage": 6000,
+                    "move_pct": 0,
+                    "dash": {
+                      "distance": 61440
+                    },
+                    "hit_box": {
+                      "type": "circle",
+                      "radius": 6144
+                    }
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 50,
+                    "move_pct": 0
+                  }
+                ]
               }
             },
-            "cooldown_ticks": 120,
+            "cooldown_ticks": 210,
             "once": false
           }
         ],
@@ -4539,7 +5477,7 @@
           "range": 51200
         }
       },
-      "xp": 3,
+      "xp": 30,
       "expertise": {
         "hit": 4,
         "kill": 60
@@ -4571,9 +5509,58 @@
             "do": {
               "type": "attack",
               "attack": {
-                "preset": {
-                  "id": "elite_slam"
-                }
+                "inline": [
+                  {
+                    "kind": "wind_up",
+                    "ticks": 90,
+                    "move_pct": 50,
+                    "damage": 4000,
+                    "spawn": [
+                      {
+                        "type": "wait",
+                        "ticks": 90
+                      },
+                      {
+                        "type": "ring",
+                        "count": 8,
+                        "body": [
+                          {
+                            "type": "zone",
+                            "shape": {
+                              "type": "circle",
+                              "radius": 5120
+                            },
+                            "offset": {
+                              "forward": 20480
+                            },
+                            "direction": {
+                              "type": "absolute",
+                              "angle": 0
+                            },
+                            "wind_up_ticks": 40,
+                            "active_ticks": 4
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 4,
+                    "move_pct": 50,
+                    "type": "strike",
+                    "damage": 10000,
+                    "hit_box": {
+                      "type": "circle",
+                      "radius": 10240
+                    }
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 20,
+                    "move_pct": 50
+                  }
+                ]
               }
             },
             "cooldown_ticks": 90,
@@ -4584,7 +5571,7 @@
           "range": 51200
         }
       },
-      "xp": 3,
+      "xp": 30,
       "expertise": {
         "hit": 4,
         "kill": 60
@@ -4608,7 +5595,7 @@
           "boss_call": "leave"
         }
       },
-      "xp": 3,
+      "xp": 30,
       "expertise": {
         "hit": 4,
         "kill": 60
@@ -4643,10 +5630,7 @@
                     "type": "attack",
                     "attack": {
                       "preset": {
-                        "id": "aimed_single",
-                        "args": [
-                          640
-                        ]
+                        "id": "slash"
                       }
                     }
                   },
@@ -4659,12 +5643,45 @@
             "radius": 20480
           }
         },
+        "rules": [
+          {
+            "when": {
+              "type": "always"
+            },
+            "target": "player",
+            "do": {
+              "type": "attack",
+              "attack": {
+                "inline": [
+                  {
+                    "kind": "active",
+                    "ticks": 1,
+                    "damage": 5000,
+                    "spawn": [
+                      {
+                        "type": "zone",
+                        "shape": {
+                          "type": "circle",
+                          "radius": 16384
+                        },
+                        "wind_up_ticks": 60,
+                        "active_ticks": 4
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "cooldown_ticks": 300,
+            "once": false
+          }
+        ],
         "elite": {
           "range": 51200,
           "boss_call": "stay"
         }
       },
-      "xp": 3,
+      "xp": 30,
       "expertise": {
         "hit": 4,
         "kill": 60
@@ -4696,15 +5713,85 @@
             "do": {
               "type": "attack",
               "attack": {
-                "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
-                }
+                "inline": [
+                  {
+                    "kind": "wind_up",
+                    "ticks": 50,
+                    "damage": 4000,
+                    "spawn": [
+                      {
+                        "type": "zone",
+                        "shape": {
+                          "type": "circle",
+                          "radius": 7168
+                        },
+                        "anchor": "target",
+                        "wind_up_ticks": 50,
+                        "active_ticks": 4
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 4
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 20
+                  }
+                ]
               }
             },
-            "cooldown_ticks": 90,
+            "cooldown_ticks": 150,
+            "once": false
+          },
+          {
+            "when": {
+              "type": "always"
+            },
+            "target": "nearest_ally",
+            "do": {
+              "type": "attack",
+              "attack": {
+                "inline": [
+                  {
+                    "kind": "wind_up",
+                    "ticks": 70,
+                    "damage": 4000,
+                    "spawn": [
+                      {
+                        "type": "ring",
+                        "count": 6,
+                        "body": [
+                          {
+                            "type": "zone",
+                            "shape": {
+                              "type": "circle",
+                              "radius": 5632
+                            },
+                            "anchor": "target",
+                            "offset": {
+                              "forward": 18432
+                            },
+                            "wind_up_ticks": 70,
+                            "active_ticks": 4
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 4
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 20
+                  }
+                ]
+              }
+            },
+            "cooldown_ticks": 240,
             "once": false
           }
         ],
@@ -4733,10 +5820,7 @@
                     "type": "attack",
                     "attack": {
                       "preset": {
-                        "id": "aimed_single",
-                        "args": [
-                          640
-                        ]
+                        "id": "slash"
                       }
                     }
                   },
@@ -4750,7 +5834,7 @@
           }
         }
       },
-      "xp": 3,
+      "xp": 30,
       "expertise": {
         "hit": 4,
         "kill": 60
@@ -4784,24 +5868,95 @@
               "attack": {
                 "inline": [
                   {
-                    "kind": "active",
-                    "ticks": 1,
-                    "damage": 200,
+                    "kind": "wind_up",
+                    "ticks": 40,
+                    "damage": 5000,
                     "spawn": [
                       {
-                        "type": "fire",
-                        "speed": 640,
-                        "direction": {
-                          "type": "aimed",
-                          "offset": 0
-                        }
+                        "type": "ring",
+                        "count": 8,
+                        "body": [
+                          {
+                            "type": "zone",
+                            "shape": {
+                              "type": "circle",
+                              "radius": 5120
+                            },
+                            "offset": {
+                              "forward": 14336
+                            },
+                            "direction": {
+                              "type": "absolute",
+                              "angle": 0
+                            },
+                            "wind_up_ticks": 40,
+                            "active_ticks": 4
+                          }
+                        ]
                       }
                     ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 4
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 20
                   }
                 ]
               }
             },
-            "cooldown_ticks": 90,
+            "cooldown_ticks": 0,
+            "once": true
+          },
+          {
+            "when": {
+              "type": "always"
+            },
+            "target": "nearest_ally",
+            "do": {
+              "type": "attack",
+              "attack": {
+                "inline": [
+                  {
+                    "kind": "wind_up",
+                    "ticks": 55,
+                    "damage": 4000,
+                    "spawn": [
+                      {
+                        "type": "ring",
+                        "count": 3,
+                        "body": [
+                          {
+                            "type": "zone",
+                            "shape": {
+                              "type": "circle",
+                              "radius": 7168
+                            },
+                            "anchor": "target",
+                            "offset": {
+                              "forward": 10240
+                            },
+                            "wind_up_ticks": 55,
+                            "active_ticks": 4
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "active",
+                    "ticks": 4
+                  },
+                  {
+                    "kind": "recovery",
+                    "ticks": 20
+                  }
+                ]
+              }
+            },
+            "cooldown_ticks": 120,
             "once": false
           }
         ],
@@ -4813,7 +5968,7 @@
           }
         }
       },
-      "xp": 3,
+      "xp": 30,
       "expertise": {
         "hit": 4,
         "kill": 60
@@ -4830,12 +5985,79 @@
     ],
     "capstone": 10
   },
+  "levels": {
+    "xp": [
+      30,
+      120,
+      210,
+      300,
+      390,
+      480,
+      570,
+      660,
+      750,
+      840,
+      930,
+      1020,
+      1110,
+      1200,
+      1290,
+      1380,
+      1470,
+      1560,
+      1650,
+      1740,
+      1830,
+      1920,
+      2010,
+      2100,
+      2190
+    ]
+  },
+  "stars": {
+    "drop_per_mille": 500,
+    "pity": 2,
+    "cap": 16,
+    "pickup_radius": 6144,
+    "rerolls": 2,
+    "banishes": 1,
+    "tiers": [
+      {
+        "from_level": 1,
+        "weights": {
+          "common": 100
+        },
+        "random_rune_weight": 53
+      },
+      {
+        "from_level": 8,
+        "weights": {
+          "common": 70,
+          "uncommon": 15,
+          "rare": 30
+        },
+        "random_rune_weight": 176
+      },
+      {
+        "from_level": 13,
+        "weights": {
+          "common": 50,
+          "uncommon": 10,
+          "rare": 35,
+          "epic": 10,
+          "legendary": 15,
+          "supernova": 5
+        },
+        "random_rune_weight": 333
+      }
+    ]
+  },
   "bosses": [
-    {"base": "stone_warden", "hp": 150000, "radius": 8192, "profile": {"weak": ["strike"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "phases": [{"until": {"type": "hp_below", "who": "self", "pct": 50}, "transition": [], "timeline": [{"type": "wait", "ticks": 120}, {"type": "telegraph", "ticks": 60}, {"type": "attack", "attack": {"preset": {"id": "elite_slam", "args": []}}, "big": true}, {"type": "wait", "ticks": 150}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "spawn": [{"type": "ring", "count": 16, "body": [{"type": "fire", "speed": 640, "direction": {"type": "absolute", "angle": 0}}]}]}]}}, {"type": "wait", "ticks": 90}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_bullets"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 30}, {"type": "attack", "attack": {"preset": {"id": "spiral", "args": [512]}}}, {"type": "wait", "ticks": 120}, {"type": "attack", "attack": {"preset": {"id": "slam", "args": []}}}, {"type": "wait", "ticks": 60}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000},
-    {"base": "lantern_choir", "hp": 150000, "radius": 8192, "profile": {"weak": ["slash"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "phases": [{"until": {"type": "hp_below", "who": "self", "pct": 50}, "transition": [], "timeline": [{"type": "wait", "ticks": 90}, {"type": "attack", "attack": {"preset": {"id": "aimed_spread", "args": [768]}}}, {"type": "wait", "ticks": 60}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "spawn": [{"type": "ring", "count": 8, "body": [{"type": "spread", "count": 3, "angle": 2560, "body": [{"type": "fire", "speed": 768, "direction": {"type": "aimed", "offset": 0}}]}]}]}]}}, {"type": "wait", "ticks": 90}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_bullets"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 30}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "spawn": [{"type": "ring", "count": 12, "body": [{"type": "spread", "count": 3, "angle": 2560, "body": [{"type": "fire", "speed": 896, "direction": {"type": "aimed", "offset": 0}}]}]}]}]}}, {"type": "wait", "ticks": 60}, {"type": "attack", "attack": {"preset": {"id": "aimed_spread", "args": [896]}}}, {"type": "wait", "ticks": 60}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000},
-    {"base": "horn_charger", "hp": 150000, "radius": 8192, "profile": {"weak": ["pierce"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "phases": [{"until": {"type": "hp_below", "who": "self", "pct": 50}, "transition": [], "timeline": [{"type": "telegraph", "ticks": 40}, {"type": "move_to", "to": {"x": 163840, "y": 180000}, "ticks": 30}, {"type": "attack", "attack": {"preset": {"id": "spread_5", "args": []}}}, {"type": "wait", "ticks": 30}, {"type": "move_to", "to": {"x": 163840, "y": 35840}, "ticks": 60}, {"type": "wait", "ticks": 30}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_bullets"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 20}, {"type": "move_to", "to": {"x": 163840, "y": 180000}, "ticks": 20}, {"type": "attack", "attack": {"preset": {"id": "twin_shot", "args": []}}}, {"type": "wait", "ticks": 20}, {"type": "move_to", "to": {"x": 163840, "y": 35840}, "ticks": 40}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000},
-    {"base": "weaver", "hp": 150000, "radius": 8192, "profile": {"weak": ["pierce"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "phases": [{"until": {"type": "hp_below", "who": "self", "pct": 66}, "transition": [], "timeline": [{"type": "wait", "ticks": 90}, {"type": "attack", "attack": {"preset": {"id": "aimed_single", "args": [640]}}}, {"type": "wait", "ticks": 60}, {"type": "loop"}], "rules": []}, {"until": {"type": "hp_below", "who": "self", "pct": 33}, "transition": [{"type": "clear_bullets"}], "timeline": [{"type": "wait", "ticks": 60}, {"type": "attack", "attack": {"preset": {"id": "aimed_spread", "args": [768]}}}, {"type": "wait", "ticks": 60}, {"type": "attack", "attack": {"preset": {"id": "aimed_single", "args": [640]}}}, {"type": "wait", "ticks": 40}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_bullets"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 30}, {"type": "attack", "attack": {"preset": {"id": "spiral", "args": [512]}}}, {"type": "wait", "ticks": 90}, {"type": "attack", "attack": {"preset": {"id": "aimed_spread", "args": [896]}}}, {"type": "wait", "ticks": 40}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000},
-    {"base": "core_pair", "hp": 300000, "radius": 8192, "profile": {"weak": ["strike", "pyro"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "parts": [{"id": "core_left", "asset": "horns_2", "hp": 60000, "offset": {"x": -3840, "y": -2048}, "radius": 4096}, {"id": "core_right", "asset": "horns_2", "hp": 60000, "offset": {"x": 3840, "y": -2048}, "radius": 4096}], "phases": [{"until": {"type": "part_broken", "part": "core_left"}, "transition": [], "timeline": [{"type": "wait", "ticks": 90}, {"type": "attack", "attack": {"preset": {"id": "aimed_spread", "args": [768]}}}, {"type": "wait", "ticks": 60}, {"type": "loop"}], "rules": []}, {"until": {"type": "part_broken", "part": "core_right"}, "transition": [{"type": "clear_bullets"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 40}, {"type": "attack", "attack": {"preset": {"id": "spiral", "args": [512]}}}, {"type": "wait", "ticks": 150}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_bullets"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "attack", "attack": {"preset": {"id": "aimed_spread", "args": [896]}}}, {"type": "wait", "ticks": 60}, {"type": "attack", "attack": {"preset": {"id": "spiral", "args": [512]}}}, {"type": "wait", "ticks": 120}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000}
+    {"base": "stone_warden", "hp": 150000, "radius": 8192, "profile": {"weak": ["strike"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "phases": [{"until": {"type": "hp_below", "who": "self", "pct": 50}, "transition": [], "timeline": [{"type": "wait", "ticks": 120}, {"type": "telegraph", "ticks": 60}, {"type": "attack", "attack": {"preset": {"id": "elite_slam", "args": []}}, "big": true}, {"type": "wait", "ticks": 150}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "spread", "count": 10, "angle": 69120, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7680}, "offset": {"forward": 28672}, "direction": {"type": "aimed", "offset": 46080}, "wind_up_ticks": 45, "active_ticks": 4}]}, {"type": "wait", "ticks": 30}, {"type": "spread", "count": 14, "angle": 69120, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 8192}, "offset": {"forward": 45056}, "direction": {"type": "aimed", "offset": 46080}, "wind_up_ticks": 45, "active_ticks": 4}]}]}]}}, {"type": "wait", "ticks": 90}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_zones"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 60}, {"type": "attack", "attack": {"preset": {"id": "elite_slam", "args": []}}, "big": true}, {"type": "wait", "ticks": 130}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "spread", "count": 10, "angle": 69120, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7680}, "offset": {"forward": 28672}, "direction": {"type": "aimed", "offset": 46080}, "wind_up_ticks": 45, "active_ticks": 4}]}]}]}}, {"type": "wait", "ticks": 60}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "spread", "count": 3, "angle": 10240, "body": [{"type": "orb", "speed": 256, "direction": {"type": "aimed", "offset": 0}, "ticks": 240, "breakable": true, "burst": [{"type": "zone", "shape": {"type": "circle", "radius": 10240}, "wind_up_ticks": 40, "active_ticks": 4}]}]}]}]}}, {"type": "wait", "ticks": 150}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000},
+    {"base": "lantern_choir", "hp": 150000, "radius": 8192, "profile": {"weak": ["slash"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "phases": [{"until": {"type": "hp_below", "who": "self", "pct": 50}, "transition": [], "timeline": [{"type": "wait", "ticks": 90}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "spread", "count": 3, "angle": 30720, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "anchor": "target", "offset": {"forward": 14336}, "wind_up_ticks": 60, "active_ticks": 4}]}]}]}}, {"type": "wait", "ticks": 100}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "ring", "count": 8, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 6656}, "anchor": "target", "offset": {"forward": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 75, "active_ticks": 4}]}, {"type": "wait", "ticks": 79}, {"type": "zone", "shape": {"type": "circle", "radius": 10240}, "anchor": "target", "wind_up_ticks": 40, "active_ticks": 4}]}]}}, {"type": "wait", "ticks": 130}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_zones"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 30}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "ring", "count": 12, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 6656}, "anchor": "target", "offset": {"forward": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 75, "active_ticks": 4}]}, {"type": "wait", "ticks": 79}, {"type": "zone", "shape": {"type": "circle", "radius": 10240}, "anchor": "target", "wind_up_ticks": 40, "active_ticks": 4}]}]}}, {"type": "wait", "ticks": 100}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "spread", "count": 2, "angle": 7680, "body": [{"type": "orb", "speed": 256, "direction": {"type": "aimed", "offset": 0}, "ticks": 180, "burst": [{"type": "zone", "shape": {"type": "circle", "radius": 10240}, "wind_up_ticks": 40, "active_ticks": 4}]}]}]}]}}, {"type": "wait", "ticks": 60}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "anchor": "target", "wind_up_ticks": 60, "active_ticks": 4}, {"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "anchor": "target", "offset": {"forward": 14336}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 4}]}]}]}}, {"type": "wait", "ticks": 100}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000},
+    {"base": "horn_charger", "hp": 150000, "radius": 8192, "profile": {"weak": ["pierce"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "phases": [{"until": {"type": "hp_below", "who": "self", "pct": 50}, "transition": [], "timeline": [{"type": "attack", "attack": {"inline": [{"kind": "wind_up", "ticks": 60, "damage": 7500, "move_pct": 0, "spawn": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 12288}, "offset": {"forward": 0}, "direction": {"type": "aimed", "offset": 0}, "wind_up_ticks": 60, "warn_only": true}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 12288}, "offset": {"forward": 61440}, "direction": {"type": "aimed", "offset": 0}, "wind_up_ticks": 60, "warn_only": true}]}, {"kind": "active", "ticks": 20, "damage": 7500, "move_pct": 0, "dash": {"distance": 122880}, "hit_box": {"type": "circle", "radius": 8192}}, {"kind": "recovery", "ticks": 60, "damage": 5000, "move_pct": 0, "spawn": [{"type": "ring", "count": 10, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "offset": {"forward": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 40, "active_ticks": 4}]}]}]}}, {"type": "wait", "ticks": 170}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_zones"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "attack", "attack": {"inline": [{"kind": "wind_up", "ticks": 40, "damage": 7500, "move_pct": 0, "spawn": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 12288}, "offset": {"forward": 0}, "direction": {"type": "aimed", "offset": 0}, "wind_up_ticks": 40, "warn_only": true}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 12288}, "offset": {"forward": 61440}, "direction": {"type": "aimed", "offset": 0}, "wind_up_ticks": 40, "warn_only": true}]}, {"kind": "active", "ticks": 16, "damage": 7500, "move_pct": 0, "dash": {"distance": 122880}, "hit_box": {"type": "circle", "radius": 8192}}, {"kind": "recovery", "ticks": 30, "damage": 5000, "move_pct": 0, "spawn": [{"type": "ring", "count": 10, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "offset": {"forward": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 40, "active_ticks": 4}]}, {"type": "spread", "count": 2, "angle": 7680, "body": [{"type": "orb", "speed": 256, "direction": {"type": "aimed", "offset": 0}, "ticks": 180, "burst": [{"type": "zone", "shape": {"type": "circle", "radius": 10240}, "wind_up_ticks": 40, "active_ticks": 4}]}]}]}]}}, {"type": "wait", "ticks": 86}, {"type": "attack", "attack": {"inline": [{"kind": "wind_up", "ticks": 40, "damage": 7500, "move_pct": 0, "spawn": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 12288}, "offset": {"forward": 0}, "direction": {"type": "aimed", "offset": 0}, "wind_up_ticks": 40, "warn_only": true}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 12288}, "offset": {"forward": 61440}, "direction": {"type": "aimed", "offset": 0}, "wind_up_ticks": 40, "warn_only": true}]}, {"kind": "active", "ticks": 16, "damage": 7500, "move_pct": 0, "dash": {"distance": 122880}, "hit_box": {"type": "circle", "radius": 8192}}, {"kind": "recovery", "ticks": 30, "damage": 5000, "move_pct": 0, "spawn": [{"type": "ring", "count": 10, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "offset": {"forward": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 40, "active_ticks": 4}]}, {"type": "spread", "count": 2, "angle": 7680, "body": [{"type": "orb", "speed": 256, "direction": {"type": "aimed", "offset": 0}, "ticks": 180, "burst": [{"type": "zone", "shape": {"type": "circle", "radius": 10240}, "wind_up_ticks": 40, "active_ticks": 4}]}]}]}]}}, {"type": "wait", "ticks": 86}, {"type": "attack", "attack": {"inline": [{"kind": "wind_up", "ticks": 40, "damage": 7500, "move_pct": 0, "spawn": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 12288}, "offset": {"forward": 0}, "direction": {"type": "aimed", "offset": 0}, "wind_up_ticks": 40, "warn_only": true}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 12288}, "offset": {"forward": 61440}, "direction": {"type": "aimed", "offset": 0}, "wind_up_ticks": 40, "warn_only": true}]}, {"kind": "active", "ticks": 16, "damage": 7500, "move_pct": 0, "dash": {"distance": 122880}, "hit_box": {"type": "circle", "radius": 8192}}, {"kind": "recovery", "ticks": 30, "damage": 5000, "move_pct": 0, "spawn": [{"type": "ring", "count": 10, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "offset": {"forward": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 40, "active_ticks": 4}]}, {"type": "spread", "count": 2, "angle": 7680, "body": [{"type": "orb", "speed": 256, "direction": {"type": "aimed", "offset": 0}, "ticks": 180, "burst": [{"type": "zone", "shape": {"type": "circle", "radius": 10240}, "wind_up_ticks": 40, "active_ticks": 4}]}]}]}]}}, {"type": "wait", "ticks": 146}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000},
+    {"base": "weaver", "hp": 150000, "radius": 8192, "profile": {"weak": ["pierce"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "phases": [{"until": {"type": "hp_below", "who": "self", "pct": 66}, "transition": [], "timeline": [{"type": "wait", "ticks": 90}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "offset": {"forward": 0}, "wind_up_ticks": 50, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "offset": {"forward": 61440}, "wind_up_ticks": 50, "active_ticks": 6}]}]}}, {"type": "wait", "ticks": 90}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}]}]}}, {"type": "wait", "ticks": 120}, {"type": "loop"}], "rules": []}, {"until": {"type": "hp_below", "who": "self", "pct": 33}, "transition": [{"type": "clear_zones"}], "timeline": [{"type": "wait", "ticks": 60}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440, "right": -24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0, "right": -24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440, "right": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0, "right": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "wait", "ticks": 30}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440, "right": -24576}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0, "right": -24576}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440, "right": 24576}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0, "right": 24576}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}]}]}}, {"type": "wait", "ticks": 150}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "offset": {"forward": 0}, "wind_up_ticks": 50, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "offset": {"forward": 61440}, "wind_up_ticks": 50, "active_ticks": 6}]}]}}, {"type": "wait", "ticks": 60}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_zones"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 90}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 6000, "spawn": [{"type": "rotate", "angle": 0, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 3840, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 7680, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 11520, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 15360, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 19200, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 23040, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 26880, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}]}]}}, {"type": "wait", "ticks": 200}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "rotate", "angle": 11520, "body": [{"type": "ring", "count": 4, "body": [{"type": "orb", "speed": 512, "direction": {"type": "aimed", "offset": 0}, "anchor": "target", "offset": {"forward": 4096}, "ticks": 180, "stop_after": 60, "breakable": true, "link": {"width": 5120, "rehit_ticks": 60}}]}]}]}]}}, {"type": "wait", "ticks": 100}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440, "right": -24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0, "right": -24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440, "right": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0, "right": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "wait", "ticks": 30}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440, "right": -24576}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0, "right": -24576}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": -61440, "right": 24576}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 5120}, "anchor": "target", "offset": {"forward": 0, "right": 24576}, "direction": {"type": "absolute", "angle": 23040}, "wind_up_ticks": 60, "active_ticks": 6}]}]}}, {"type": "wait", "ticks": 100}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000},
+    {"base": "core_pair", "hp": 300000, "radius": 8192, "profile": {"weak": ["strike", "pyro"], "resist": "physical"}, "spawn": {"x": 163840, "y": 35840}, "parts": [{"id": "core_left", "asset": "horns_2", "hp": 60000, "offset": {"x": -3840, "y": -2048}, "radius": 4096}, {"id": "core_right", "asset": "horns_2", "hp": 60000, "offset": {"x": 3840, "y": -2048}, "radius": 4096}], "phases": [{"until": {"type": "part_broken", "part": "core_left"}, "transition": [], "timeline": [{"type": "wait", "ticks": 90}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "repeat", "count": 3, "interval_ticks": 20, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "anchor": "target", "wind_up_ticks": 60, "active_ticks": 4}]}]}]}}, {"type": "wait", "ticks": 100}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "ring", "count": 10, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 6656}, "anchor": "target", "offset": {"forward": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 75, "active_ticks": 4}]}, {"type": "wait", "ticks": 79}, {"type": "zone", "shape": {"type": "circle", "radius": 10240}, "anchor": "target", "wind_up_ticks": 40, "active_ticks": 4}]}]}}, {"type": "wait", "ticks": 100}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 6000, "spawn": [{"type": "spread", "count": 3, "angle": 10240, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "wind_up_ticks": 60, "active_ticks": 8}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "wind_up_ticks": 60, "active_ticks": 8}]}]}]}}, {"type": "wait", "ticks": 90}, {"type": "loop"}], "rules": []}, {"until": {"type": "part_broken", "part": "core_right"}, "transition": [{"type": "clear_zones"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 90}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 6000, "spawn": [{"type": "rotate", "angle": 0, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 3840, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 7680, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 11520, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 15360, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 19200, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 23040, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}, {"type": "wait", "ticks": 26}, {"type": "rotate", "angle": 26880, "body": [{"type": "ring", "count": 4, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 45, "active_ticks": 6}]}]}]}]}}, {"type": "wait", "ticks": 260}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "spread", "count": 10, "angle": 69120, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7680}, "offset": {"forward": 28672}, "direction": {"type": "aimed", "offset": 46080}, "wind_up_ticks": 45, "active_ticks": 4}]}, {"type": "wait", "ticks": 30}, {"type": "spread", "count": 14, "angle": 69120, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 8192}, "offset": {"forward": 45056}, "direction": {"type": "aimed", "offset": 46080}, "wind_up_ticks": 45, "active_ticks": 4}]}]}]}}, {"type": "wait", "ticks": 120}, {"type": "loop"}], "rules": []}, {"transition": [{"type": "clear_zones"}, {"type": "invulnerable_ticks", "ticks": 60}], "timeline": [{"type": "telegraph", "ticks": 60}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "ring", "count": 16, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 8192}, "anchor": "target", "offset": {"forward": 40960}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 90, "active_ticks": 4}]}, {"type": "wait", "ticks": 94}, {"type": "ring", "count": 16, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 5632}, "anchor": "target", "offset": {"forward": 24576}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 90, "active_ticks": 4}]}, {"type": "wait", "ticks": 94}, {"type": "ring", "count": 16, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 5120}, "anchor": "target", "offset": {"forward": 8192}, "direction": {"type": "absolute", "angle": 0}, "wind_up_ticks": 90, "active_ticks": 4}]}]}]}}, {"type": "wait", "ticks": 260}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "ring", "count": 4, "body": [{"type": "orb", "speed": 256, "direction": {"type": "aimed", "offset": 0}, "ticks": 180, "burst": [{"type": "zone", "shape": {"type": "circle", "radius": 10240}, "wind_up_ticks": 40, "active_ticks": 4}]}]}]}]}}, {"type": "wait", "ticks": 120}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 5000, "spawn": [{"type": "repeat", "count": 3, "interval_ticks": 20, "body": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "anchor": "target", "wind_up_ticks": 50, "active_ticks": 4}]}]}]}}, {"type": "wait", "ticks": 80}, {"type": "attack", "attack": {"inline": [{"kind": "active", "ticks": 1, "damage": 6000, "spawn": [{"type": "spread", "count": 3, "angle": 10240, "body": [{"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 0}, "wind_up_ticks": 50, "active_ticks": 8}, {"type": "zone", "shape": {"type": "line", "length": 61440, "width": 6144}, "offset": {"forward": 61440}, "wind_up_ticks": 50, "active_ticks": 8}]}]}]}}, {"type": "wait", "ticks": 100}, {"type": "loop"}], "rules": []}], "call_elites": {"after_ticks": 1800, "below_pct": 70}, "expertise": {"hit": 5, "kill": 500}, "stardust": 2000}
   ],
   "stardust_summon_base": 10,
   "stardust_tiers": [
@@ -4862,8 +6084,8 @@
   ]
 },
     "tutorial": {
-  "schema_version": 0,
-  "sim_version": 0,
+  "schema_version": 1,
+  "sim_version": 1,
   "id": "tutorial",
   "title": "Tutorial",
   "description": "The tutorial mode: three minutes of gentle bats and one weak golem, with no elites, no mid-boss and no Stardust. Placeholder content from the trial stage: the same main character, companion, levels and stars, with the bats weak to Slash and the golem weak to Strike. Every weapon can be switched inside it; the weapon and the seed come from the run setup.",
@@ -4936,9 +6158,8 @@
           ]
         },
         "movement": {
-          "type": "straight",
-          "vx": 0,
-          "vy": 192
+          "type": "follow",
+          "distance": 12288
         },
         "rules": [
           {
@@ -4950,10 +6171,7 @@
               "type": "attack",
               "attack": {
                 "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
+                  "id": "slash"
                 }
               }
             },
@@ -4962,9 +6180,9 @@
           }
         ]
       },
-      "spawn": {
-        "x": 61440,
-        "y": 0
+      "edge": {
+        "side": "top",
+        "along": -423
       },
       "count": 3,
       "every_ticks": 40,
@@ -4985,9 +6203,8 @@
           ]
         },
         "movement": {
-          "type": "straight",
-          "vx": 0,
-          "vy": 192
+          "type": "follow",
+          "distance": 12288
         },
         "rules": [
           {
@@ -4999,10 +6216,7 @@
               "type": "attack",
               "attack": {
                 "preset": {
-                  "id": "aimed_single",
-                  "args": [
-                    640
-                  ]
+                  "id": "slash"
                 }
               }
             },
@@ -5011,9 +6225,9 @@
           }
         ]
       },
-      "spawn": {
-        "x": 266240,
-        "y": 0
+      "edge": {
+        "side": "top",
+        "along": 423
       },
       "count": 3,
       "every_ticks": 40,
@@ -5044,23 +6258,15 @@
               "type": "always"
             },
             "target": "nearest_ally",
-            "do": {
-              "type": "attack",
-              "attack": {
-                "preset": {
-                  "id": "spread_5",
-                  "args": []
-                }
-              }
-            },
+            "do": {"type": "attack", "attack": {"inline": [{"kind": "wind_up", "ticks": 45, "spawn": [{"type": "zone", "shape": {"type": "circle", "radius": 7168}, "anchor": "target", "wind_up_ticks": 45, "active_ticks": 4}]}, {"kind": "active", "ticks": 4}, {"kind": "recovery", "ticks": 15}]}, "ranged": true},
             "cooldown_ticks": 120,
             "once": false
           }
         ]
       },
-      "spawn": {
-        "x": 102400,
-        "y": 0
+      "edge": {
+        "side": "top",
+        "along": -254
       },
       "count": 2,
       "every_ticks": 60,
@@ -5092,68 +6298,93 @@
         "timeline": [
           {
             "type": "wait",
-            "ticks": 90
+            "ticks": 120
           },
           {
             "type": "telegraph",
-            "ticks": 30
-          },
-          {
-            "type": "attack",
-            "attack": {
-              "preset": {
-                "id": "aimed_spread",
-                "args": [
-                  768
-                ]
-              }
-            }
-          },
-          {
-            "type": "move_to",
-            "to": {
-              "x": 92160,
-              "y": 35840
-            },
             "ticks": 60
           },
           {
             "type": "attack",
             "attack": {
               "preset": {
-                "id": "aimed_spread",
-                "args": [
-                  768
-                ]
+                "id": "elite_slam",
+                "args": []
               }
+            },
+            "big": true
+          },
+          {
+            "type": "wait",
+            "ticks": 150
+          },
+          {
+            "type": "attack",
+            "attack": {
+              "inline": [
+                {
+                  "kind": "active",
+                  "ticks": 1,
+                  "damage": 5000,
+                  "spawn": [
+                    {
+                      "type": "spread",
+                      "count": 10,
+                      "angle": 69120,
+                      "body": [
+                        {
+                          "type": "zone",
+                          "shape": {
+                            "type": "circle",
+                            "radius": 7680
+                          },
+                          "offset": {
+                            "forward": 28672
+                          },
+                          "direction": {
+                            "type": "aimed",
+                            "offset": 46080
+                          },
+                          "wind_up_ticks": 45,
+                          "active_ticks": 4
+                        }
+                      ]
+                    },
+                    {
+                      "type": "wait",
+                      "ticks": 30
+                    },
+                    {
+                      "type": "spread",
+                      "count": 14,
+                      "angle": 69120,
+                      "body": [
+                        {
+                          "type": "zone",
+                          "shape": {
+                            "type": "circle",
+                            "radius": 8192
+                          },
+                          "offset": {
+                            "forward": 45056
+                          },
+                          "direction": {
+                            "type": "aimed",
+                            "offset": 46080
+                          },
+                          "wind_up_ticks": 45,
+                          "active_ticks": 4
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           },
           {
-            "type": "move_to",
-            "to": {
-              "x": 235520,
-              "y": 35840
-            },
+            "type": "wait",
             "ticks": 90
-          },
-          {
-            "type": "attack",
-            "attack": {
-              "preset": {
-                "id": "aimed_spread",
-                "args": [
-                  768
-                ]
-              }
-            }
-          },
-          {
-            "type": "move_to",
-            "to": {
-              "x": 163840,
-              "y": 35840
-            },
-            "ticks": 60
           },
           {
             "type": "loop"
