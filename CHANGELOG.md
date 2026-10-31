@@ -3,6 +3,18 @@
 One section per release, `## <version>`, newest first. The version is the file `VERSION`; Candidate
 refuses a version without a non-empty section here and puts it in the release notes.
 
+## 0.0.7
+
+The pack of core v0.2.1, for `sim_version` 1 (it was core v0.1.0, `sim_version` 0), with `schema_version`
+1. New top-level data: the weapons (giant sword, giant hammer), nine attack presets (aimed single,
+aimed spread, elite slam, slam, slash, spiral, spread 5, thrust, twin shot), the simulation rules
+and the six reward rarities with their lumine costs (common 1, uncommon 2, rare 3, epic 4,
+legendary 6, supernova 10). The expertise weapons lose their titles and descriptions. The free
+weapon and perk set of the starting unlocks and the three modes (trial, time_limit, tutorial) change. No ID of 0.0.6 is
+renamed or removed.
+
+Promote now requires a verified `packs.json.minisig` signature before it releases.
+
 ## 0.0.6
 
 First release that carries packs.json (one channel per core minor, FT1b); the pack is unchanged, core v0.1.0's.
