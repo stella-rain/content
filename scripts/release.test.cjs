@@ -171,13 +171,11 @@ test("the CLI check-candidate: main only, a commit since the latest release, not
   assert.ok(head);
 });
 
-test("Candidate runs on main only, makes a release commit on top of main and the guard watches rc/** only", () => {
+test("Candidate runs on main only, tags main's own commit and the guard watches rc/** only", () => {
   const wf = (f) => fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", f), "utf8");
   const cand = wf("candidate.yml");
   assert.match(cand, /release\.cjs check-main/);
   assert.match(cand, /release\.cjs check-candidate/);
-  assert.match(cand, /release\.cjs stamp/);
-  assert.match(cand, /Release v\$FINAL/);
   assert.doesNotMatch(cand, /candidate\//);
   assert.doesNotMatch(wf("candidate-guard.yml"), /candidate\/\*\*|candidate\/\[/);
   assert.match(wf("candidate-guard.yml"), /branches: \["rc\/\*\*"\]/);
