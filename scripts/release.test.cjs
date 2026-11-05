@@ -244,6 +244,63 @@ test("Candidate runs on main only, makes a release commit on top of main and the
   assert.ok(!fs.existsSync(path.join(__dirname, "..", ".github", "workflows", "auto-candidate.yml")));
 });
 
+// VERSION is exactly the release version: no floor, no next-patch fallback, no stamp, no changelog.
+test("a VERSION equal to the latest tag is refused, with no next-patch fallback", () => {
+  const dev = repo();
+  git(dev, "tag", "v0.0.1");
+  assert.throws(() => cli(dev, "check-version"), /v0\.0\.1 is already released/);
+  assert.strictEqual(cli(dev, "rc"), "v0.0.1-rc.1");
+});
+
+test("a VERSION below the latest tag is refused, one above it is the release", () => {
+  const dev = repo();
+  git(dev, "tag", "v0.0.1");
+  git(dev, "tag", "v0.0.3");
+  fs.writeFileSync(path.join(dev, "VERSION"), "0.0.2\n");
+  assert.throws(() => cli(dev, "check-version"), /v0\.0\.2 is not above the latest release v0\.0\.3/);
+  fs.writeFileSync(path.join(dev, "VERSION"), "0.0.4\n");
+  assert.strictEqual(cli(dev, "check-version"), "");
+  assert.strictEqual(cli(dev, "rc"), "v0.0.4-rc.1");
+});
+
+test("a VERSION above the latest tag is accepted as is, without a CHANGELOG.md", () => {
+  const dev = repo();
+  fs.rmSync(path.join(dev, "CHANGELOG.md"));
+  git(dev, "tag", "v0.0.1");
+  fs.writeFileSync(path.join(dev, "VERSION"), "0.0.2\n");
+  assert.strictEqual(cli(dev, "check-version"), "");
+  assert.strictEqual(cli(dev, "rc"), "v0.0.2-rc.1");
+  git(dev, "tag", "v0.0.2-rc.1");
+  assert.strictEqual(cli(dev, "rc"), "v0.0.2-rc.2");
+  for (const gone of ["final", "stamp", "notes"]) {
+    assert.throws(() => cli(dev, gone), /usage: release\.cjs/, gone);
+  }
+});
+
+test("Candidate makes no release commit, stamps nothing and reads no changelog; the repository has none", () => {
+  const root = path.join(__dirname, "..");
+  const wf = (f) => fs.readFileSync(path.join(root, ".github", "workflows", f), "utf8");
+  const cand = wf("candidate.yml");
+  assert.doesNotMatch(cand, /release\.cjs (stamp|final|notes)/);
+  assert.doesNotMatch(cand, /CHANGELOG/i);
+  assert.doesNotMatch(cand, /Release v/);
+  assert.doesNotMatch(cand, /git\/commits"/);
+  assert.doesNotMatch(cand, /steps\.stamp/);
+  assert.doesNotMatch(cand, /STAMPED/);
+  assert.doesNotMatch(cand, /TREE/);
+  assert.match(cand, /release\.cjs check-version/);
+  assert.match(cand, /release\.cjs version/);
+  assert.match(cand, /target=\$GITHUB_SHA/);
+  assert.match(wf("promote.yml"), /release\.cjs check-promote/);
+  assert.ok(!fs.existsSync(path.join(root, "CHANGELOG.md")));
+});
+
+test("checkCandidate refuses only a head that is a candidate's commit", () => {
+  const rcCommits = [{ tag: "v0.0.6-rc.1", commit: "bbb" }];
+  assert.doesNotThrow(() => r.checkCandidate({ commitsSince: 2, head: "ccc", rcCommits }));
+  assert.throws(() => r.checkCandidate({ commitsSince: 2, head: "bbb", rcCommits }), /already v0\.0\.6-rc\.1/);
+});
+
 test("the job names checksPassed leaves out are the candidate workflows' jobs", () => {
   const text = ["candidate.yml", "candidate-guard.yml"]
     .map((f) => fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", f), "utf8"))
