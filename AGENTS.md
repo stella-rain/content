@@ -55,6 +55,10 @@ every player. Data only: no code of the game lives here. CC0 1.0 (`LICENSE`).
   no notes are written by hand. The app fetches the latest release's `pack.json`
   (`https://github.com/stella-rain/content/releases/latest/download/pack.json`); each release
   carries `pack.json`, `pack.json.sha256` and `SHA256SUMS`, and those names never change.
+- Promote's `sign` job signs `packs.json` (secrets `MINISIGN_SECRET_KEY` and `MINISIGN_PASSWORD` of the
+  Environment `release-signing`; Kade approves each run); no other job holds the key. It verifies with
+  `MINISIGN_PUBLIC_KEY` before the tag and attaches `packs.json.minisig`. Never sign or attach by
+  hand; a private key is never in the repository, an issue or a session.
 
 ## Gates
 

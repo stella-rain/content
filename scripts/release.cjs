@@ -25,7 +25,8 @@
 //   packs PREV        prints packs.json for this release: PREV is the previous release's packs.json
 //                     (a file, or - for none); its channel for the core-version's major.minor is set
 //                     to v<VERSION> and pack.json's SHA-256, seq goes up by one (needs GITHUB_REPOSITORY)
-//   check-minisig P S K verifies packs.json P against minisig S using public key K
+//   check-minisig P S K verifies packs.json P against minisig S using public key K (an independent
+//                     verifier; Promote's sign job verifies with minisign itself and calls this no more)
 "use strict";
 
 const fs = require("fs");
@@ -201,7 +202,7 @@ function packsHere(prevPath) {
   }));
 }
 
-// Minisign verification (DS49 D-SIGN). Detached signature packs.json.minisig checked in Promote.
+// Minisign verification. Detached signature packs.json.minisig; an independent check, no workflow calls it.
 const ED25519_SPKI_PREFIX = Buffer.from("302a300506032b6570032100", "hex");
 
 function parseMinisignPublicKey(pubKeyStr) {
