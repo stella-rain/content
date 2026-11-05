@@ -1,15 +1,16 @@
 # Promote (release-flow, step 4). Kade runs it on the branch rc/v<version>-rc.N that Candidate
-# made, after trying that prerelease. Between Candidate and Promote, Kade signs offline (minisign -Sm packs.json)
-# and attaches packs.json.minisig to the candidate prerelease (DS49). The tag is the record and the
-# branch only a handle: it refuses unless the branch head is the rc tag's commit, the tag is the highest
-# rc of a version that is not released yet and is above the latest release, VERSION at that commit is
-# the version, its prerelease exists (scripts/release.cjs rc-branch, check-promote), and packs.json.minisig
-# is attached and verifies against MINISIGN_PUBLIC_KEY. It downloads the prerelease's assets and checks
-# them against SHA256SUMS, the commit's pack.json, and the minisign signature, then tags the same
-# commit v<version> and makes the GitHub release, marked latest, with the same assets: nothing is built
-# again. That release is what the app fetches. Last, it deletes the rc branches of that version and
-# every older one; a failed run deletes nothing. Only the tag job can write, and it runs none of the
-# repository's code.
+# made, after trying that prerelease. The tag is the record and the branch only a handle: the
+# check job refuses unless the branch head is the rc tag's commit, the tag is the highest rc of a
+# version that is not released yet and is above the latest release, VERSION at that commit is the
+# version, and its prerelease exists (scripts/release.cjs rc-branch, check-promote). It downloads the
+# prerelease's assets and checks them against SHA256SUMS and the commit's pack.json. The sign job,
+# bound to the Environment release-signing (Kade approves each run), signs packs.json with a pinned
+# minisign, verifies the signature with MINISIGN_PUBLIC_KEY and attaches packs.json.minisig to the
+# prerelease: no hand-attached signature. Then the tag job tags the same commit v<version> and makes the
+# GitHub release, marked latest, with the same assets: nothing is built again. That release is what
+# the app fetches. Last, it deletes the rc branches of that version and every older one; a failed run
+# deletes nothing. Only the sign job (the signature on the prerelease) and the tag job can write, and
+# neither runs the repository's code.
 name: Promote
 
 on:
@@ -75,42 +76,22 @@ jobs:
             echo "rc=$rc"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Install minisign
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y minisign
-
       - name: Download the prerelease's assets and check them, with no rebuild
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           RC: ${{ steps.check.outputs.rc }}
           FINAL: ${{ steps.check.outputs.final }}
-          MINISIGN_PUBLIC_KEY: ${{ secrets.MINISIGN_PUBLIC_KEY }}
         run: |
           set -euo pipefail
           assets="$RUNNER_TEMP/assets"
           mkdir "$assets"
           gh release download "$RC" --repo "$REPO" --dir "$assets" \
-            --pattern pack.json --pattern pack.json.sha256 --pattern packs.json --pattern packs.json.minisig --pattern SHA256SUMS
+            --pattern pack.json --pattern pack.json.sha256 --pattern packs.json --pattern SHA256SUMS
           (cd "$assets" && sha256sum -c SHA256SUMS)
           if ! cmp -s pack.json "$assets/pack.json"; then
             echo "::error::the prerelease's pack.json is not pack.json at $RC"
             exit 1
-          fi
-          if [ ! -f "$assets/packs.json.minisig" ]; then
-            echo "::error::packs.json.minisig is missing from candidate release"
-            exit 1
-          fi
-          if [ -z "${MINISIGN_PUBLIC_KEY:-}" ]; then
-            echo "::error::MINISIGN_PUBLIC_KEY is empty or unset: Promote has no fallback key"
-            exit 1
-          fi
-          key="$MINISIGN_PUBLIC_KEY"
-          if command -v minisign >/dev/null 2>&1; then
-            minisign -Vm "$assets/packs.json" -x "$assets/packs.json.minisig" -P "$key"
-          else
-            node scripts/release.cjs check-minisig "$assets/packs.json" "$assets/packs.json.minisig" "$key"
           fi
           {
             echo "Content pack ${FINAL#v}, promoted from $RC."
@@ -126,15 +107,111 @@ jobs:
             ${{ runner.temp }}/assets/pack.json
             ${{ runner.temp }}/assets/pack.json.sha256
             ${{ runner.temp }}/assets/packs.json
-            ${{ runner.temp }}/assets/packs.json.minisig
             ${{ runner.temp }}/assets/SHA256SUMS
             ${{ runner.temp }}/assets/notes.md
           if-no-files-found: error
           retention-days: 1
 
+  sign:
+    name: sign packs.json
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: release-signing
+    permissions:
+      contents: write  # attach packs.json.minisig to the rc prerelease
+    outputs:
+      packs_sha256: ${{ steps.sign.outputs.packs_sha256 }}
+    steps:
+      - name: Install minisign 0.12, pinned
+        env:
+          MINISIGN_URL: https://github.com/jedisct1/minisign/releases/download/0.12/minisign-0.12-linux.tar.gz
+          MINISIGN_SHA256: 9a599b48ba6eb7b1e80f12f36b94ceca7c00b7a5173c95c3efc88d9822957e73
+        run: |
+          set -euo pipefail
+          curl -fsSL -o "$RUNNER_TEMP/minisign.tgz" "$MINISIGN_URL"
+          echo "$MINISIGN_SHA256  $RUNNER_TEMP/minisign.tgz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/minisign.tgz" --warning=no-unknown-keyword -C "$RUNNER_TEMP" minisign-linux/x86_64/minisign
+          echo "$RUNNER_TEMP/minisign-linux/x86_64" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/minisign-linux/x86_64/minisign" -v
+
+      - name: Download packs.json from the prerelease and check it
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RC: ${{ needs.check.outputs.rc }}
+        run: |
+          set -euo pipefail
+          dir="$RUNNER_TEMP/sign"
+          mkdir "$dir"
+          gh release download "$RC" --repo "$REPO" --dir "$dir" --pattern packs.json --pattern SHA256SUMS
+          (cd "$dir" && sha256sum -c --ignore-missing SHA256SUMS | tee "$dir/checked.txt")
+          if ! grep -q '^packs.json: OK$' "$dir/checked.txt"; then
+            echo "::error::packs.json is not listed in SHA256SUMS or does not match it"
+            exit 1
+          fi
+
+      - name: Sign and verify
+        id: sign
+        env:
+          MINISIGN_SECRET_KEY: ${{ secrets.MINISIGN_SECRET_KEY }}
+          MINISIGN_PASSWORD: ${{ secrets.MINISIGN_PASSWORD }}
+          MINISIGN_PUBLIC_KEY: ${{ secrets.MINISIGN_PUBLIC_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${MINISIGN_SECRET_KEY:-}" ]; then
+            echo "::error::MINISIGN_SECRET_KEY is empty or unset"
+            exit 1
+          fi
+          if [ -z "${MINISIGN_PASSWORD:-}" ]; then
+            echo "::error::MINISIGN_PASSWORD is empty or unset"
+            exit 1
+          fi
+          if [ -z "${MINISIGN_PUBLIC_KEY:-}" ]; then
+            echo "::error::MINISIGN_PUBLIC_KEY is empty or unset: Promote has no fallback key"
+            exit 1
+          fi
+          dir="$RUNNER_TEMP/sign"
+          umask 077
+          key_file=$(mktemp "$RUNNER_TEMP/minisign-key.XXXXXX")
+          echo "MINISIGN_KEY_FILE=$key_file" >> "$GITHUB_ENV"
+          printf '%s\n' "$MINISIGN_SECRET_KEY" > "$key_file"
+          printf '%s\n' "$MINISIGN_PASSWORD" | minisign -S -s "$key_file" -m "$dir/packs.json" -x "$dir/packs.json.minisig"
+          minisign -Vm "$dir/packs.json" -x "$dir/packs.json.minisig" -P "$MINISIGN_PUBLIC_KEY"
+          echo "packs_sha256=$(sha256sum "$dir/packs.json" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+
+      - name: Attach packs.json.minisig to the prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RC: ${{ needs.check.outputs.rc }}
+          PACKS_SHA256: ${{ steps.sign.outputs.packs_sha256 }}
+        run: |
+          set -euo pipefail
+          dir="$RUNNER_TEMP/sign"
+          had=$(gh release view "$RC" --repo "$REPO" --json assets --jq '[.assets[].name] | index("packs.json.minisig")')
+          gh release upload "$RC" "$dir/packs.json.minisig" --repo "$REPO" --clobber
+          {
+            echo "Signed packs.json (SHA-256 $PACKS_SHA256), verified with MINISIGN_PUBLIC_KEY, attached packs.json.minisig to $RC."
+            if [ "$had" != null ]; then
+              echo "Replaced a hand-attached packs.json.minisig."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packs-signature
+          path: ${{ runner.temp }}/sign/packs.json.minisig
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Remove the key file
+        if: always()
+        run: rm -f -- "${MINISIGN_KEY_FILE:-}"
+
   tag:
     name: tag and GitHub release
-    needs: check
+    needs: [check, sign]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -145,6 +222,11 @@ jobs:
           name: release-assets
           path: assets
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: packs-signature
+          path: assets
+
       - name: Tag the candidate's commit, make the release, delete the rc branches
         env:
           GH_TOKEN: ${{ github.token }}
@@ -153,6 +235,7 @@ jobs:
           COMMIT: ${{ needs.check.outputs.commit }}
           RC: ${{ needs.check.outputs.rc }}
           RELEASED: ${{ needs.check.outputs.released }}
+          PACKS_SHA256: ${{ needs.sign.outputs.packs_sha256 }}
         run: |
           set -euo pipefail
           head=$(gh api "repos/$REPO/git/ref/heads/$GITHUB_REF_NAME" --jq .object.sha)
@@ -161,6 +244,14 @@ jobs:
             exit 1
           fi
           (cd assets && sha256sum -c SHA256SUMS)
+          if [ ! -s assets/packs.json.minisig ]; then
+            echo "::error::packs.json.minisig is missing or empty"
+            exit 1
+          fi
+          if [ "$(sha256sum assets/packs.json | cut -d' ' -f1)" != "$PACKS_SHA256" ]; then
+            echo "::error::assets/packs.json is not the file that was signed"
+            exit 1
+          fi
           object=$(jq -n --arg tag "$FINAL" --arg sha "$COMMIT" \
                      '{tag: $tag, message: ("Content pack " + $tag), object: $sha, type: "commit"}' \
                    | gh api "repos/$REPO/git/tags" --input - --jq .sha)

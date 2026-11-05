@@ -385,7 +385,7 @@ test("Promote: the key and password are read only by the sign job, in step env",
   assert.doesNotMatch(jobSign, /actions\/checkout/);
   assert.doesNotMatch(jobSign, /\bnode /);
   assert.doesNotMatch(jobSign, /set -x/);
-  assert.doesNotMatch(jobSign, /echo[^\n]*MINISIGN_(SECRET_KEY|PASSWORD)/);
+  assert.doesNotMatch(jobSign, /echo[^\n]*\$\{?MINISIGN_(SECRET_KEY|PASSWORD)/);
 });
 
 test("Promote sign job: key file hygiene, password by stdin", () => {
@@ -399,7 +399,7 @@ test("Promote sign job: key file hygiene, password by stdin", () => {
 
 test("Promote sign job: pinned minisign, no apt", () => {
   assert.match(jobSign, /minisign-0\.12-linux\.tar\.gz/);
-  assert.match(jobSign, /[0-9a-f]{64}  [^\n]*\| sha256sum -c/);
+  assert.match(jobSign, /MINISIGN_SHA256: [0-9a-f]{64}\n[\s\S]*"\$MINISIGN_SHA256  [^\n]*\| sha256sum -c -/);
   assert.match(jobSign, /--warning=no-unknown-keyword/);
   assert.doesNotMatch(PROMOTE, /apt-get install[^\n]*minisign/);
 });
