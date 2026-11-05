@@ -34,14 +34,6 @@ test("rcTag is the next candidate number of a version", () => {
   assert.strictEqual(r.rcTag("0.0.1", ["v0.0.1-rc.1", "v0.0.1-rc.2", "v0.0.2-rc.5"]), "v0.0.1-rc.3");
 });
 
-test("changelogEntry is the body of the version's section", () => {
-  const text = "# Changelog\n\n## 0.0.2 - 2026-11-01\n\nSecond.\n\n## 0.0.1\n\nFirst.\n- a\n";
-  assert.strictEqual(r.changelogEntry(text, "0.0.1"), "First.\n- a");
-  assert.strictEqual(r.changelogEntry(text, "0.0.2"), "Second.");
-  assert.throws(() => r.changelogEntry(text, "0.0.3"), /no entry for 0\.0\.3/);
-  assert.throws(() => r.changelogEntry("## 0.0.1\n\n## 0.0.0\nx\n", "0.0.1"), /entry for 0\.0\.1 is empty/);
-});
-
 test("checksPassed wants one finished check run, none failed, this run's own left out", () => {
   const run = (name, status, conclusion, id = 1) => ({ name, status, conclusion, details_url: `https://github.com/o/r/actions/runs/${id}/job/9` });
   assert.doesNotThrow(() => r.checksPassed([run("test", "completed", "success"), run("guard", "completed", "skipped")], "7"));
@@ -74,37 +66,6 @@ test("checkPromote wants the highest rc of a new version whose commit holds that
   assert.throws(() => r.checkPromote("v0.0.2-rc.2", tags, "0.0.3"), /VERSION at v0\.0\.2-rc\.2 is '0\.0\.3', not '0\.0\.2'/);
 });
 
-test("finalVersion: VERSION is a floor; at or below the latest release it is that release's next patch", () => {
-  assert.strictEqual(r.finalVersion("0.0.6", ["v0.0.5"]), "0.0.6");
-  assert.strictEqual(r.finalVersion("0.1.0", ["v0.0.5"]), "0.1.0");
-  assert.strictEqual(r.finalVersion("0.0.5", ["v0.0.5"]), "0.0.6");
-  assert.strictEqual(r.finalVersion("0.0.3", ["v0.0.4", "v0.0.5", "v0.0.5-rc.1"]), "0.0.6");
-  assert.strictEqual(r.finalVersion("0.0.1", []), "0.0.1");
-  assert.strictEqual(r.finalVersion("0.0.5", ["v0.0.5", "v0.0.6-rc.1"]), "0.0.6");
-  assert.strictEqual(r.finalVersion("0.0.9", ["v0.0.9"]), "0.0.10");
-});
-
-test("the second rc of a final counts the rcs already tagged, whether VERSION is the final or below it", () => {
-  const tags = ["v0.0.5", "v0.0.6-rc.1"];
-  assert.strictEqual(r.rcTag(r.finalVersion("0.0.6", tags), tags), "v0.0.6-rc.2");
-  assert.strictEqual(r.rcTag(r.finalVersion("0.0.5", tags), tags), "v0.0.6-rc.2");
-});
-
-test("stampFiles writes the final version into every place that holds it", () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "stamp-"));
-  fs.writeFileSync(path.join(dir, "VERSION"), "0.0.5\n");
-  const changed = r.stampFiles(dir, "0.0.6");
-  assert.deepStrictEqual(changed, ["VERSION"]);
-  assert.strictEqual(fs.readFileSync(path.join(dir, "VERSION"), "utf8"), "0.0.6\n");
-  assert.deepStrictEqual(r.STAMPED_FILES, ["VERSION"]);
-  assert.throws(() => r.stampFiles(dir, "v0.0.6"), /not a version/);
-});
-
-test("changelogEntry names the entry to add when the final's is missing", () => {
-  assert.throws(() => r.changelogEntry("# Changelog\n\n## 0.0.5\n\nx\n", "0.0.6"),
-    /no entry for 0\.0\.6: add a "## 0\.0\.6" section on main/);
-});
-
 test("checkMain: a candidate is made on main only", () => {
   assert.doesNotThrow(() => r.checkMain("refs/heads/main"));
   for (const bad of ["refs/heads/candidate/0123456789ab", "refs/heads/rc/v0.0.1-rc.1", "refs/heads/claude/x", "refs/tags/v0.0.1", ""]) {
@@ -113,12 +74,11 @@ test("checkMain: a candidate is made on main only", () => {
 });
 
 test("checkCandidate wants a commit since the latest release and a main commit that is no candidate", () => {
-  const ok = { commitsSince: 3, head: "aaa", rcCommits: [{ tag: "v0.0.6-rc.1", commit: "bbb", parent: "ccc" }] };
+  const ok = { commitsSince: 3, head: "aaa", rcCommits: [{ tag: "v0.0.6-rc.1", commit: "bbb" }] };
   assert.doesNotThrow(() => r.checkCandidate(ok));
   assert.doesNotThrow(() => r.checkCandidate({ ...ok, rcCommits: [] }));
   assert.throws(() => r.checkCandidate({ ...ok, commitsSince: 0 }), /no commit since the latest release/);
-  assert.throws(() => r.checkCandidate({ ...ok, rcCommits: [{ tag: "v0.0.6-rc.1", commit: "aaa", parent: "x" }] }), /already v0\.0\.6-rc\.1/);
-  assert.throws(() => r.checkCandidate({ ...ok, rcCommits: [{ tag: "v0.0.6-rc.1", commit: "bbb", parent: "aaa" }] }), /already v0\.0\.6-rc\.1/);
+  assert.throws(() => r.checkCandidate({ ...ok, rcCommits: [{ tag: "v0.0.6-rc.1", commit: "aaa" }] }), /already v0\.0\.6-rc\.1/);
 });
 
 function git(cwd, ...args) {
@@ -133,7 +93,7 @@ function cli(cwd, ...args) {
   }).trim();
 }
 
-// One origin, one clone on main with VERSION 0.0.1 and a CHANGELOG entry for it.
+// One origin, one clone on main with VERSION 0.0.1.
 function repo() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "release-"));
   const origin = path.join(root, "origin.git");
@@ -145,28 +105,22 @@ function repo() {
   git(dev, "config", "user.name", "t");
   fs.writeFileSync(path.join(dev, "VERSION"), "0.0.1\n");
   fs.writeFileSync(path.join(dev, "core-version"), "v0.0.15\n");
-  fs.writeFileSync(path.join(dev, "CHANGELOG.md"), "# Changelog\n\n## 0.0.1\n\nFirst pack.\n");
   git(dev, "add", "-A");
   git(dev, "commit", "-q", "-m", "first");
   git(dev, "push", "-q", "origin", "main");
   return dev;
 }
 
-test("the CLI reads VERSION, CHANGELOG.md and the tags of the clone", () => {
+test("the CLI reads VERSION and the tags of the clone", () => {
   const dev = repo();
   assert.strictEqual(cli(dev, "version"), "0.0.1");
   assert.strictEqual(cli(dev, "check-version"), "");
-  assert.strictEqual(cli(dev, "notes"), "First pack.");
-  assert.strictEqual(cli(dev, "final"), "0.0.1");
   assert.strictEqual(cli(dev, "rc"), "v0.0.1-rc.1");
   git(dev, "tag", "v0.0.1-rc.1");
   assert.strictEqual(cli(dev, "rc"), "v0.0.1-rc.2");
   assert.strictEqual(cli(dev, "latest"), "");
   git(dev, "tag", "v0.0.1");
   assert.strictEqual(cli(dev, "latest"), "v0.0.1");
-  assert.strictEqual(cli(dev, "final"), "0.0.2");
-  assert.throws(() => cli(dev, "check-version"), /no entry for 0\.0\.2: add a "## 0\.0\.2" section on main/);
-  assert.throws(() => cli(dev, "notes"), /no entry for 0\.0\.2/);
 });
 
 test("the CLI check-version refuses a core-version that is a commit or junk (ADR-131), accepts a tag", () => {
@@ -211,37 +165,77 @@ test("the CLI check-candidate: main only, a commit since the latest release, not
   git(dev, "add", "-A");
   git(dev, "commit", "-q", "-m", "second");
   assert.strictEqual(run(env, "check-candidate").status, 0);
-  // a release commit made on top of this one makes it a candidate already
-  const main = git(dev, "rev-parse", "HEAD");
-  fs.writeFileSync(path.join(dev, "VERSION"), "0.0.2\n");
-  git(dev, "commit", "-q", "-am", "Release v0.0.2");
+  // the main commit itself is the candidate once tagged
   git(dev, "tag", "v0.0.2-rc.1");
-  git(dev, "reset", "-q", "--hard", main);
   assert.match(run(env, "check-candidate").stderr, /already v0\.0\.2-rc\.1/);
   assert.ok(head);
 });
 
-test("the CLI stamp writes the final into VERSION, and packs then names the final", () => {
-  const dev = repo();
-  git(dev, "tag", "v0.0.1");
-  fs.writeFileSync(path.join(dev, "pack.json"), "{}\n");
-  assert.strictEqual(cli(dev, "stamp"), "");
-  assert.strictEqual(fs.readFileSync(path.join(dev, "VERSION"), "utf8"), "0.0.2\n");
-  const out = execFileSync(process.execPath, [path.join(__dirname, "release.cjs"), "packs", "-"], { cwd: dev, encoding: "utf8", env: { ...process.env, GITHUB_REPOSITORY: "stella-rain/content" } });
-  assert.strictEqual(JSON.parse(out).channels["0.0"].tag, "v0.0.2");
-});
-
-test("Candidate runs on main only, makes a release commit on top of main and the guard watches rc/** only", () => {
+test("Candidate runs on main only, tags main's own commit and the guard watches rc/** only", () => {
   const wf = (f) => fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", f), "utf8");
   const cand = wf("candidate.yml");
   assert.match(cand, /release\.cjs check-main/);
   assert.match(cand, /release\.cjs check-candidate/);
-  assert.match(cand, /release\.cjs stamp/);
-  assert.match(cand, /Release v\$FINAL/);
   assert.doesNotMatch(cand, /candidate\//);
   assert.doesNotMatch(wf("candidate-guard.yml"), /candidate\/\*\*|candidate\/\[/);
   assert.match(wf("candidate-guard.yml"), /branches: \["rc\/\*\*"\]/);
   assert.ok(!fs.existsSync(path.join(__dirname, "..", ".github", "workflows", "auto-candidate.yml")));
+});
+
+// VERSION is exactly the release version: no floor, no next-patch fallback, no stamp, no changelog.
+test("a VERSION equal to the latest tag is refused, with no next-patch fallback", () => {
+  const dev = repo();
+  git(dev, "tag", "v0.0.1");
+  assert.throws(() => cli(dev, "check-version"), /v0\.0\.1 is already released/);
+  assert.strictEqual(cli(dev, "rc"), "v0.0.1-rc.1");
+});
+
+test("a VERSION below the latest tag is refused, one above it is the release", () => {
+  const dev = repo();
+  git(dev, "tag", "v0.0.1");
+  git(dev, "tag", "v0.0.3");
+  fs.writeFileSync(path.join(dev, "VERSION"), "0.0.2\n");
+  assert.throws(() => cli(dev, "check-version"), /v0\.0\.2 is not above the latest release v0\.0\.3/);
+  fs.writeFileSync(path.join(dev, "VERSION"), "0.0.4\n");
+  assert.strictEqual(cli(dev, "check-version"), "");
+  assert.strictEqual(cli(dev, "rc"), "v0.0.4-rc.1");
+});
+
+test("a VERSION above the latest tag is accepted as is, without a CHANGELOG.md", () => {
+  const dev = repo();
+  git(dev, "tag", "v0.0.1");
+  fs.writeFileSync(path.join(dev, "VERSION"), "0.0.2\n");
+  assert.strictEqual(cli(dev, "check-version"), "");
+  assert.strictEqual(cli(dev, "rc"), "v0.0.2-rc.1");
+  git(dev, "tag", "v0.0.2-rc.1");
+  assert.strictEqual(cli(dev, "rc"), "v0.0.2-rc.2");
+  for (const gone of ["final", "stamp", "notes"]) {
+    assert.throws(() => cli(dev, gone), /usage: release\.cjs/, gone);
+  }
+});
+
+test("Candidate makes no release commit, stamps nothing and reads no changelog; the repository has none", () => {
+  const root = path.join(__dirname, "..");
+  const wf = (f) => fs.readFileSync(path.join(root, ".github", "workflows", f), "utf8");
+  const cand = wf("candidate.yml");
+  assert.doesNotMatch(cand, /release\.cjs (stamp|final|notes)/);
+  assert.doesNotMatch(cand, /CHANGELOG/i);
+  assert.doesNotMatch(cand, /Release v/);
+  assert.doesNotMatch(cand, /git\/commits"/);
+  assert.doesNotMatch(cand, /steps\.stamp/);
+  assert.doesNotMatch(cand, /STAMPED/);
+  assert.doesNotMatch(cand, /TREE/);
+  assert.match(cand, /release\.cjs check-version/);
+  assert.match(cand, /release\.cjs version/);
+  assert.match(cand, /target=\$GITHUB_SHA/);
+  assert.match(wf("promote.yml"), /release\.cjs check-promote/);
+  assert.ok(!fs.existsSync(path.join(root, "CHANGELOG.md")));
+});
+
+test("checkCandidate refuses only a head that is a candidate's commit", () => {
+  const rcCommits = [{ tag: "v0.0.6-rc.1", commit: "bbb" }];
+  assert.doesNotThrow(() => r.checkCandidate({ commitsSince: 2, head: "ccc", rcCommits }));
+  assert.throws(() => r.checkCandidate({ commitsSince: 2, head: "bbb", rcCommits }), /already v0\.0\.6-rc\.1/);
 });
 
 test("the job names checksPassed leaves out are the candidate workflows' jobs", () => {
