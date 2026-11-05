@@ -350,19 +350,96 @@ function createMinisigFixture(data) {
   return { pubKeyStr, minisigText, keyId: keyId.toString("hex") };
 }
 
-test("Promote workflow downloads, verifies and carries packs.json.minisig", () => {
-  const text = fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", "promote.yml"), "utf8");
-  assert.match(text, /--pattern packs\.json\.minisig/, "Promote downloads packs.json.minisig");
-  assert.match(text, /MINISIGN_PUBLIC_KEY/, "Promote uses MINISIGN_PUBLIC_KEY");
-  assert.match(text, /minisign/, "Promote verifies with minisign");
-  assert.match(text, /assets\/packs\.json\.minisig/, "Promote carries packs.json.minisig in assets");
-  assert.match(text, /Kade signs offline[\s\S]*minisign -Sm/i, "Promote documents offline signing");
-  assert.doesNotMatch(text, /RWQf/, "Promote has no hard-coded public key");
-  assert.match(text, /-z "\$\{MINISIGN_PUBLIC_KEY:-\}"/, "Promote guards an empty or unset MINISIGN_PUBLIC_KEY");
-  assert.match(text, /::error::MINISIGN_PUBLIC_KEY/, "the guard reports with ::error::");
-  const guard = text.indexOf("::error::MINISIGN_PUBLIC_KEY");
-  assert.ok(guard > 0 && guard < text.indexOf("minisign -Vm"), "the guard comes before minisign runs");
-  assert.doesNotMatch(text, /MINISIGN_PUBLIC_KEY:-[^}"]/, "no default value for MINISIGN_PUBLIC_KEY");
+const PROMOTE = fs.readFileSync(path.join(__dirname, "..", ".github", "workflows", "promote.yml"), "utf8");
+const README = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
+const AGENTS = fs.readFileSync(path.join(__dirname, "..", "AGENTS.md"), "utf8");
+const iCheck = PROMOTE.indexOf("\n  check:");
+const iSign = PROMOTE.indexOf("\n  sign:");
+const iTag = PROMOTE.indexOf("\n  tag:");
+const jobCheck = iSign > iCheck ? PROMOTE.slice(iCheck, iSign) : PROMOTE.slice(iCheck, iTag);
+const jobSign = iSign >= 0 ? PROMOTE.slice(iSign, iTag) : "";
+const jobTag = PROMOTE.slice(iTag);
+
+test("Promote: check, then sign (Environment release-signing), then tag", () => {
+  assert.ok(iCheck >= 0 && iSign > iCheck && iTag > iSign, "jobs in order check, sign, tag");
+  assert.match(jobSign, /environment: release-signing/);
+  assert.match(jobSign, /needs: check/);
+  assert.match(jobTag, /needs: \[check, sign\]/);
+  assert.match(PROMOTE, /^permissions: \{\}/m);
+  assert.match(jobCheck, /contents: read/);
+  assert.match(jobSign, /contents: write/);
+  assert.match(jobTag, /contents: write/);
+});
+
+test("Promote: the key and password are read only by the sign job, in step env", () => {
+  for (const name of ["MINISIGN_SECRET_KEY", "MINISIGN_PASSWORD"]) {
+    assert.ok(jobSign.includes("${{ secrets." + name + " }}"), name + " read in sign");
+    assert.doesNotMatch(jobCheck, new RegExp(name));
+    assert.doesNotMatch(jobTag, new RegExp(name));
+    assert.doesNotMatch(PROMOTE.slice(0, iCheck), new RegExp(name), "not in the header");
+    assert.match(jobSign, new RegExp("\\n        env:\\n(?:          [^\\n]*\\n)*?          " + name + ": \\$\\{\\{ secrets\\." + name + " \\}\\}"), name + " in a step-level env");
+    assert.doesNotMatch(jobSign, /\n    env:/, "no job-level env");
+  }
+  assert.match(jobSign, /MINISIGN_PUBLIC_KEY/);
+  assert.doesNotMatch(jobCheck, /MINISIGN_PUBLIC_KEY/);
+  assert.doesNotMatch(jobSign, /actions\/checkout/);
+  assert.doesNotMatch(jobSign, /\bnode /);
+  assert.doesNotMatch(jobSign, /set -x/);
+  assert.doesNotMatch(jobSign, /echo[^\n]*\$\{?MINISIGN_(SECRET_KEY|PASSWORD)/);
+});
+
+test("Promote sign job: key file hygiene, password by stdin", () => {
+  assert.match(jobSign, /umask 077/);
+  assert.match(jobSign, /mktemp "\$RUNNER_TEMP\//);
+  assert.match(jobSign, /-s "\$key_file"/);
+  assert.match(jobSign, /printf '%s\\n' "\$MINISIGN_PASSWORD" \| minisign -S/);
+  assert.doesNotMatch(jobSign, /minisign -S[^\n]* -W/);
+  assert.match(jobSign, /if: always\(\)[\s\S]*rm -f[^\n]*MINISIGN_KEY_FILE/);
+});
+
+test("Promote sign job: pinned minisign, no apt", () => {
+  assert.match(jobSign, /minisign-0\.12-linux\.tar\.gz/);
+  assert.match(jobSign, /MINISIGN_SHA256: [0-9a-f]{64}\n[\s\S]*"\$MINISIGN_SHA256  [^\n]*\| sha256sum -c -/);
+  assert.match(jobSign, /--warning=no-unknown-keyword/);
+  assert.doesNotMatch(PROMOTE, /apt-get install[^\n]*minisign/);
+});
+
+test("Promote sign job: signs the prerelease's asset, verifies, then attaches", () => {
+  assert.match(jobSign, /gh release download "\$RC"[^\n]*(\\\n[^\n]*)*--pattern packs\.json/);
+  assert.match(jobSign, /sha256sum -c/);
+  const at = (s) => jobSign.indexOf(s);
+  const guard = at('-z "${MINISIGN_PUBLIC_KEY:-}"');
+  const err = at("::error::MINISIGN_PUBLIC_KEY");
+  const sign = at("minisign -S");
+  const ver = at("minisign -Vm");
+  const up = at('gh release upload "$RC"');
+  assert.ok(guard > 0 && err > 0 && sign > 0 && ver > 0 && up > 0, "all steps present");
+  assert.ok(guard < sign && err < sign && sign < ver && ver < up, "guard, sign, verify, upload in order");
+  assert.match(jobSign, /minisign -Vm[^\n]*-P "\$MINISIGN_PUBLIC_KEY"/);
+  assert.match(jobSign, /gh release upload "\$RC"[^\n]*--clobber/);
+  assert.doesNotMatch(PROMOTE, /RWQf/);
+});
+
+test("Promote check and tag jobs carry the signature without signing", () => {
+  assert.doesNotMatch(jobCheck, /packs\.json\.minisig/);
+  assert.doesNotMatch(jobCheck, /minisign/);
+  assert.match(jobTag, /name: packs-signature/);
+  assert.match(jobTag, /PACKS_SHA256/);
+  assert.match(jobTag, /gh release create[^\n]*assets\/packs\.json\.minisig/);
+  assert.match(jobSign, /name: packs-signature/);
+});
+
+test("No hand signing step is left in the workflow or docs", () => {
+  assert.doesNotMatch(PROMOTE, /Kade signs offline/);
+  assert.doesNotMatch(PROMOTE, /minisign -Sm/);
+  assert.doesNotMatch(README, /minisign -Sm/);
+  assert.doesNotMatch(README, /signs `packs\.json` offline/);
+  assert.match(README, /release-signing|approval/i);
+  assert.match(README, /packs\.json\.minisig/);
+  assert.match(AGENTS, /release-signing/);
+  assert.match(AGENTS, /MINISIGN_SECRET_KEY/);
+  assert.ok(AGENTS.split("\n").length <= 101, "AGENTS.md at most 100 lines");
+  assert.doesNotMatch(README + AGENTS, /RWQ[A-Za-z0-9+\/]{20}/);
 });
 
 test("checkMinisig refuses missing packs.json.minisig", () => {

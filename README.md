@@ -13,8 +13,9 @@ Public content packs for **Stella Rain**, an action shooter for phones and compu
   `{"schema":1,"seq":N,"channels":{"0.2":{"tag":"v<version>","pack_sha256":"<hex>","text_sha256":null,"url":"<pack.json URL>"}}}`.
   The channel is the `major.minor` of `core-version`; a release sets its channel and leaves the others,
   and `seq` goes up by one. `text_sha256` is `null` until the text pack exists.
-  Between Candidate and Promote, Kade signs `packs.json` offline (`minisign -Sm packs.json`) and
-  attaches `packs.json.minisig`; Promote verifies it against the public key before releasing.
+  Promote signs `packs.json` with a minisign key held in an approval-gated GitHub Environment
+  (`release-signing`) and attaches `packs.json.minisig` to the release; check it with the public
+  key, `minisign -Vm packs.json -P <public key>`.
 - A pack names the simulation version it is for (`sim_version`) and is checked with the
   `content-pack` tool from [stella-rain/core](https://github.com/stella-rain/core) before it is
   released. The core tag in `core-version` is the one used here.
