@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "sim_version": 1,
+  "schema_version": 2,
+  "sim_version": 2,
   "introduced": {
     "run_stats": [
       {
@@ -3902,7 +3902,9 @@
   "default_xp": 1,
   "offer_size": 3,
   "defence_k": 10000,
-  "crit_damage_base_pct": 200
+  "crit_damage_base_pct": 200,
+  "offer_timer_ticks": 300,
+  "party_damage_pct": [100, 100, 100]
 },
   "starting_unlocks": {
   "free_weapon": "giant_sword",
@@ -4671,7 +4673,7 @@
     "drop_per_mille": 500,
     "pity": 2,
     "cap": 16,
-    "pickup_radius": 6144,
+    "pickup_radius": 16384,
     "rerolls": 2,
     "banishes": 1,
     "tiers": [
@@ -4710,7 +4712,7 @@
     "drop_one_in": 150,
     "amount": 30000,
     "cap": 5,
-    "pickup_radius": 6144
+    "pickup_radius": 16384
   },
   "elite_cap": 4,
   "level_table": {
@@ -6018,7 +6020,7 @@
     "drop_per_mille": 500,
     "pity": 2,
     "cap": 16,
-    "pickup_radius": 6144,
+    "pickup_radius": 16384,
     "rerolls": 2,
     "banishes": 1,
     "tiers": [
@@ -6409,7 +6411,7 @@
     "drop_per_mille": 500,
     "pity": 2,
     "cap": 16,
-    "pickup_radius": 6144,
+    "pickup_radius": 16384,
     "rerolls": 2,
     "banishes": 1,
     "tiers": [
