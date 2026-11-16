@@ -2838,22 +2838,107 @@
           "upgrade_1": [
             {
               "id": "titan_trigger_up_1",
-              "effect": "attack_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "giant_trigger",
+                  "ticks": 720,
+                  "effects": []
+                }
+              ]
             }
           ],
           "upgrade_2": [
             {
               "id": "titan_trigger_up_2",
-              "effect": "attack_speed_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "giant_trigger",
+                  "ticks": 720,
+                  "effects": [
+                    {
+                      "type": "hold_move_pct",
+                      "pct": 80
+                    }
+                  ]
+                },
+                {
+                  "type": "replace_step",
+                  "step": [
+                    "main",
+                    "main",
+                    "main"
+                  ],
+                  "grant": {
+                    "hold": {
+                      "loop": {
+                        "inline": [
+                          {
+                            "hit_box": {
+                              "offset": {
+                                "forward": 0,
+                                "right": 0
+                              },
+                              "radius": 12288,
+                              "type": "circle"
+                            },
+                            "kind": "active",
+                            "rehit_ticks": 8,
+                            "ticks": 8,
+                            "type": "strike"
+                          }
+                        ]
+                      },
+                      "max_ticks": 180,
+                      "move_pct": 50,
+                      "release": {
+                        "inline": [
+                          {
+                            "kind": "wind_up",
+                            "ticks": 10
+                          },
+                          {
+                            "damage": 10000,
+                            "hit_box": {
+                              "offset": {
+                                "forward": 4096,
+                                "right": 0
+                              },
+                              "radius": 16384,
+                              "type": "circle"
+                            },
+                            "kind": "active",
+                            "ticks": 5,
+                            "type": "strike"
+                          },
+                          {
+                            "kind": "recovery",
+                            "ticks": 24
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             }
           ],
           "capstone": [
             {
               "id": "titan_trigger_cap",
-              "effect": "attack_pct",
-              "amount": 20
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "giant_trigger",
+                  "ticks": 720,
+                  "effects": [
+                    {
+                      "type": "end_ring"
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "stats": [
@@ -3001,22 +3086,54 @@
           "upgrade_1": [
             {
               "id": "momentum_up_1",
-              "effect": "attack_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "combo_tempo_pct",
+                  "max_stacks": 5,
+                  "effects": [
+                    {
+                      "type": "range_pct_at_full",
+                      "pct": 25
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "upgrade_2": [
             {
               "id": "momentum_up_2",
-              "effect": "attack_speed_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "combo_tempo_pct",
+                  "max_stacks": 5,
+                  "effects": [
+                    {
+                      "type": "speed_pct",
+                      "pct": 6
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "capstone": [
             {
               "id": "momentum_cap",
-              "effect": "attack_pct",
-              "amount": 20
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "combo_tempo_pct",
+                  "max_stacks": 5,
+                  "effects": [
+                    {
+                      "type": "carry_at_full"
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "stats": [
@@ -3068,16 +3185,16 @@
             {
               "effect": "range_pct",
               "by_level": [
-                80,
-                160,
-                240,
-                320,
+                50,
+                100,
+                150,
+                200,
+                250,
+                300,
+                350,
                 400,
-                480,
-                560,
-                640,
-                720,
-                800
+                450,
+                500
               ]
             }
           ]
@@ -3193,8 +3310,18 @@
           "upgrade_1": [
             {
               "id": "breaker_up_1",
-              "effect": "attack_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "breaker",
+                  "effects": [
+                    {
+                      "type": "stagger_ticks_pct",
+                      "pct": 150
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "upgrade_2": [
@@ -3615,15 +3742,33 @@
           "upgrade_1": [
             {
               "id": "spirit_blade_up_1",
-              "effect": "attack_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "spirit",
+                  "decay_ticks": 1800,
+                  "levels": [
+                    []
+                  ]
+                }
+              ]
             }
           ],
           "upgrade_2": [
             {
               "id": "spirit_blade_up_2",
-              "effect": "attack_speed_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "charge_sooner",
+                  "step": [
+                    "main",
+                    "main",
+                    "main"
+                  ],
+                  "pct": 25
+                }
+              ]
             }
           ],
           "capstone": [
@@ -3828,22 +3973,148 @@
           "upgrade_1": [
             {
               "id": "foresight_counter_up_1",
-              "effect": "attack_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "counter_bonus",
+                  "window_ticks": 38,
+                  "effects": []
+                }
+              ]
             }
           ],
           "upgrade_2": [
             {
               "id": "foresight_counter_up_2",
-              "effect": "attack_speed_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "counter_bonus",
+                  "window_ticks": 38,
+                  "effects": [
+                    {
+                      "type": "advance",
+                      "distance": 12288
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "capstone": [
             {
               "id": "foresight_counter_cap",
-              "effect": "attack_pct",
-              "amount": 20
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "counter_bonus",
+                  "window_ticks": 38,
+                  "effects": [
+                    {
+                      "type": "refund_evade"
+                    },
+                    {
+                      "type": "gauge_fill_pct",
+                      "pct": 25
+                    }
+                  ]
+                },
+                {
+                  "type": "gauge",
+                  "max": 100,
+                  "step_cap": 1,
+                  "spend": {
+                    "type": "full_smash",
+                    "attack": {
+                      "inline": [
+                        {
+                          "kind": "wind_up",
+                          "ticks": 12
+                        },
+                        {
+                          "kind": "active",
+                          "ticks": 3,
+                          "damage": 9600,
+                          "type": "slash",
+                          "hit_box": {
+                            "type": "circle",
+                            "radius": 24576,
+                            "offset": {
+                              "forward": 0,
+                              "right": 0
+                            }
+                          },
+                          "rehit_ticks": 3
+                        },
+                        {
+                          "kind": "active",
+                          "ticks": 3,
+                          "damage": 9600,
+                          "type": "slash",
+                          "hit_box": {
+                            "type": "circle",
+                            "radius": 24576,
+                            "offset": {
+                              "forward": 0,
+                              "right": 0
+                            }
+                          },
+                          "rehit_ticks": 3
+                        },
+                        {
+                          "kind": "active",
+                          "ticks": 3,
+                          "damage": 9600,
+                          "type": "slash",
+                          "hit_box": {
+                            "type": "circle",
+                            "radius": 24576,
+                            "offset": {
+                              "forward": 0,
+                              "right": 0
+                            }
+                          },
+                          "rehit_ticks": 3
+                        },
+                        {
+                          "kind": "active",
+                          "ticks": 3,
+                          "damage": 9600,
+                          "type": "slash",
+                          "hit_box": {
+                            "type": "circle",
+                            "radius": 24576,
+                            "offset": {
+                              "forward": 0,
+                              "right": 0
+                            }
+                          },
+                          "rehit_ticks": 3
+                        },
+                        {
+                          "kind": "active",
+                          "ticks": 3,
+                          "damage": 9600,
+                          "type": "slash",
+                          "hit_box": {
+                            "type": "circle",
+                            "radius": 24576,
+                            "offset": {
+                              "forward": 0,
+                              "right": 0
+                            }
+                          },
+                          "rehit_ticks": 3
+                        },
+                        {
+                          "kind": "recovery",
+                          "ticks": 20
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
             }
           ],
           "stats": [
@@ -3959,15 +4230,29 @@
           "upgrade_1": [
             {
               "id": "judgement_cut_up_1",
-              "effect": "attack_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "repeat_breaks_orbs",
+                  "chance_pct": 60,
+                  "radius_px": 96
+                }
+              ]
             }
           ],
           "upgrade_2": [
             {
               "id": "judgement_cut_up_2",
-              "effect": "attack_speed_pct",
-              "amount": 10
+              "effect": "none",
+              "kinds": [
+                {
+                  "type": "repeat_bleed",
+                  "stacks": 1,
+                  "duration_ticks": 180,
+                  "damage": 300,
+                  "max_stacks": 6
+                }
+              ]
             }
           ],
           "capstone": [
